@@ -6,9 +6,13 @@
 - Priscila Pereira De Lima R.A: 1110482013005
 - Viktor Bartosz Ferrer R.A: 1110482013006
 
-Projeto Integrado FATEC-ZL 2021-1
+Projeto Integrador FATEC-ZL 2021-1
+
+[Caso de Uso](https://github.com/CTRLMarcws/IED001-Buffet-Mundo_Feliz/blob/main/CasoDeUso.md)
 
 #### Disciplinas:
-- Engenharia de Software II - Profª Cristina Corrêa De Oliveira
-- Estruturas de Dados - Profº Fábio Pereira da Silva
-- Sistemas Operacionais I - Profº Leandro Colevati Dos Santos
+- Engenharia de Software II - ProfÂª Cristina CorrÃªa De Oliveira
+- Estruturas de Dados - ProfÂº FÃ¡bio Pereira da Silva
+- Sistemas Operacionais I - ProfÂº Leandro Colevati Dos Santos
+
+O projeto "Buffet - Mundo Feliz" estÃ¡ sob a [licenÃ§a MIT](https://github.com/CTRLMarcws/IED001-Buffet-Mundo_Feliz/blob/main/LICENSE) (=
