@@ -29,6 +29,7 @@ public class TCadTemas extends JFrame
 	private JTextField tfNome;
 	private JFormattedTextField ftfValor;
 	private JTextArea taDesc;
+	private JButton btnSalvar, btnVerTodos, btnExcluir, btnPesquisar;
 
 	public static void main(String[] args)
 	{
@@ -98,19 +99,19 @@ public class TCadTemas extends JFrame
 		ftfValor.setBounds(20, 217, 110, 20);
 		TCadTemas.add(ftfValor);
 		
-		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(60, 260, 95, 23);
 		TCadTemas.add(btnSalvar);
 		
-		JButton btnVerTodos = new JButton("Ver Todos");
+		btnVerTodos = new JButton("Ver Todos");
 		btnVerTodos.setBounds(280, 260, 94, 23);
 		TCadTemas.add(btnVerTodos);
 		
-		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir = new JButton("Excluir");
 		btnExcluir.setBounds(170, 260, 94, 23);
 		TCadTemas.add(btnExcluir);
 		
-		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setBounds(319, 79, 95, 19);
 		TCadTemas.add(btnPesquisar);
 		
@@ -125,6 +126,9 @@ public class TCadTemas extends JFrame
 		
 		ControllerTemas ctrTemas = new ControllerTemas(tfNome, taDesc, ftfValor);
 		
+		btnPesquisar.addActionListener(ctrTemas);
+		btnSalvar.addActionListener(ctrTemas);
+		btnExcluir.addActionListener(ctrTemas);
 		btnVerTodos.addActionListener(ctrTemas);
 	}
 }

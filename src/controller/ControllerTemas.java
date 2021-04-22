@@ -7,6 +7,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import entity.Tema;
 import persistence.TemaDao;
 import view.TConTemas;
 
@@ -31,11 +32,24 @@ public class ControllerTemas implements ActionListener
 	{
 		String cmd = e.getActionCommand();
 
+		if (cmd.equals("Pesquisar"))
+		{
+			
+		}
+		if (cmd.equals("Salvar"))
+		{
+			
+		}
+		if (cmd.equals("Excluir"))
+		{
+			
+		}
 		if (cmd.equals("Ver Todos"))
 		{
 			TConTemas frame = new TConTemas();
 			frame.setVisible(true);
 		}
 	}
+	
 	
 }
