@@ -9,7 +9,8 @@ import javax.swing.JTextField;
 
 import entity.Tema;
 import persistence.TemaDao;
-import view.TConTemas;
+import view.FPrincipal;
+import view.PConsulta;
 
 public class ControllerTemas implements ActionListener
 {
@@ -46,8 +47,7 @@ public class ControllerTemas implements ActionListener
 		}
 		if (cmd.equals("Ver Todos"))
 		{
-			TConTemas frame = new TConTemas();
-			frame.setVisible(true);
+			FPrincipal.atualizarFrame(new PConsulta());			
 		}
 	}
 	

@@ -1,16 +1,16 @@
 package view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import controller.ControllerTemas;
 
 import javax.swing.JLabel;
+
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import javax.swing.SwingConstants;
@@ -21,68 +21,47 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-public class TCadTemas extends JFrame
+public class PCadTemas extends JPanel
 {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel TCadTemas;
+	private JLabel lblTitulo, label;
 	private JTextField tfNome;
 	private JFormattedTextField ftfValor;
 	private JTextArea taDesc;
 	private JButton btnSalvar, btnVerTodos, btnExcluir, btnPesquisar;
-
-	public static void main(String[] args)
+	
+	private static final long serialVersionUID = 1L;
+	
+	public Dimension getPreferredSize()
 	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				try
-				{
-					TCadTemas frame = new TCadTemas();
-					frame.setVisible(true);
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		});
+		return new Dimension(460, 300);
 	}
-
-	public TCadTemas()
+	
+	public PCadTemas()
 	{
-		setTitle("Cadastro de Temas");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 330);
-		TCadTemas = new JPanel();
-		TCadTemas.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(TCadTemas);
-		TCadTemas.setLayout(null);
-		setResizable(false);
-		
-		JLabel lblTitulo = new JLabel("Cadastro de Temas");
+		setLayout(null);
+		lblTitulo = new JLabel("Cadastro de Temas");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-		lblTitulo.setBounds(10, 10, 414, 30);
-		TCadTemas.add(lblTitulo);
+		lblTitulo.setBounds(0, 10, 450, 30);
+		add(lblTitulo);
 		
-		JLabel lblNewLabel = new JLabel("Nome");
-		lblNewLabel.setBounds(20, 60, 46, 20);
-		TCadTemas.add(lblNewLabel);
+		label = new JLabel("Nome");
+		label.setBounds(20, 60, 46, 20);
+		add(label);
 		
 		tfNome = new JTextField();
-		tfNome.setBounds(20, 79, 300, 20);
-		TCadTemas.add(tfNome);
+		tfNome.setBounds(20, 79, 316, 20);
+		add(tfNome);
 		tfNome.setColumns(10);
 		
-		JLabel lblDescrio = new JLabel("Descri\u00E7\u00E3o");
-		lblDescrio.setBounds(20, 109, 94, 20);
-		TCadTemas.add(lblDescrio);
+		label = new JLabel("Descri\u00E7\u00E3o");
+		label.setBounds(20, 109, 94, 20);
+		add(label);
 		
-		JLabel lblValor = new JLabel("Valor");
-		lblValor.setBounds(20, 198, 46, 20);
-		TCadTemas.add(lblValor);
+		label = new JLabel("Valor");
+		label.setBounds(20, 198, 46, 20);
+		add(label);
 		
 		MaskFormatter valor = null;
 		
@@ -97,29 +76,38 @@ public class TCadTemas extends JFrame
 		}
 		ftfValor = new JFormattedTextField(valor);
 		ftfValor.setBounds(20, 217, 110, 20);
-		TCadTemas.add(ftfValor);
+		add(ftfValor);
 		
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(60, 260, 95, 23);
-		TCadTemas.add(btnSalvar);
+		add(btnSalvar);
 		
 		btnVerTodos = new JButton("Ver Todos");
-		btnVerTodos.setBounds(280, 260, 94, 23);
-		TCadTemas.add(btnVerTodos);
+		btnVerTodos.setBounds(295, 260, 95, 23);
+		add(btnVerTodos);
 		
 		btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(170, 260, 94, 23);
-		TCadTemas.add(btnExcluir);
+		btnExcluir.setBounds(177, 260, 95, 23);
+		add(btnExcluir);
 		
 		btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.setBounds(319, 79, 95, 19);
-		TCadTemas.add(btnPesquisar);
+		btnPesquisar.setBounds(335, 79, 95, 19);
+		add(btnPesquisar);
+		
+		JButton btnNewButton = new JButton("<");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FPrincipal.atualizarFrame(new PMenuPrinc());
+			}
+		});
+		btnNewButton.setBounds(10, 14, 41, 23);
+		add(btnNewButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(20, 127, 394, 60);
-		TCadTemas.add(scrollPane);
+		scrollPane.setBounds(20, 127, 410, 60);
+		add(scrollPane);
 		
 		taDesc = new JTextArea();
 		scrollPane.setViewportView(taDesc);
