@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
-import controller.ControllerPrincipal;
+import controller.ControllerMenuPrinc;
 import controller.ControllerTemas;
 
 import java.awt.event.ActionListener;
@@ -102,7 +102,7 @@ public class PMenuPrinc extends JPanel
 		add(listaOpcoes);
 		
 		
-		ControllerPrincipal ctrPrinc = new ControllerPrincipal(listaOpcoes, btnCadastro, btnConsulta);
+		ControllerMenuPrinc ctrPrinc = new ControllerMenuPrinc(listaOpcoes, btnCadastro, btnConsulta);
 		btnCadastro.addActionListener(ctrPrinc);
 		btnConsulta.addActionListener(ctrPrinc);
 

@@ -1,5 +1,7 @@
 package persistence;
 
+import java.util.Scanner;
+
 import entity.Tema;
 
 public class TemaDao
@@ -79,28 +81,18 @@ public class TemaDao
 	{
 		return "Nome: " + novo.getNome()
 			 + "Descrição: " + novo.getDesc()
+			 + ""
 			 + "Valor: " + novo.getValor();
 	}
 	
-//	public String percorrer()
-//	{
-//		Tema auxiliar = inicio;
-//		String msg = "";
-//
-//		if(listaVazia())
-//		{
-//			msg = "Lista vazia.";
-//		}
-//		else
-//		{
-//			while(auxiliar != null)
-//			{
-//				msg += exibirMsg(auxiliar) + "\n";
-//				auxiliar = auxiliar.getProximo();
-//			}
-//		}
-//
-//		return msg;
-//	}
+	public static void main(String[] args)
+	{
+		System.out.println("1, 2, 3, testando");
+		Scanner sc1 = new Scanner(System.in);
+		
+		String aaaaa = sc1.nextLine();
+		
+		System.out.println(aaaaa);
+	}
 	
 }

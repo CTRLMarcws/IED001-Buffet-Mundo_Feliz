@@ -13,12 +13,12 @@ import view.FPrincipal;
 import view.PCadTemas;
 import view.PConsulta;
 
-public class ControllerPrincipal implements ActionListener
+public class ControllerMenuPrinc implements ActionListener
 {
 	private JComboBox listaOpcoes;
 	private JButton btnCadastro, btnConsulta;
 
-	public ControllerPrincipal(JComboBox listaOpcoes, JButton btnCadastro, JButton btnConsulta)
+	public ControllerMenuPrinc(JComboBox listaOpcoes, JButton btnCadastro, JButton btnConsulta)
 	{
 		this.btnCadastro = btnCadastro;
 		this.btnConsulta = btnConsulta;
@@ -50,40 +50,24 @@ public class ControllerPrincipal implements ActionListener
 
 		if (cmd.equals("Consultar"))
 		{
-			FPrincipal.atualizarFrame(new PConsulta());
-			
 			switch(opc)
 			{
 			case "Temas":
-				consultaTipo(0);
+				ControllerConsulta.setTipo(0);
 				break;
 				
 			case "Clientes":
-				consultaTipo(1);
+				//consultaTipo(1);
 				break;
 				
 			case "Alugueis":
-				consultaTipo(2);
+				//consultaTipo(2);
 				break;
 			}
+			
+			FPrincipal.atualizarFrame(new PConsulta());
 		}
 	}
 	
-	private void consultaTipo(int tipo)
-	{
-		//criar lista
-		//mensagem de carregando dados
-		switch(tipo)
-		{
-		case 0:
-			//executar query do tipo temas
-			break;
-		case 1:
-			//executar query do tipo clientes
-			break;
-		case 2:
-			//executar query do tipo alugueis
-			break;
-		}
-	}
+	
 }

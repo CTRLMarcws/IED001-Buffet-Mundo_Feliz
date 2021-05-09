@@ -39,7 +39,7 @@ public class ControllerTemas implements ActionListener
 		}
 		if (cmd.equals("Salvar"))
 		{
-			
+			salvar();
 		}
 		if (cmd.equals("Excluir"))
 		{
@@ -49,6 +49,11 @@ public class ControllerTemas implements ActionListener
 		{
 			FPrincipal.atualizarFrame(new PConsulta());			
 		}
+	}
+	
+	private void salvar()
+	{
+		
 	}
 	
 	
