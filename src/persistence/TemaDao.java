@@ -1,98 +1,94 @@
 package persistence;
 
-import java.util.Scanner;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 
 import entity.Tema;
+import entity.NO;
 
 public class TemaDao
 {
+	public static final Object[][] Percorrer = null;
 	private String msg;
-	private Tema inicio;
+	private static NO inicio;
 	
 	public TemaDao()
 	{
 		inicio = null;
 	}
 
-	public String adicionarInicio(String nome, String desc, double valor)
+	public static void adicionarInicio(Tema tema)
 	{
-		msg = "";
+		NO novo = new NO(tema);
+		novo.prox = inicio;
+		inicio = novo;
 		
-		Tema novo = new Tema(nome, desc, valor);
+		JOptionPane.showMessageDialog(null,"Tema adicionado na lista: \nNome: " + novo.getTemaDao().getNome() 
+				+ "\nDescrição: " + novo.getTemaDao().getDesc()
+				+ "\nValor: " + novo.getTemaDao().getValor()
+				+ "\n");
 		
-		if (listaVazia())
-		{
-			inicio = novo;
-			
-			msg = exibirMsg(novo);
-		}
-		else
-		{
-			novo.setProximo(inicio);
-			
-			msg = exibirMsg(novo);
-			
-			inicio.setAnterior(novo);
-		}
-		
-		return msg;
 	}
 	
-	public String adicionarFinal(String nome, String desc, double valor)
+			
+	public static void AdicionarFinal(Tema tema) {
+			
+			if(listaVazia())
+			{
+				adicionarInicio(tema);
+			}
+			else
+			{
+				NO auxiliar = inicio;
+				
+				while(auxiliar.prox != null)
+				{
+					auxiliar = auxiliar.prox;
+				}
+				NO novo = new NO (tema);
+				auxiliar.prox = novo;
+				
+				JOptionPane.showMessageDialog(null,"Tema adicionado na lista: \nNome: " + novo.getTemaDao().getNome() 
+						+ "\nDescrição: " + novo.getTemaDao().getDesc()
+						+ "\nValor: " + novo.getTemaDao().getValor()
+						+ "\n");
+			}
+		}
+		
+	
+	public static boolean listaVazia()
 	{
-		msg = "";
-		
-		Tema novo = new Tema(nome, desc, valor);
-		
 		if(inicio == null)
 		{
-			adicionarInicio(nome, desc, valor);
+			return true;
 		}
-		else
-		{
-			Tema auxiliar = buscarParaAdicionar(inicio);
-			
-			auxiliar.setProximo(novo);
-			novo.setAnterior(auxiliar);
-			novo.setProximo(null);
-			
-			msg = exibirMsg(novo);
-		}
-		
-		return msg;
+		return false;
 	}
+	
 
-	private Tema buscarParaAdicionar(Tema aux)
+	public static void percorrer()
 	{
-		if(aux.getProximo() != null)
-		{
-			return buscarParaAdicionar(aux.getProximo());
+		int pos = 1;
+		
+		if (inicio == null) {
+			JOptionPane.showMessageDialog(null, "Lista Vazia!");
+		} else {
+			NO novo = inicio;
+			System.out.println("\n\n\n\n************ Lista de Temas: \n");
+			while (novo != null) {
+
+				System.out.println("Posição: #" + pos + " - Nome: " + novo.getTemaDao().getNome()
+						+ "\nDescrição: " + novo.getTemaDao().getDesc()
+						+ "\nValor: " + novo.getTemaDao().getValor()
+						+ "\n");
+				novo = novo.getProx();
+				pos ++;
+				
+			}
 		}
-		return aux;
-		
-	}
-	
-	private boolean listaVazia()
-	{
-		return this.inicio == null;
-	}
-	
-	private String exibirMsg(Tema novo)
-	{
-		return "Nome: " + novo.getNome()
-			 + "Descrição: " + novo.getDesc()
-			 + ""
-			 + "Valor: " + novo.getValor();
-	}
-	
-	public static void main(String[] args)
-	{
-		System.out.println("1, 2, 3, testando");
-		Scanner sc1 = new Scanner(System.in);
-		
-		String aaaaa = sc1.nextLine();
-		
-		System.out.println(aaaaa);
 	}
 	
 }

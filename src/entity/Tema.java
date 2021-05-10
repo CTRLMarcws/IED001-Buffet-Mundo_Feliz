@@ -1,13 +1,16 @@
 package entity;
 
+import javax.swing.JTextArea;
+
 public class Tema
 {
-  	private String nome, desc;
-  	private double valor;
+
+	private String nome, desc;
+  	private String valor;
 	private int sts;
 	private Tema proximo, anterior;
 
-	public Tema(String nome, String desc, double valor)
+	public Tema(String nome, String desc, String valor)
 	{
 		this.nome = nome;
 		this.desc = desc;
@@ -37,17 +40,17 @@ public class Tema
 		this.desc = desc;
 	}
 	
-	public double getValor()
+	public String getValor()
 	{
 		return valor;
 	}
 	
-	public void setValor(double valor)
+	public void setValor(String valor)
 	{
 		this.valor = valor;
 	}
 	
-	public int getSts()
+	/*public int getSts()
 	{
 		return sts;
 	}
@@ -76,11 +79,6 @@ public class Tema
 	{
 		this.anterior = anterior;
 	}
+	*/
 	
-	
-	/*
-	 * cliente:
-	private String nome, email, endRua, endBairro, endCidade, endCompl, endUF, obs;
-	private int id, cpf, rg, fone, endNum, estado; 
-	 */
 }

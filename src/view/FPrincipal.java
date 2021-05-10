@@ -34,6 +34,7 @@ public class FPrincipal
 		atualizarFrame(new PMenuPrinc());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		frame.setResizable(false);
 	}
 
 	public static void atualizarFrame(JPanel painel)

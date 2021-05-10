@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -39,7 +40,11 @@ public class ControllerTemas implements ActionListener
 		}
 		if (cmd.equals("Salvar"))
 		{
-			salvar();
+	
+			Tema tema = new Tema(tfNome.getText(), taDesc.getText(),  ftfValor.getText());			
+			TemaDao.AdicionarFinal(tema);
+			
+			
 		}
 		if (cmd.equals("Excluir"))
 		{
@@ -47,13 +52,10 @@ public class ControllerTemas implements ActionListener
 		}
 		if (cmd.equals("Ver Todos"))
 		{
-			FPrincipal.atualizarFrame(new PConsulta());			
+			Tema tema = new Tema(tfNome.getText(), taDesc.getText(),  ftfValor.getText());			
+			TemaDao.percorrer();
+			//FPrincipal.atualizarFrame(new PConsulta());			
 		}
-	}
-	
-	private void salvar()
-	{
-		
 	}
 	
 	
