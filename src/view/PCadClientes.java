@@ -1,27 +1,18 @@
 package view;
 
+import java.awt.Dimension;
 
-
-import java.awt.EventQueue;
-
-
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-
-
 import controller.ControllerClientes;
-
-
+import controller.ControllerTemas;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
-
-
 
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -31,280 +22,257 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-
-
-
-public class PCadClientes extends JFrame {
-
-
-
-private static final long serialVersionUID = 1L;
-private JPanel PCadClientes;
-private JTextField tfNome, tfEndereco, tfBairro, tfCidade, tfComp, tfEmail, tfEndNum;
-private JFormattedTextField ftfId, ftfCpf, ftfRg, ftfFone, ftfCep;
-private JTextArea taObs;
-
-
-
-public static void main(String[] args) {
-EventQueue.invokeLater(new Runnable() {
-public void run() {
-try {
-PCadClientes frame = new PCadClientes();
-frame.setVisible(true);
-} catch (Exception e) {
-e.printStackTrace();
-}
-}
-});
-}
-
-
-
-public PCadClientes() {
-setTitle("Cadastro de Clientes");
-setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-setBounds(100, 100, 563, 543);
-PCadClientes = new JPanel();
-PCadClientes.setBorder(new EmptyBorder(5, 5, 5, 5));
-setContentPane(PCadClientes);
-PCadClientes.setLayout(null);
-setResizable(false);
-this.setLocationRelativeTo(null);
-
-
-
-JLabel lblTitulo = new JLabel("Cadastro de Clientes");
-lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-lblTitulo.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-lblTitulo.setBounds(68, 10, 414, 30);
-PCadClientes.add(lblTitulo);
-
-
-
-JLabel lblNewLabel = new JLabel("Nome");
-lblNewLabel.setBounds(20, 60, 46, 20);
-PCadClientes.add(lblNewLabel);
-
-
-
-tfNome = new JTextField();
-tfNome.setBounds(20, 80, 370, 20);
-PCadClientes.add(tfNome);
-tfNome.setColumns(10);
-
-JLabel lblId = new JLabel("Id");
-lblId.setBounds(400, 60, 46, 20);
-PCadClientes.add(lblId);
-
-MaskFormatter Id = null;
-
-try
+public class PCadClientes extends JPanel
 {
-Id = new MaskFormatter("#####");
 
+	private static final long serialVersionUID = 1L;
+	private JTextField tfNome, tfEndereco, tfBairro, tfCidade, tfComp, tfEmail, tfEndNum;
+	private JFormattedTextField ftfId, ftfCpf, ftfRg, ftfFone, ftfCep;
+	private JTextArea taObs;
+	private JLabel lblTitulo, label;
+	private JButton btnConsultar, btnFinanceiro, btnHistorico, btnVerTodos, btnSalvar;
 
+	public Dimension getPreferredSize()
+	{
+		return new Dimension(563, 543);
+	}
 
-}
-catch (ParseException e)
-{
-e.printStackTrace();
-}
-ftfId = new JFormattedTextField(Id);
-ftfId.setBounds(400, 80, 134, 20);
-PCadClientes.add(ftfId);
+
+	public PCadClientes()
+	{
+		setLayout(null);
+
+		lblTitulo = new JLabel("Cadastro de Clientes");
+		lblTitulo.setBounds(0, 10, 546, 30);
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		add(lblTitulo);
 
+		label = new JLabel("Nome");
+		label.setBounds(20, 60, 46, 20);
+		add(label);
 
+		label = new JLabel("Id");
+		label.setBounds(400, 60, 46, 20);
+		add(label);
+
+		label = new JLabel("CPF");
+		label.setBounds(20, 110, 46, 20);
+		add(label);
 
+		label = new JLabel("RG");
+		label.setBounds(180, 110, 46, 20);
+		add(label);
 
-JScrollPane scrollPane = new JScrollPane();
-scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-scrollPane.setBounds(20, 340, 354, 60);
-PCadClientes.add(scrollPane);
+		label = new JLabel("Telefone Celular");
+		label.setBounds(340, 110, 118, 20);
+		add(label);
 
-taObs = new JTextArea();
-scrollPane.setViewportView(taObs);
+		label = new JLabel("Email");
+		label.setBounds(180, 160, 46, 20);
+		add(label);
 
-JLabel lblCpf = new JLabel("CPF");
-lblCpf.setBounds(20, 110, 46, 20);
-PCadClientes.add(lblCpf);
+		label = new JLabel("Logradouro");
+		label.setBounds(20, 210, 100, 20);
+		add(label);
 
-MaskFormatter Cpf = null;
+		label = new JLabel("Bairro");
+		label.setBounds(20, 260, 46, 20);
+		add(label);
 
-try
-{
-Cpf = new MaskFormatter("###.###.###-##");
+		label = new JLabel("Cidade");
+		label.setBounds(300, 260, 46, 20);
+		add(label);
 
+		label = new JLabel("Observa\u00E7\u00E3o");
+		label.setBounds(20, 320, 100, 20);
+		add(label);
 
+		label = new JLabel("Complemento");
+		label.setBounds(435, 210, 90, 20);
+		add(label);
 
-}
-catch (ParseException e)
-{
-e.printStackTrace();
-}
+		label = new JLabel("Número");
+		label.setBounds(330, 210, 63, 20);
+		add(label);
 
-ftfCpf = new JFormattedTextField(Cpf);
-ftfCpf.setBounds(20, 130, 150, 20);
-PCadClientes.add(ftfCpf);
+		label = new JLabel("CEP");
+		label.setBounds(20, 160, 46, 20);
+		add(label);
 
-JLabel lblRg = new JLabel("RG");
-lblRg.setBounds(180, 110, 46, 20);
-PCadClientes.add(lblRg);
+		tfNome = new JTextField();
+		tfNome.setBounds(20, 80, 370, 20);
+		add(tfNome);
+		tfNome.setColumns(10);
 
-MaskFormatter Rg = null;
+		MaskFormatter Id = null;
 
-try
-{
-Rg = new MaskFormatter("##.###.###-#");
+		try
+		{
+			Id = new MaskFormatter("#####");
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
 
+		ftfId = new JFormattedTextField(Id);
+		ftfId.setBounds(400, 80, 134, 20);
+		add(ftfId);
 
 
-}
-catch (ParseException e)
-{
-e.printStackTrace();
-}
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(20, 340, 354, 60);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		add(scrollPane);
 
+		taObs = new JTextArea();
+		scrollPane.setViewportView(taObs);
 
-ftfRg = new JFormattedTextField(Rg);
-ftfRg.setBounds(180, 130, 150, 20);
-PCadClientes.add(ftfRg);
 
-JLabel lblFone = new JLabel("Telefone Celular");
-lblFone.setBounds(340, 110, 118, 20);
-PCadClientes.add(lblFone);
+		MaskFormatter Cpf = null;
 
-MaskFormatter Fone = null;
+		try
+		{
+			Cpf = new MaskFormatter("###.###.###-##");
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
 
-try
-{
-Fone = new MaskFormatter("(##) # ####-####");
+		ftfCpf = new JFormattedTextField(Cpf);
+		ftfCpf.setBounds(20, 130, 150, 20);
+		add(ftfCpf);
 
 
+		MaskFormatter Rg = null;
 
-}
-catch (ParseException e)
-{
-e.printStackTrace();
-}
+		try
+		{
+			Rg = new MaskFormatter("##.###.###-#");
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
 
 
-ftfFone = new JFormattedTextField(Fone);
-ftfFone.setBounds(340, 130, 194, 19);
-PCadClientes.add(ftfFone);
+		ftfRg = new JFormattedTextField(Rg);
+		ftfRg.setBounds(180, 130, 150, 20);
+		add(ftfRg);
 
-JLabel lblEmail = new JLabel("Email");
-lblEmail.setBounds(180, 160, 46, 20);
-PCadClientes.add(lblEmail);
 
+		MaskFormatter Fone = null;
 
+		try
+		{
+			Fone = new MaskFormatter("(##) # ####-####");
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
 
-tfEmail = new JTextField();
-tfEmail.setBounds(180, 180, 354, 20);
-PCadClientes.add(tfEmail);
-tfEmail.setColumns(10);
 
-JLabel lblEndereco = new JLabel("Logradouro");
-lblEndereco.setBounds(20, 210, 100, 20);
-PCadClientes.add(lblEndereco);
+		ftfFone = new JFormattedTextField(Fone);
+		ftfFone.setBounds(340, 130, 194, 19);
+		add(ftfFone);
 
 
+		tfEmail = new JTextField();
+		tfEmail.setBounds(180, 180, 354, 20);
+		add(tfEmail);
+		tfEmail.setColumns(10);
 
-tfEndereco = new JTextField();
-tfEndereco.setBounds(20, 230, 300, 20);
-PCadClientes.add(tfEndereco);
-tfEndereco.setColumns(10);
 
-JLabel lblBairro = new JLabel("Bairro");
-lblBairro.setBounds(20, 260, 46, 20);
-PCadClientes.add(lblBairro);
 
+		tfEndereco = new JTextField();
+		tfEndereco.setBounds(20, 230, 300, 20);
+		add(tfEndereco);
+		tfEndereco.setColumns(10);
 
 
-tfBairro = new JTextField();
-tfBairro.setBounds(20, 280, 270, 20);
-PCadClientes.add(tfBairro);
-tfBairro.setColumns(10);
 
-JLabel lblCidade = new JLabel("Cidade");
-lblCidade.setBounds(300, 260, 46, 20);
-PCadClientes.add(lblCidade);
+		tfBairro = new JTextField();
+		tfBairro.setBounds(20, 280, 270, 20);
+		add(tfBairro);
+		tfBairro.setColumns(10);
 
 
 
-tfCidade = new JTextField();
-tfCidade.setBounds(304, 280, 230, 20);
-PCadClientes.add(tfCidade);
-tfCidade.setColumns(10);
+		tfCidade = new JTextField();
+		tfCidade.setBounds(304, 280, 230, 20);
+		add(tfCidade);
+		tfCidade.setColumns(10);
 
-JLabel lblComp = new JLabel("Complemento");
-lblComp.setBounds(435, 210, 90, 20);
-PCadClientes.add(lblComp);
+		tfComp = new JTextField();
+		tfComp.setBounds(439, 230, 95, 20);
+		add(tfComp);
+		tfComp.setColumns(10);
 
 
+		tfEndNum = new JTextField();
+		tfEndNum.setBounds(330, 230, 95, 20);
+		add(tfEndNum);
+		tfEndNum.setColumns(10);
 
-tfComp = new JTextField();
-tfComp.setBounds(439, 230, 95, 20);
-PCadClientes.add(tfComp);
-tfComp.setColumns(10);
 
-JLabel lblEndNum = new JLabel("Número");
-lblEndNum.setBounds(330, 210, 63, 20);
-PCadClientes.add(lblEndNum);
+		MaskFormatter Cep = null;
 
+		try
+		{
+			Cep = new MaskFormatter("#####-###");
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
 
+		ftfCep = new JFormattedTextField(Cep);
+		ftfCep.setBounds(20, 180, 150, 20);
+		add(ftfCep);
 
-tfEndNum = new JTextField();
-tfEndNum.setBounds(330, 230, 95, 20);
-PCadClientes.add(tfEndNum);
-tfEndNum.setColumns(10);
 
-JLabel lblCep = new JLabel("CEP");
-lblCep.setBounds(20, 160, 46, 20);
-PCadClientes.add(lblCep);
+		btnSalvar = new JButton("Salvar");
+		btnSalvar.setBounds(110, 465, 100, 25);
+		add(btnSalvar);
 
-MaskFormatter Cep = null;
+		btnVerTodos = new JButton("Ver Todos");
+		btnVerTodos.setBounds(370, 465, 100, 25);
+		add(btnVerTodos);
 
-try
-{
-Cep = new MaskFormatter("#####-###");
+		btnHistorico = new JButton("Historico");
+		btnHistorico.setBounds(384, 341, 150, 25);
+		add(btnHistorico);
 
+		btnConsultar = new JButton("Consultar");
+		btnConsultar.setBounds(240, 465, 100, 25);
+		add(btnConsultar);
 
+		btnFinanceiro = new JButton("Situação Financeira");
+		btnFinanceiro.setBounds(384, 376, 150, 25);
+		add(btnFinanceiro);
 
-}
-catch (ParseException e)
-{
-e.printStackTrace();
-}
+		JButton Voltar = new JButton("<");
+		Voltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FPrincipal.atualizarFrame(new PMenuPrinc());
+			}
+		});
+		Voltar.setBounds(10, 14, 41, 23);
+		add(Voltar);
 
-ftfCep = new JFormattedTextField(Cep);
-ftfCep.setBounds(20, 180, 150, 20);
-PCadClientes.add(ftfCep);
+		ControllerClientes ctrClientes = new ControllerClientes(
+				tfNome, tfEndereco,tfBairro, tfCidade, tfComp, tfEmail, tfEndNum,
+				ftfId, ftfCpf, ftfRg, ftfFone, ftfCep, taObs);
 
-JLabel lblObs = new JLabel("Observa\u00E7\u00E3o");
-lblObs.setBounds(20, 320, 100, 20);
-PCadClientes.add(lblObs);
+		btnConsultar.addActionListener(ctrClientes);
+		btnFinanceiro.addActionListener(ctrClientes);
+		btnHistorico.addActionListener(ctrClientes);
+		btnVerTodos.addActionListener(ctrClientes);
+		btnSalvar.addActionListener(ctrClientes);
 
-JButton btnSalvar = new JButton("Salvar");
-btnSalvar.setBounds(110, 465, 100, 25);
-PCadClientes.add(btnSalvar);
-
-JButton btnVerTodos = new JButton("Ver Todos");
-btnVerTodos.setBounds(370, 465, 100, 25);
-PCadClientes.add(btnVerTodos);
-
-JButton btnHistorico = new JButton("Historico");
-btnHistorico.setBounds(384, 341, 150, 25);
-PCadClientes.add(btnHistorico);
-
-JButton btnConsultar = new JButton("Consultar");
-btnConsultar.setBounds(240, 465, 100, 25);
-PCadClientes.add(btnConsultar);
-
-JButton btnFinanceiro = new JButton("Situação Financeira");
-btnFinanceiro.setBounds(384, 376, 150, 25);
-PCadClientes.add(btnFinanceiro);
-
-}
+	}
 }

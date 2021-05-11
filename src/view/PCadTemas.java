@@ -94,14 +94,14 @@ public class PCadTemas extends JPanel
 		btnPesquisar.setBounds(335, 79, 95, 19);
 		add(btnPesquisar);
 		
-		JButton btnNewButton = new JButton("<");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton Voltar = new JButton("<");
+		Voltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FPrincipal.atualizarFrame(new PMenuPrinc());
 			}
 		});
-		btnNewButton.setBounds(10, 14, 41, 23);
-		add(btnNewButton);
+		Voltar.setBounds(10, 14, 41, 23);
+		add(Voltar);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
