@@ -4,14 +4,14 @@ import javax.swing.table.AbstractTableModel;
 
 import persistence.ThemeDao;
 
-public class TableModel_Themes extends AbstractTableModel
+public class ThemesTableModel extends AbstractTableModel
 {
 	private static final long serialVersionUID = 1L;
-	private String[] columns = {"Nome", "Descrição", "Valor"};
+	private String[] columns = {"ID", "Nome", "Descrição", "Valor"};
 	private ThemeDao tDao;
 
 
-	public TableModel_Themes(ThemeDao tDao)
+	public ThemesTableModel(ThemeDao tDao)
 	{
 		this.tDao = tDao;
 	}
@@ -44,11 +44,13 @@ public class TableModel_Themes extends AbstractTableModel
 	{
 		switch(columnIndex)
 		{
-		case 0: return tDao.getTheme(rowIndex).getName();
+		case 0: return tDao.getTheme(rowIndex).getId();
+		
+		case 1: return tDao.getTheme(rowIndex).getName();
 
-		case 1: return tDao.getTheme(rowIndex).getDesc();
+		case 2: return tDao.getTheme(rowIndex).getDesc();
 
-		case 2: return tDao.getTheme(rowIndex).getValue();
+		case 3: return tDao.getTheme(rowIndex).getValue();
 		}
 		return null;
 	}

@@ -5,7 +5,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerConsulta;
-import model.TableModel_Themes;
+import controller.FileController;
+import model.ThemesTableModel;
+import persistence.ThemeDao;
 
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -31,6 +33,7 @@ public class PQuery extends JPanel
 	private JButton btnEditar, btnPesquisar;
 	private JLabel lblTituloPesquisa;
 	private JComboBox comboBox;
+	private ThemeDao tDao;
 	
 
 	public Dimension getPreferredSize()
@@ -40,6 +43,21 @@ public class PQuery extends JPanel
 
 	public PQuery()
 	{
+		/*
+		 * Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException: Cannot invoke "model.Theme.getId()"
+		 * because the return value of "persistence.ThemeDao.getTheme(int)" is null
+		 * 
+		 * at model.TableModel_Themes.getValueAt(TableModel_Themes.java:47)
+		 */
+		tDao = new ThemeDao();
+		FileController file = new FileController();
+		
+		try
+		{
+			tDao = file.readThemes(tDao);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 /*
  * 		Resposabilidade:
  * 
@@ -59,7 +77,7 @@ public class PQuery extends JPanel
 		switch(i)
 		{
 		case 0:
-			TableModel_Themes tableModelTemas = new TableModel_Themes(null);
+			ThemesTableModel tableModelTemas = new ThemesTableModel(tDao);
 			table.setModel(tableModelTemas);
 			break;
 		case 1:

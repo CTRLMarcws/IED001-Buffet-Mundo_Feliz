@@ -9,20 +9,20 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import persistence.ClienteDao;
+import persistence.ClientsDao;
 
 
 
-public class ControllerClientes implements ActionListener
+public class ClientsController implements ActionListener
 {
 
-	private ClienteDao cDao;
+	private ClientsDao cDao;
 	private JTextField tfNome, tfEndereco, tfBairro, tfCidade, tfComp, tfEmail, tfEndNum;
 	private JFormattedTextField ftfId, ftfCpf, ftfRg, ftfFone, ftfCep;
 	private JTextArea taObs;
 
 
-	public ControllerClientes(JTextField tfNome, JTextField tfEndereco, JTextField tfBairro, JTextField tfCidade,
+	public ClientsController(JTextField tfNome, JTextField tfEndereco, JTextField tfBairro, JTextField tfCidade,
 			JTextField tfComp, JTextField tfEmail, JTextField tfEndNum, JFormattedTextField ftfId,
 			JFormattedTextField ftfCpf, JFormattedTextField ftfRg, JFormattedTextField ftfFone,
 			JFormattedTextField ftfCep, JTextArea taObs)
@@ -40,7 +40,7 @@ public class ControllerClientes implements ActionListener
 		this.ftfFone = ftfFone;
 		this.ftfCep = ftfCep;
 		this.taObs = taObs;
-		cDao = new ClienteDao();
+		cDao = new ClientsDao();
 	}
 
 

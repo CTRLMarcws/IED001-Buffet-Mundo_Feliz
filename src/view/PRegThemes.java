@@ -2,7 +2,7 @@ package view;
 
 import javax.swing.JPanel;
 
-import controller.ControllerThemes;
+import controller.ThemesController;
 
 import javax.swing.JLabel;
 
@@ -110,7 +110,7 @@ public class PRegThemes extends JPanel
 		taDesc = new JTextArea();
 		scrollPane.setViewportView(taDesc);
 
-		ControllerThemes ctrTemas = new ControllerThemes(tfNome, taDesc, ftfValor);
+		ThemesController ctrTemas = new ThemesController(tfNome, taDesc, ftfValor);
 
 		btnPesquisar.addActionListener(ctrTemas);
 		btnSalvar.addActionListener(ctrTemas);

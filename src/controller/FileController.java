@@ -37,18 +37,34 @@ public class FileController
 			}
 		}
 	}
+	public boolean readFile()
+	{
+		File file = new File(path + nameThemes);
+		if (!file.exists() || !file.isFile())
+		{
+			return false;			
+		}
+		return true;
+	}
 
 	//-----------------------CRUD - Themes-----------------------
-	private void createTheme(Theme theme) throws IOException
+	public void createTheme(Theme theme) throws IOException
 	{
 		readDir();
 		File file = new File(path + nameThemes);
-
-
-		String newTheme = theme.getId() + ";" + theme.getName() + ";" + theme.getDesc() + ";" + theme.getValue();
-
+		String newTheme;
 		boolean exists = false;
-		if (file.exists()) exists = true;
+
+		if(readFile())
+		{
+			newTheme = theme.getId() + ";" + theme.getName() + ";" + theme.getDesc() + ";" + theme.getValue() + "\n";
+			exists = true;
+		}
+		else
+		{
+			newTheme = "Id;Nome;Descricao;Valor\n";
+			newTheme += theme.getId() + ";" + theme.getName() + ";" + theme.getDesc() + ";" + theme.getValue() + "\n";
+		}
 
 		FileWriter fileWriter = new FileWriter(file, exists);
 
@@ -59,7 +75,9 @@ public class FileController
 		fileWriter.close();			
 	}
 
-	private ThemeDao readThemes(ThemeDao tDao) throws IOException
+	
+
+	public ThemeDao readThemes(ThemeDao tDao) throws IOException
 	{
 		Theme theme;
 

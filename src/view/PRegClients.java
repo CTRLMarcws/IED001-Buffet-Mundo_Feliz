@@ -5,8 +5,8 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.text.MaskFormatter;
 
-import controller.ControllerClientes;
-import controller.ControllerThemes;
+import controller.ClientsController;
+import controller.ThemesController;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-public class PCadClientes extends JPanel
+public class PRegClients extends JPanel
 {
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ public class PCadClientes extends JPanel
 	}
 
 
-	public PCadClientes()
+	public PRegClients()
 	{
 		setLayout(null);
 
@@ -264,7 +264,7 @@ public class PCadClientes extends JPanel
 		Voltar.setBounds(10, 14, 41, 23);
 		add(Voltar);
 
-		ControllerClientes ctrClientes = new ControllerClientes(
+		ClientsController ctrClientes = new ClientsController(
 				tfNome, tfEndereco,tfBairro, tfCidade, tfComp, tfEmail, tfEndNum,
 				ftfId, ftfCpf, ftfRg, ftfFone, ftfCep, taObs);
 

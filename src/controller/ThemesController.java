@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
@@ -12,19 +13,34 @@ import model.Theme;
 import persistence.ThemeDao;
 import view.FPrincipal;
 import view.PQuery;
-public class ControllerThemes implements ActionListener
+public class ThemesController implements ActionListener
 {
 	private ThemeDao tDao;
 	private JTextField tfName;
 	private JFormattedTextField ftfValue;
 	private JTextArea taDesc;
 
-	public ControllerThemes(JTextField tfName, JTextArea taDesc, JFormattedTextField ftfValue)
+	public ThemesController(JTextField tfName, JTextArea taDesc, JFormattedTextField ftfValue)
 	{
 		this.tfName = tfName;
 		this.ftfValue = ftfValue;
 		this.taDesc = taDesc;
+		
+		
 		tDao = new ThemeDao();
+		
+		FileController file = new FileController();
+		try
+		{
+			if(file.readFile())
+			{
+				tDao = file.readThemes(tDao);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 
@@ -39,7 +55,12 @@ public class ControllerThemes implements ActionListener
 		}
 		if (cmd.equals("Salvar"))
 		{
-			register();
+			try {
+				register();
+			} catch (IOException e1)
+			{
+				e1.printStackTrace();
+			}
 		}
 		if (cmd.equals("Excluir"))
 		{
@@ -121,7 +142,7 @@ public class ControllerThemes implements ActionListener
 		notification(returnMsg, "removido");
 	}
 
-	private void register()
+	private void register() throws IOException
 	{
 		int id = 1;
 		if(validateFields())

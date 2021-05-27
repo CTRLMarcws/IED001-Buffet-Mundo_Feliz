@@ -1,12 +1,16 @@
 package persistence;
 
-import model.Node_Themes;
+import java.io.IOException;
+
+import controller.FileController;
+import model.ThemesNode;
 import model.Theme;
 
 public class ThemeDao
 {
 	private String msg;
-	private Node_Themes inicio;
+	private ThemesNode inicio;
+	FileController file;
 
 	public ThemeDao()
 	{
@@ -24,26 +28,26 @@ public class ThemeDao
 
 	public int getLenght()
 	{
-		Node_Themes aux = this.inicio;
-		int cont = 0;
+		ThemesNode aux = this.inicio;
+		int i = 0;
 		if (aux != null)
 		{
 			while (aux.getNext() != null)
 			{
 				aux = aux.getNext();
-				cont++;
+				i++;
 			}
 		}
-		return cont;
+		return i;
 	}
 	public int getId(int id)
 	{
-		Node_Themes aux = this.inicio;
+		ThemesNode aux = this.inicio;
 		int i = 0;
 
 		while(aux != null)
 		{
-			if (id == aux.getThemeDao().getId())
+			if (id == aux.getTheme().getId())
 			{
 				return i;
 			}
@@ -53,10 +57,10 @@ public class ThemeDao
 		return 0;
 	}
 
-	public Theme getTheme(int theme)
+	public Theme getTheme(int rowIndex)
 	{
-		Node_Themes aux = this.inicio;
-		for (int i = 0; i < theme; i++)
+		ThemesNode aux = this.inicio;
+		for (int i = 0; i < rowIndex; i++)
 		{
 			aux = aux.getNext();
 		}
@@ -64,16 +68,16 @@ public class ThemeDao
 		{
 			return null;
 		}
-		return aux.getThemeDao();
+		return aux.getTheme();
 	}
 
 	public Theme findTheme(String name)
 	{
-		Node_Themes aux = this.inicio;
+		ThemesNode aux = this.inicio;
 
 		while(aux != null)
 		{
-			if (name.equalsIgnoreCase(aux.getThemeDao().getName()))
+			if (name.equalsIgnoreCase(aux.getTheme().getName()))
 			{
 				return aux.theme;
 			}
@@ -84,30 +88,30 @@ public class ThemeDao
 
 	public Theme getLastTheme()
 	{
-		Node_Themes aux = this.inicio;
+		ThemesNode aux = this.inicio;
 
 		while(aux.getNext() != null)
 		{
 			aux = aux.getNext();
 		}
-		return aux.getThemeDao();
+		return aux.getTheme();
 	}
 
 	public String addFirst(Theme theme)
 	{
-		Node_Themes newTheme = new Node_Themes(theme);
+		ThemesNode newTheme = new ThemesNode(theme);
 		newTheme.next = this.inicio;
 		this.inicio = newTheme;
 		msg = "Tema adicionado na lista: \n"
-				+ "ID: " + newTheme.getThemeDao().getId()
-				+ "\nNome: " + newTheme.getThemeDao().getName() 
-				+ "\nDescrição: " + newTheme.getThemeDao().getDesc()
-				+ "\nValor: " + newTheme.getThemeDao().getValue()+ "\n";
+				+ "ID: " + newTheme.getTheme().getId()
+				+ "\nNome: " + newTheme.getTheme().getName() 
+				+ "\nDescrição: " + newTheme.getTheme().getDesc()
+				+ "\nValor: " + newTheme.getTheme().getValue()+ "\n";
 		return msg;
 	}
 
 
-	public String addLast(Theme theme)
+	public String addLast(Theme theme) throws IOException
 	{
 		if(emptyList())
 		{
@@ -115,38 +119,40 @@ public class ThemeDao
 		}
 		else
 		{
-			Node_Themes auxiliar = this.inicio;
+			ThemesNode auxiliar = this.inicio;
 
 			while(auxiliar.next != null)
 			{
 				auxiliar = auxiliar.next;
 			}
-			Node_Themes newTheme = new Node_Themes (theme);
+			ThemesNode newTheme = new ThemesNode (theme);
 			auxiliar.next = newTheme;
 			msg = "Tema adicionado na lista: \n"
-					+ "ID: " + newTheme.getThemeDao().getId()
-					+ "\nNome: " + newTheme.getThemeDao().getName() 
-					+ "\nDescrição: " + newTheme.getThemeDao().getDesc()
-					+ "\nValor: " + newTheme.getThemeDao().getValue()+ "\n";
+					+ "ID: " + newTheme.getTheme().getId()
+					+ "\nNome: " + newTheme.getTheme().getName() 
+					+ "\nDescrição: " + newTheme.getTheme().getDesc()
+					+ "\nValor: " + newTheme.getTheme().getValue()+ "\n";
 		}
+		file = new FileController();
+		file.createTheme(theme);
 		return msg;
 	}
 
 
 
-	private String removeFirstTheme()
+	private String removeFirst()
 	{
 		msg = "Tema removido da lista: \n"
-				+ "ID: " + this.inicio.getThemeDao().getId()
-				+ "\nNome: " + this.inicio.getThemeDao().getName() 
-				+ "\nDescrição: " + this.inicio.getThemeDao().getDesc()
-				+ "\nValor: " + this.inicio.getThemeDao().getValue()+ "\n";
+				+ "ID: " + this.inicio.getTheme().getId()
+				+ "\nNome: " + this.inicio.getTheme().getName() 
+				+ "\nDescrição: " + this.inicio.getTheme().getDesc()
+				+ "\nValor: " + this.inicio.getTheme().getValue()+ "\n";
 		this.inicio = this.inicio.getNext();
 		return msg;
 	}
 
 
-	private String removeLastTheme()
+	private String removeLast()
 	{
 		if (this.inicio.next == null)
 		{
@@ -154,8 +160,8 @@ public class ThemeDao
 		}
 		else
 		{
-			Node_Themes aux1 = this.inicio;
-			Node_Themes aux2 = this.inicio;
+			ThemesNode aux1 = this.inicio;
+			ThemesNode aux2 = this.inicio;
 
 			while (aux1.getNext() != null)
 			{
@@ -163,10 +169,10 @@ public class ThemeDao
 				aux1 = aux1.getNext();
 			}
 			msg = "Tema removido da lista: \n"
-					+ "ID: " + aux1.getThemeDao().getId()
-					+ "\nNome: " + aux1.getThemeDao().getName() 
-					+ "\nDescrição: " + aux1.getThemeDao().getDesc()
-					+ "\nValor: " + aux1.getThemeDao().getValue()+ "\n";
+					+ "ID: " + aux1.getTheme().getId()
+					+ "\nNome: " + aux1.getTheme().getName() 
+					+ "\nDescrição: " + aux1.getTheme().getDesc()
+					+ "\nValor: " + aux1.getTheme().getValue()+ "\n";
 			aux2.setNext(null);
 		}
 		return msg;
@@ -182,16 +188,16 @@ public class ThemeDao
 		{
 			if(id == 1)
 			{
-				msg = removeFirstTheme();
+				msg = removeFirst();
 			}
 			else if (id == getLenght() + 1)
 			{
-				msg = removeLastTheme();
+				msg = removeLast();
 			}
 			else if (id <= getLenght() && id > 0)
 			{
-				Node_Themes aux1 = this.inicio;
-				Node_Themes aux2 = this.inicio;
+				ThemesNode aux1 = this.inicio;
+				ThemesNode aux2 = this.inicio;
 
 				while (id > 1)
 				{
@@ -200,10 +206,10 @@ public class ThemeDao
 					id --;
 				}
 				msg = "Tema removido da lista: \n"
-						+ "ID: " + aux1.getThemeDao().getId()
-						+ "\nNome: " + aux1.getThemeDao().getName() 
-						+ "\nDescrição: " + aux1.getThemeDao().getDesc()
-						+ "\nValor: " + aux1.getThemeDao().getValue()+ "\n";
+						+ "ID: " + aux1.getTheme().getId()
+						+ "\nNome: " + aux1.getTheme().getName() 
+						+ "\nDescrição: " + aux1.getTheme().getDesc()
+						+ "\nValor: " + aux1.getTheme().getValue()+ "\n";
 				aux2.setNext(aux1.getNext());
 			}
 		}

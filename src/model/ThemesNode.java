@@ -1,33 +1,32 @@
 package model;
 
-
-public class Node_Themes
+public class ThemesNode
 {
 	public Theme theme;
-	public Node_Themes next;
-	
-	public Node_Themes(Theme theme)
+	public ThemesNode next;
+
+	public ThemesNode(Theme theme)
 	{
 		this.theme = theme;
 		next = null;
 	}
 
-	public Theme getThemeDao()
+	public Theme getTheme()
 	{
 		return theme;
 	}
-	
+
 	public void setTheme(Theme theme)
 	{
 		this.theme = theme;
 	}
-	
-	public Node_Themes getNext()
+
+	public ThemesNode getNext()
 	{
 		return next;
 	}
-	
-	public void setNext(Node_Themes next)
+
+	public void setNext(ThemesNode next)
 	{
 		this.next = next;
 	}

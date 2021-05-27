@@ -1,9 +1,10 @@
 package model;
 
-public class Cliente {
-
+public class Client
+{
 	private String nome, email, endRua, endBairro, endCidade, endComp, endUF,
-	obs, id, cpf, rg, fone, endNum, endCep, status;
+	obs, cpf, rg, fone, endNum, endCep, status;
+	private int id;
 
 
 	public String getNome()
@@ -86,12 +87,12 @@ public class Cliente {
 		this.obs = obs;
 	}
 
-	public String getId()
+	public int getId()
 	{
 		return id;
 	}
 
-	public void setId(String id)
+	public void setId(int id)
 	{
 		this.id = id;
 	}
