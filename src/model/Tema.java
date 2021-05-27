@@ -1,4 +1,4 @@
-package entity;
+package model;
 
 import javax.swing.JTextArea;
 
@@ -50,7 +50,7 @@ public class Tema
 		this.valor = valor;
 	}
 	
-	/*public int getSts()
+	public int getSts()
 	{
 		return sts;
 	}
@@ -59,26 +59,5 @@ public class Tema
 	{
 		this.sts = sts;
 	}
-	
-	public Tema getProximo()
-	{
-		return proximo;
-	}
-
-	public void setProximo(Tema proximo)
-	{
-		this.proximo = proximo;
-	}
-
-	public Tema getAnterior()
-	{
-		return anterior;
-	}
-
-	public void setAnterior(Tema anterior)
-	{
-		this.anterior = anterior;
-	}
-	*/
 	
 }

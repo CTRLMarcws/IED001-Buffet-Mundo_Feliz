@@ -5,6 +5,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerConsulta;
+import model.TableModel_Temas;
 
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -20,7 +21,6 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
-import javax.swing.ListSelectionModel;
 
 public class PConsulta extends JPanel
 {
@@ -31,10 +31,7 @@ public class PConsulta extends JPanel
 	private JButton btnEditar, btnPesquisar;
 	private JLabel lblTituloPesquisa;
 	private JComboBox comboBox;
-
-	private String dados[][] = {{"Batman","Festa DC"},
-			{"Iron Main", "Marvel do Ceara"}};
-	private String colunas[] = {"Nome", "Descrição"};
+	
 
 	public Dimension getPreferredSize()
 	{
@@ -42,6 +39,40 @@ public class PConsulta extends JPanel
 	}
 
 	public PConsulta()
+	{
+/*
+ * 		Resposabilidade:
+ * 
+ * 		1. Iniciar componentes
+ * 		2. Iniciar controller
+ * 
+ * 		Responsabilidades ControllerConsulta:
+ * 		Informar o tipo
+ * 		criar a tablemodel
+ * 		popular a tablemodel
+ */
+		
+		initComp();
+		
+		int i = 1;
+
+		switch(i)
+		{
+		case 0:
+			TableModel_Temas tableModelTemas = new TableModel_Temas(null);
+			table.setModel(tableModelTemas);
+			break;
+		case 1:
+			System.out.println("Em progresso");
+			break;
+		case 2:
+			System.out.println("Em progresso");
+			break;
+		}
+		
+	}
+
+	private void initComp()
 	{
 		String tipo = "Clientes";
 		setBounds(100, 100, 690, 430);
@@ -85,16 +116,14 @@ public class PConsulta extends JPanel
 		});
 		btnVoltar.setBounds(10, 14, 41, 23);
 		add(btnVoltar);
+		
 
-		//tableTemas = new JTable(ControllerConsulta.getDados(), ControllerConsulta.getColunas());
-		table = new JTable(dados, colunas);
+		table = new JTable();
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setFillsViewportHeight(true);
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 81, 670, 338);
 		add(scrollPane);
-
-		
 	}
 }

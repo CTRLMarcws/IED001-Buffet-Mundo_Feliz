@@ -1,12 +1,12 @@
-package entity;
+package model;
 
 
-public class NO
+public class No_Temas
 {
 	public Tema tema;
-	public NO prox;
+	public No_Temas prox;
 	
-	public NO(Tema tema)
+	public No_Temas(Tema tema)
 	{
 		this.tema = tema;
 		prox = null;
@@ -22,12 +22,12 @@ public class NO
 		this.tema = tema;
 	}
 	
-	public NO getProx()
+	public No_Temas getProx()
 	{
 		return prox;
 	}
 	
-	public void setProx(NO prox)
+	public void setProx(No_Temas prox)
 	{
 		this.prox = prox;
 	}

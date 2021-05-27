@@ -1,11 +1,11 @@
 package persistence;
 
-import entity.NO;
+import model.No_Temas;
 
 public class ClienteDao
 {
 	private String msg;
-	private static NO inicio;
+	private static No_Temas inicio;
 	
 	public ClienteDao()
 	{
