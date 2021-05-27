@@ -8,14 +8,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import model.Tema;
-import persistence.TemaDao;
+import model.Theme;
+import persistence.ThemeDao;
 import view.FPrincipal;
 import view.PConsulta;
 
 public class ControllerTemas implements ActionListener
 {
-	private TemaDao tDao;
+	private ThemeDao tDao;
 	private JTextField tfNome;
 	private JFormattedTextField ftfValor;
 	private JTextArea taDesc;
@@ -25,7 +25,7 @@ public class ControllerTemas implements ActionListener
 		this.tfNome = tfNome;
 		this.ftfValor = ftfValor;
 		this.taDesc = taDesc;
-		tDao = new TemaDao();
+		tDao = new ThemeDao();
 	}
 
 
@@ -49,7 +49,7 @@ public class ControllerTemas implements ActionListener
 		}
 		if (cmd.equals("Ver Todos"))
 		{
-			Tema tema = new Tema(tfNome.getText(), taDesc.getText(),  ftfValor.getText());			
+			Theme tema = new Theme(tfNome.getText(), taDesc.getText(),  ftfValor.getText());			
 			//TemaDao.percorrer();
 			//FPrincipal.atualizarFrame(new PConsulta());			
 		}
@@ -57,7 +57,7 @@ public class ControllerTemas implements ActionListener
 
 	private void salvar()
 	{
-		Tema tema = new Tema(tfNome.getText(), taDesc.getText(),  ftfValor.getText());
+		Theme tema = new Theme(tfNome.getText(), taDesc.getText(),  ftfValor.getText());
 		String retorno = tDao.AdicionarFinal(tema);
 		notificacaoRetorno(retorno, "adicionado");
 		limpar();

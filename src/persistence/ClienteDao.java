@@ -1,14 +1,17 @@
 package persistence;
 
-import model.No_Temas;
+import model.Node_Themes;
 
 public class ClienteDao
 {
 	private String msg;
-	private static No_Temas inicio;
+	private Node_Themes next, previous;
 	
-	public ClienteDao()
+	public ClienteDao(Node_Themes next, Node_Themes previous)
 	{
-		inicio = null;
+		this.next = next;
+		this.previous = previous;
 	}
+	
+	
 }

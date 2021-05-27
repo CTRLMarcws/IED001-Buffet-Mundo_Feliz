@@ -5,7 +5,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerConsulta;
-import model.TableModel_Temas;
+import model.TableModel_Themes;
 
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -59,7 +59,7 @@ public class PConsulta extends JPanel
 		switch(i)
 		{
 		case 0:
-			TableModel_Temas tableModelTemas = new TableModel_Temas(null);
+			TableModel_Themes tableModelTemas = new TableModel_Themes(null);
 			table.setModel(tableModelTemas);
 			break;
 		case 1:

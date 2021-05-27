@@ -2,12 +2,12 @@ package controller;
 
 import javax.swing.JTable;
 
-import model.Tema;
-import persistence.TemaDao;
+import model.Theme;
+import persistence.ThemeDao;
 
 public class ControllerConsulta
 {
-	private Tema inicio;
+	private Theme inicio;
 
 	private JTable table;
 
