@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
 import controller.ControllerMenuPrinc;
-import controller.ControllerTemas;
+import controller.ControllerThemes;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

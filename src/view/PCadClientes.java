@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.text.MaskFormatter;
 
 import controller.ControllerClientes;
-import controller.ControllerTemas;
+import controller.ControllerThemes;
 
 import javax.swing.JLabel;
 import java.awt.Font;

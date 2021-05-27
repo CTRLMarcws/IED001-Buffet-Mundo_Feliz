@@ -10,8 +10,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 
 import view.FPrincipal;
-import view.PCadTemas;
-import view.PConsulta;
+import view.PRegThemes;
+import view.PQuery;
 
 public class ControllerMenuPrinc implements ActionListener
 {
@@ -36,7 +36,7 @@ public class ControllerMenuPrinc implements ActionListener
 			switch(opc)
 			{
 			case "Temas":
-				FPrincipal.atualizarFrame(new PCadTemas());
+				FPrincipal.atualizarFrame(new PRegThemes());
 				break;
 			case "Clientes":
 				//FPrincipal.atualizarFrame(new PCadClientes());
@@ -65,7 +65,7 @@ public class ControllerMenuPrinc implements ActionListener
 				break;
 			}
 			
-			FPrincipal.atualizarFrame(new PConsulta());
+			FPrincipal.atualizarFrame(new PQuery());
 		}
 	}
 	

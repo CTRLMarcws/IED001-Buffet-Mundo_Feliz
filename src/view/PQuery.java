@@ -22,7 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
-public class PConsulta extends JPanel
+public class PQuery extends JPanel
 {
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ public class PConsulta extends JPanel
 		return new Dimension(690, 430);
 	}
 
-	public PConsulta()
+	public PQuery()
 	{
 /*
  * 		Resposabilidade:
@@ -54,7 +54,7 @@ public class PConsulta extends JPanel
 		
 		initComp();
 		
-		int i = 1;
+		int i = 0;
 
 		switch(i)
 		{
@@ -111,7 +111,7 @@ public class PConsulta extends JPanel
 		JButton btnVoltar = new JButton("<");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FPrincipal.atualizarFrame(new PCadTemas());
+				FPrincipal.atualizarFrame(new PRegThemes());
 			}
 		});
 		btnVoltar.setBounds(10, 14, 41, 23);

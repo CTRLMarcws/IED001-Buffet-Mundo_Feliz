@@ -11,7 +11,8 @@ public class TableModel_Themes extends AbstractTableModel
 	private ThemeDao tDao;
 
 
-	public TableModel_Themes(ThemeDao tDao) {
+	public TableModel_Themes(ThemeDao tDao)
+	{
 		this.tDao = tDao;
 	}
 
@@ -43,11 +44,11 @@ public class TableModel_Themes extends AbstractTableModel
 	{
 		switch(columnIndex)
 		{
-		case 0: return tDao.getTheme(rowIndex).getNome();
+		case 0: return tDao.getTheme(rowIndex).getName();
 
 		case 1: return tDao.getTheme(rowIndex).getDesc();
 
-		case 2: return tDao.getTheme(rowIndex).getValor();
+		case 2: return tDao.getTheme(rowIndex).getValue();
 		}
 		return null;
 	}

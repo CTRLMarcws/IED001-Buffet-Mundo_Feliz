@@ -4,16 +4,16 @@ package model;
 public class Theme
 {
 
-	private String nome, desc;
-	private double valor;
+	private String name, desc;
+	private double value;
 	private int id;
 
-	public Theme(int id, String nome, String desc, double valor)
+	public Theme(int id, String name, String desc, double value)
 	{
 		this.id = id;
-		this.nome = nome;
+		this.name = name;
 		this.desc = desc;
-		this.valor = valor;
+		this.value = value;
 	}
 
 	public int getId()
@@ -26,14 +26,14 @@ public class Theme
 		this.id = id;
 	}
 
-	public String getNome()
+	public String getName()
 	{
-		return nome;
+		return name;
 	}
 
-	public void setNome(String nome)
+	public void setName(String name)
 	{
-		this.nome = nome;
+		this.name = name;
 	}
 
 	public String getDesc()
@@ -46,14 +46,14 @@ public class Theme
 		this.desc = desc;
 	}
 
-	public double getValor()
+	public double getValue()
 	{
-		return valor;
+		return value;
 	}
 
-	public void setValor(double valor)
+	public void setValue(double value)
 	{
-		this.valor = valor;
+		this.value = value;
 	}
 
 

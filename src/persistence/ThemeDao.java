@@ -1,19 +1,25 @@
 package persistence;
 
-import javax.swing.JOptionPane;
-
 import model.Node_Themes;
 import model.Theme;
 
 public class ThemeDao
 {
-	public static final Object[][] Percorrer = null;
-	private static String msg;
+	private String msg;
 	private Node_Themes inicio;
 
 	public ThemeDao()
 	{
 		this.inicio = null;
+	}
+
+	public boolean emptyList()
+	{
+		if(this.inicio == null)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	public int getLenght()
@@ -30,6 +36,22 @@ public class ThemeDao
 		}
 		return cont;
 	}
+	public int getId(int id)
+	{
+		Node_Themes aux = this.inicio;
+		int i = 0;
+
+		while(aux != null)
+		{
+			if (id == aux.getThemeDao().getId())
+			{
+				return i;
+			}
+			i++;
+			aux = aux.getNext();
+		}
+		return 0;
+	}
 
 	public Theme getTheme(int theme)
 	{
@@ -45,21 +67,51 @@ public class ThemeDao
 		return aux.getThemeDao();
 	}
 
-	public String adicionarInicio(Theme tema)
+	public Theme findTheme(String name)
 	{
-		Node_Themes novo = new Node_Themes(tema);
-		novo.next = this.inicio;
-		this.inicio = novo;
-		msg = novo.getThemeDao().getNome() + novo.getThemeDao().getDesc() + novo.getThemeDao().getValor();
+		Node_Themes aux = this.inicio;
+
+		while(aux != null)
+		{
+			if (name.equalsIgnoreCase(aux.getThemeDao().getName()))
+			{
+				return aux.theme;
+			}
+			aux = aux.getNext();
+		}
+		return null;
+	}
+
+	public Theme getLastTheme()
+	{
+		Node_Themes aux = this.inicio;
+
+		while(aux.getNext() != null)
+		{
+			aux = aux.getNext();
+		}
+		return aux.getThemeDao();
+	}
+
+	public String addFirst(Theme theme)
+	{
+		Node_Themes newTheme = new Node_Themes(theme);
+		newTheme.next = this.inicio;
+		this.inicio = newTheme;
+		msg = "Tema adicionado na lista: \n"
+				+ "ID: " + newTheme.getThemeDao().getId()
+				+ "\nNome: " + newTheme.getThemeDao().getName() 
+				+ "\nDescrição: " + newTheme.getThemeDao().getDesc()
+				+ "\nValor: " + newTheme.getThemeDao().getValue()+ "\n";
 		return msg;
 	}
 
 
-	public String AdicionarFinal(Theme tema)
+	public String addLast(Theme theme)
 	{
 		if(emptyList())
 		{
-			msg = adicionarInicio(tema);
+			msg = addFirst(theme);
 		}
 		else
 		{
@@ -69,36 +121,36 @@ public class ThemeDao
 			{
 				auxiliar = auxiliar.next;
 			}
-			Node_Themes novo = new Node_Themes (tema);
-			auxiliar.next = novo;
-			msg = "Tema adicionado na lista: \nNome: " + novo.getThemeDao().getNome() 
-					+ "\nDescrição: " + novo.getThemeDao().getDesc()
-					+ "\nValor: " + novo.getThemeDao().getValor()+ "\n";
+			Node_Themes newTheme = new Node_Themes (theme);
+			auxiliar.next = newTheme;
+			msg = "Tema adicionado na lista: \n"
+					+ "ID: " + newTheme.getThemeDao().getId()
+					+ "\nNome: " + newTheme.getThemeDao().getName() 
+					+ "\nDescrição: " + newTheme.getThemeDao().getDesc()
+					+ "\nValor: " + newTheme.getThemeDao().getValue()+ "\n";
 		}
 		return msg;
 	}
 
 
-	private boolean emptyList()
-	{
-		if(this.inicio == null)
-		{
-			return true;
-		}
-		return false;
-	}
 
-	private void removeFirstTheme()
+	private String removeFirstTheme()
 	{
+		msg = "Tema removido da lista: \n"
+				+ "ID: " + this.inicio.getThemeDao().getId()
+				+ "\nNome: " + this.inicio.getThemeDao().getName() 
+				+ "\nDescrição: " + this.inicio.getThemeDao().getDesc()
+				+ "\nValor: " + this.inicio.getThemeDao().getValue()+ "\n";
 		this.inicio = this.inicio.getNext();
+		return msg;
 	}
 
 
-	private void removeLastTheme()
+	private String removeLastTheme()
 	{
 		if (this.inicio.next == null)
 		{
-			this.inicio = null;
+			this.inicio = null; //mantém?
 		}
 		else
 		{
@@ -110,26 +162,31 @@ public class ThemeDao
 				aux2 = aux1;
 				aux1 = aux1.getNext();
 			}
-
+			msg = "Tema removido da lista: \n"
+					+ "ID: " + aux1.getThemeDao().getId()
+					+ "\nNome: " + aux1.getThemeDao().getName() 
+					+ "\nDescrição: " + aux1.getThemeDao().getDesc()
+					+ "\nValor: " + aux1.getThemeDao().getValue()+ "\n";
 			aux2.setNext(null);
 		}
+		return msg;
 	}
 
-	public void removeTheme(int id)
+	public String removeTheme(int id)
 	{
 		if (emptyList())
 		{
-			//erro = não há temas
+			msg = "A Lista está vazia.";
 		}
 		else
 		{
 			if(id == 1)
 			{
-				removeFirstTheme();
+				msg = removeFirstTheme();
 			}
 			else if (id == getLenght() + 1)
 			{
-				removeLastTheme();
+				msg = removeLastTheme();
 			}
 			else if (id <= getLenght() && id > 0)
 			{
@@ -142,28 +199,18 @@ public class ThemeDao
 					aux1 = aux1.getNext();
 					id --;
 				}
+				msg = "Tema removido da lista: \n"
+						+ "ID: " + aux1.getThemeDao().getId()
+						+ "\nNome: " + aux1.getThemeDao().getName() 
+						+ "\nDescrição: " + aux1.getThemeDao().getDesc()
+						+ "\nValor: " + aux1.getThemeDao().getValue()+ "\n";
 				aux2.setNext(aux1.getNext());
 			}
 		}
+		return msg;
 	}
 
 	//	update theme
 
-	public int getId(int id)
-	{
-		Node_Themes aux = this.inicio;
-		int i = 0;
 
-		//		while(aux != null && id != aux.getThemeDao().getId())
-		while(aux != null)
-		{
-			if (id == aux.getThemeDao().getId())
-			{
-				return i;
-			}
-			i++;
-			aux = aux.getNext();
-		}
-		return 0;
-	}
 }
