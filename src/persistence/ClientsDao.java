@@ -10,12 +10,12 @@ public class ClientsDao
 	private String msg;
 	private ClientsNode inicio;
 	FileController file;
-	
+
 	public ClientsDao()
 	{
 		this.inicio = null;
 	}
-	
+
 	public boolean emptyList()
 	{
 		if(this.inicio == null)
@@ -39,7 +39,7 @@ public class ClientsDao
 		}
 		return i;
 	}
-	
+
 	public int getId(int id)
 	{
 		ClientsNode aux = this.inicio;
@@ -70,7 +70,7 @@ public class ClientsDao
 		}
 		return aux.getClient();
 	}
-	
+
 	public Client findClientByName(String name)
 	{
 		ClientsNode aux = this.inicio;
@@ -85,7 +85,22 @@ public class ClientsDao
 		}
 		return null;
 	}
-	
+
+	public Client findClientByCPF(String cpf)
+	{
+		ClientsNode aux = this.inicio;
+
+		while(aux != null)
+		{
+			if (cpf.equalsIgnoreCase(aux.getClient().getCpf()))
+			{
+				return aux.client;
+			}
+			aux = aux.getNext();
+		}
+		return null;
+	}
+
 	/*
 	 * addFirst
 	 * addLast
@@ -94,6 +109,4 @@ public class ClientsDao
 	 * removeClient
 	 * updateClient
 	 */
-	
-	
 }

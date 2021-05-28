@@ -3,7 +3,7 @@ package controller;
 import javax.swing.JTable;
 
 import model.Theme;
-import persistence.ThemeDao;
+import persistence.ThemesDao;
 
 public class ControllerConsulta
 {

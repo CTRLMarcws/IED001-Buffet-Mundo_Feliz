@@ -9,7 +9,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import model.Theme;
-import persistence.ThemeDao;
+import persistence.ClientsDao;
+import persistence.ThemesDao;
 
 @SuppressWarnings("unused")
 public class FileController
@@ -77,7 +78,7 @@ public class FileController
 
 	
 
-	public ThemeDao readThemes(ThemeDao tDao) throws IOException
+	public ThemesDao readThemes(ThemesDao tDao) throws IOException
 	{
 		Theme theme;
 
@@ -112,12 +113,12 @@ public class FileController
 		return tDao;
 	}
 
-	private void updateTheme()
+	public void updateTheme()
 	{
 		//logica do update
 	}
 
-	private void deleteTheme(ThemeDao tDao, int id) throws IOException
+	public void deleteTheme(ThemesDao tDao, int id) throws IOException
 	{
 		int idTheme = tDao.getId(id);
 		if (idTheme == 0)
@@ -162,22 +163,23 @@ public class FileController
 
 	//-----------------------CRUD - Clients-----------------------
 
-	private void createClient()
+	public void createClient()
 	{
 
 	}
 
-	private void readClients()
+	public ClientsDao readClients(ClientsDao cDao) throws IOException
+	{
+		return cDao;
+
+	}
+
+	public void updateClient()
 	{
 
 	}
 
-	private void updateClient()
-	{
-
-	}
-
-	private void deleteClient()
+	public void deleteClient()
 	{
 
 	}
@@ -185,22 +187,22 @@ public class FileController
 
 	//-----------------------CRUD - Rental-----------------------
 
-	private void createRental()
+	public void createRental()
 	{
 
 	}
 
-	private void readRentals()
+	public void readRentals()
 	{
 
 	}
 
-	private void updateRental()
+	public void updateRental()
 	{
 
 	}
 
-	private void deleteRental()
+	public void deleteRental()
 	{
 
 	}

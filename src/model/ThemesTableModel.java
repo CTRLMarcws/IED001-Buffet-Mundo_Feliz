@@ -2,16 +2,16 @@ package model;
 
 import javax.swing.table.AbstractTableModel;
 
-import persistence.ThemeDao;
+import persistence.ThemesDao;
 
 public class ThemesTableModel extends AbstractTableModel
 {
 	private static final long serialVersionUID = 1L;
 	private String[] columns = {"ID", "Nome", "Descrição", "Valor"};
-	private ThemeDao tDao;
+	private ThemesDao tDao;
 
 
-	public ThemesTableModel(ThemeDao tDao)
+	public ThemesTableModel(ThemesDao tDao)
 	{
 		this.tDao = tDao;
 	}

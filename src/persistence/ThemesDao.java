@@ -6,13 +6,13 @@ import controller.FileController;
 import model.ThemesNode;
 import model.Theme;
 
-public class ThemeDao
+public class ThemesDao
 {
 	private String msg;
 	private ThemesNode inicio;
 	FileController file;
 
-	public ThemeDao()
+	public ThemesDao()
 	{
 		this.inicio = null;
 	}

@@ -10,12 +10,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import model.Theme;
-import persistence.ThemeDao;
-import view.FPrincipal;
+import persistence.ThemesDao;
+import view.FMain;
 import view.PQuery;
 public class ThemesController implements ActionListener
 {
-	private ThemeDao tDao;
+	private ThemesDao tDao;
 	private JTextField tfName;
 	private JFormattedTextField ftfValue;
 	private JTextArea taDesc;
@@ -27,7 +27,7 @@ public class ThemesController implements ActionListener
 		this.taDesc = taDesc;
 		
 		
-		tDao = new ThemeDao();
+		tDao = new ThemesDao();
 		
 		FileController file = new FileController();
 		try
@@ -68,7 +68,7 @@ public class ThemesController implements ActionListener
 		}
 		if (cmd.equals("Ver Todos"))
 		{
-			FPrincipal.atualizarFrame(new PQuery());
+			FMain.refreshFrame(new PQuery());
 		}
 	}
 

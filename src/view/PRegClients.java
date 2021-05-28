@@ -258,7 +258,7 @@ public class PRegClients extends JPanel
 		JButton Voltar = new JButton("<");
 		Voltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FPrincipal.atualizarFrame(new PMenuPrinc());
+				FMain.refreshFrame(new PMainMenu());
 			}
 		});
 		Voltar.setBounds(10, 14, 41, 23);
