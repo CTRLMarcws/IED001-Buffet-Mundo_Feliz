@@ -77,7 +77,7 @@ public class ClientsDao
 
 		while(aux != null)
 		{
-			if (name.equalsIgnoreCase(aux.getClient().getNome()))
+			if (name.equalsIgnoreCase(aux.getClient().getName()))
 			{
 				return aux.client;
 			}

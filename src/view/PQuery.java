@@ -34,6 +34,7 @@ public class PQuery extends JPanel
 	private JComboBox cbOptions;
 	private ThemesDao tDao;
 	private ClientsDao cDao;
+	private String kind;
 	
 
 	public Dimension getPreferredSize()
@@ -82,6 +83,7 @@ public class PQuery extends JPanel
 			
 			ThemesTableModel themesModel = new ThemesTableModel(tDao);
 			table.setModel(themesModel);
+			kind = "Temas";
 			break;
 			
 		case 1:
@@ -97,10 +99,12 @@ public class PQuery extends JPanel
 			}
 			ClientsTableModel clientModel = new ClientsTableModel(cDao);
 			table.setModel(clientModel);
+			kind = "Clientes";
 			break;
 			
 		case 2:
 			System.out.println("Em progresso");
+			kind = "Alugueis";
 			break;
 		}
 		
@@ -108,7 +112,6 @@ public class PQuery extends JPanel
 
 	private void initComp()
 	{
-		String tipo = "Clientes";
 		setBounds(100, 100, 690, 430);
 		setLayout(null);
 
@@ -131,7 +134,7 @@ public class PQuery extends JPanel
 		btnEdit.setBounds(580, 47, 100, 23);
 		add(btnEdit);
 
-		lblHeading = new JLabel("Pesquisa de " + tipo);
+		lblHeading = new JLabel("Pesquisa de " + kind);
 		lblHeading.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHeading.setFont(new Font("Century Gothic", Font.PLAIN, 18));
 		lblHeading.setBounds(10, 11, 670, 23);
@@ -142,14 +145,14 @@ public class PQuery extends JPanel
 		cbOptions.setBounds(10, 47, 93, 22);
 		add(cbOptions);
 
-		JButton btnVoltar = new JButton("<");
-		btnVoltar.addActionListener(new ActionListener() {
+		JButton btnBack = new JButton("<");
+		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FMain.refreshFrame(new PRegThemes());
+				FMain.refreshFrame(new PThemeForm());
 			}
 		});
-		btnVoltar.setBounds(10, 14, 41, 23);
-		add(btnVoltar);
+		btnBack.setBounds(10, 14, 41, 23);
+		add(btnBack);
 		
 
 		table = new JTable();

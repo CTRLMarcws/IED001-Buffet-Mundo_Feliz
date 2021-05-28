@@ -13,36 +13,34 @@ import persistence.ClientsDao;
 
 
 
+@SuppressWarnings("unused")
 public class ClientsController implements ActionListener
 {
-
-	private ClientsDao cDao;
-	private JTextField tfNome, tfEndereco, tfBairro, tfCidade, tfComp, tfEmail, tfEndNum;
-	private JFormattedTextField ftfId, ftfCpf, ftfRg, ftfFone, ftfCep;
+	private JTextField tfName, tfEmail, tfStreet, tfDistrict, tfCity, tfAddrCompl,  tfStreetNum;
+	private JFormattedTextField ftfId, ftfCpf, ftfRg, ftfPhone, ftfPostalCode;
 	private JTextArea taObs;
+	private ClientsDao cDao;	
 
-
-	public ClientsController(JTextField tfNome, JTextField tfEndereco, JTextField tfBairro, JTextField tfCidade,
-			JTextField tfComp, JTextField tfEmail, JTextField tfEndNum, JFormattedTextField ftfId,
-			JFormattedTextField ftfCpf, JFormattedTextField ftfRg, JFormattedTextField ftfFone,
-			JFormattedTextField ftfCep, JTextArea taObs)
+	public ClientsController(JTextField tfName, JTextField tfEmail, JTextField tfStreet,
+			JTextField tfDistrict, JTextField tfCity, JTextField tfAddrCompl, JTextField tfStreetNum,
+			JFormattedTextField ftfId, JFormattedTextField ftfCpf, JFormattedTextField ftfRg,
+			JFormattedTextField ftfPhone, JFormattedTextField ftfPostalCode, JTextArea taObs)
 	{
-		this.tfNome = tfNome;
-		this.tfEndereco = tfEndereco;
-		this.tfBairro = tfBairro;
-		this.tfCidade = tfCidade;
-		this.tfComp = tfComp;
+		this.tfName = tfName;
 		this.tfEmail = tfEmail;
-		this.tfEndNum = tfEndNum;
+		this.tfStreet = tfStreet;
+		this.tfDistrict = tfDistrict;
+		this.tfCity = tfCity;
+		this.tfAddrCompl = tfAddrCompl;
+		this.tfStreetNum = tfStreetNum;
 		this.ftfId = ftfId;
 		this.ftfCpf = ftfCpf;
 		this.ftfRg = ftfRg;
-		this.ftfFone = ftfFone;
-		this.ftfCep = ftfCep;
+		this.ftfPhone = ftfPhone;
+		this.ftfPostalCode = ftfPostalCode;
 		this.taObs = taObs;
 		cDao = new ClientsDao();
 	}
-
 
 	@Override
 	public void actionPerformed(ActionEvent e)

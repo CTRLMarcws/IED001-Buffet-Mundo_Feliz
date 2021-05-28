@@ -18,14 +18,14 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import controller.ControllerMenuPrinc;
+import controller.MainMenuController;
 import model.ClientsTableModel;
 
 @SuppressWarnings("rawtypes")
 public class PMainMenu extends JPanel
 {
 	private JLabel lblHeading, lblDate, lblNextRentals;
-	private JButton btnRegister, btnQuery;
+	private JButton btnForms, btnQuery;
 	private JTable table;
 	private JComboBox cbOptions;
 
@@ -56,9 +56,9 @@ public class PMainMenu extends JPanel
 		lblDate.setBounds(10, 48, 430, 26);
 		add(lblDate);
 
-		btnRegister = new JButton("Cadastrar");
-		btnRegister.setBounds(175, 113, 100, 23);
-		add(btnRegister);
+		btnForms = new JButton("Cadastrar");
+		btnForms.setBounds(175, 113, 100, 23);
+		add(btnForms);
 
 		btnQuery = new JButton("Consultar");
 		btnQuery.setBounds(320, 113, 100, 23);
@@ -84,8 +84,8 @@ public class PMainMenu extends JPanel
 		cbOptions.setBounds(30, 113, 100, 22);
 		add(cbOptions);
 
-		ControllerMenuPrinc ctrPrinc = new ControllerMenuPrinc(cbOptions, btnRegister, btnQuery);
-		btnRegister.addActionListener(ctrPrinc);
+		MainMenuController ctrPrinc = new MainMenuController(cbOptions, btnForms, btnQuery);
+		btnForms.addActionListener(ctrPrinc);
 		btnQuery.addActionListener(ctrPrinc);
 
 	}

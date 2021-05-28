@@ -19,7 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-public class PRegThemes extends JPanel
+public class PThemeForm extends JPanel
 {
 
 	private JLabel lblTitulo, label;
@@ -35,7 +35,7 @@ public class PRegThemes extends JPanel
 		return new Dimension(460, 300);
 	}
 
-	public PRegThemes()
+	public PThemeForm()
 	{
 		setLayout(null);
 		lblTitulo = new JLabel("Cadastro de Temas");

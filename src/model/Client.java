@@ -2,19 +2,18 @@ package model;
 
 public class Client
 {
-	private String nome, email, endRua, endBairro, endCidade, endComp, endUF,
-	obs, cpf, rg, fone, endNum, endCep, status;
+	private String name, email, obs, cpf, rg, phone;
+	private String street, district, city, addrCompl, state, streetNum, postalCode;
 	private int id;
 
-
-	public String getNome()
+	public String getName()
 	{
-		return nome;
+		return name;
 	}
 
-	public void setNome(String nome)
+	public void setName(String name)
 	{
-		this.nome = nome;
+		this.name = name;
 	}
 
 	public String getEmail()
@@ -25,56 +24,6 @@ public class Client
 	public void setEmail(String email)
 	{
 		this.email = email;
-	}
-
-	public String getEndRua()
-	{
-		return endRua;
-	}
-
-	public void setEndRua(String endRua)
-	{
-		this.endRua = endRua;
-	}
-
-	public String getEndBairro()
-	{
-		return endBairro;
-	}
-
-	public void setEndBairro(String endBairro)
-	{
-		this.endBairro = endBairro;
-	}
-
-	public String getEndCidade()
-	{
-		return endCidade;
-	}
-
-	public void setEndCidade(String endCidade)
-	{
-		this.endCidade = endCidade;
-	}
-
-	public String getEndComp()
-	{
-		return endComp;
-	}
-
-	public void setEndComp(String endComp)
-	{
-		this.endComp = endComp;
-	}
-
-	public String getEndUF()
-	{
-		return endUF;
-	}
-
-	public void setEndUF(String endUF)
-	{
-		this.endUF = endUF;
 	}
 
 	public String getObs()
@@ -117,43 +66,84 @@ public class Client
 		this.rg = rg;
 	}
 
-	public String getFone()
+	public String getPhone()
 	{
-		return fone;
+		return phone;
 	}
 
-	public void setFone(String fone)
+	public void setPhone(String phone)
 	{
-		this.fone = fone;
+		this.phone = phone;
 	}
 
-	public String getEndNum()
+
+	public String getStreet()
 	{
-		return endNum;
+		return street;
 	}
 
-	public void setEndNum(String endNum)
+	public void setStreet(String street)
 	{
-		this.endNum = endNum;
+		this.street = street;
 	}
 
-	public String getEndCep()
+	public String getDistrict()
 	{
-		return endCep;
+		return district;
 	}
 
-	public void setEndCep(String endCep)
+	public void setDistrict(String district)
 	{
-		this.endCep = endCep;
+		this.district = district;
 	}
 
-	public String getStatus()
+	public String getCity()
 	{
-		return status;
+		return city;
 	}
 
-	public void setStatus(String status)
+	public void setCity(String city)
 	{
-		this.status = status;
+		this.city = city;
+	}
+
+	public String getAddrCompl()
+	{
+		return addrCompl;
+	}
+
+	public void setAddrCompl(String addrCompl)
+	{
+		this.addrCompl = addrCompl;
+	}
+
+	public String getState()
+	{
+		return state;
+	}
+
+	public void setState(String state)
+	{
+		this.state = state;
+	}
+
+	public String getStreetNum()
+	{
+		return streetNum;
+	}
+
+	public void setStreetNum(String streetNum)
+	{
+		this.streetNum = streetNum;
+	}
+
+	public String getPostalCode()
+	{
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode)
+	{
+		this.postalCode = postalCode;
 	}
 }
