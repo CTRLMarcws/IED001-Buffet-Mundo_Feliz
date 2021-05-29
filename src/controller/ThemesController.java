@@ -32,7 +32,7 @@ public class ThemesController implements ActionListener
 		FileController file = new FileController();
 		try
 		{
-			if(file.readFile())
+			if(file.readFile("themes.csv"))
 			{
 				tDao = file.readThemes(tDao);
 			}
@@ -154,7 +154,7 @@ public class ThemesController implements ActionListener
 
 			Theme theme = new Theme(id, tfName.getText(), taDesc.getText(), Double.parseDouble(ftfValue.getText().replace(',', '.')));
 
-			String returnMsg = tDao.addLast(theme);
+			String returnMsg = tDao.addLast(theme, 1);
 
 			notification(returnMsg, "adicionado");
 			clearFields();

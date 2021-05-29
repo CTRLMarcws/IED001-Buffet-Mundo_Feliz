@@ -111,7 +111,7 @@ public class ThemesDao
 	}
 
 
-	public String addLast(Theme theme) throws IOException
+	public String addLast(Theme theme, int write) throws IOException
 	{
 		if(emptyList())
 		{
@@ -133,13 +133,14 @@ public class ThemesDao
 					+ "\nDescrição: " + newTheme.getTheme().getDesc()
 					+ "\nValor: " + newTheme.getTheme().getValue()+ "\n";
 		}
-		file = new FileController();
-		file.createTheme(theme);
+		if (write == 1)
+		{
+			file = new FileController();
+			file.createTheme(theme);
+		}
 		return msg;
 	}
-
-
-
+	
 	private String removeFirst()
 	{
 		msg = "Tema removido da lista: \n"

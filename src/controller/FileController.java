@@ -17,6 +17,8 @@ public class FileController
 {
 	private final String path = "C:\\TEMP\\ED\\";
 	private final String nameThemes = "themes.csv";
+	private final String nameClients = "clients.csv";
+	private final String nameRents = "rents.csv";
 
 	public FileController()
 	{
@@ -38,9 +40,9 @@ public class FileController
 			}
 		}
 	}
-	public boolean readFile()
+	public boolean readFile(String name)
 	{
-		File file = new File(path + nameThemes);
+		File file = new File(path + name);
 		if (!file.exists() || !file.isFile())
 		{
 			return false;			
@@ -56,7 +58,7 @@ public class FileController
 		String newTheme;
 		boolean exists = false;
 
-		if(readFile())
+		if(readFile(nameThemes))
 		{
 			newTheme = theme.getId() + ";" + theme.getName() + ";" + theme.getDesc() + ";" + theme.getValue() + "\n";
 			exists = true;
@@ -85,12 +87,12 @@ public class FileController
 		File file = new File(path + nameThemes);
 
 		readDir();
-		if (file.exists() && file.isFile())
+		if (readFile(nameThemes))
 		{
 			FileInputStream stream = new FileInputStream(file);
 			InputStreamReader reader = new InputStreamReader(stream);
 			BufferedReader buffer = new BufferedReader(reader);
-
+			
 			String line = buffer.readLine();
 			line = buffer.readLine();
 
@@ -98,7 +100,7 @@ public class FileController
 			{
 				String lineTheme[] = line.split(";");
 				theme = new Theme(Integer.parseInt(lineTheme[0]), lineTheme[1], lineTheme[2], Double.parseDouble(lineTheme[3]));
-				tDao.addLast(theme);
+				tDao.addLast(theme, 0);
 				line = buffer.readLine();
 			}
 
