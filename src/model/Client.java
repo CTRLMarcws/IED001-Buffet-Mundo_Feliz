@@ -2,89 +2,30 @@ package model;
 
 public class Client
 {
-	private String nome, email, endRua, endBairro, endCidade, endComp, endUF,
-	obs, cpf, rg, fone, endNum, endCep, status;
 	private int id;
+	private String name, cpf, rg, email, phone, obs;
+	private Address address;
 
-
-	public String getNome()
+	public Client(int id, String name, String cpf, String rg, String email, String phone, String obs, Address address)
 	{
-		return nome;
-	}
-
-	public void setNome(String nome)
-	{
-		this.nome = nome;
-	}
-
-	public String getEmail()
-	{
-		return email;
-	}
-
-	public void setEmail(String email)
-	{
+		this.id = id;
+		this.name = name;
+		this.cpf = cpf;
+		this.rg = rg;
 		this.email = email;
-	}
-
-	public String getEndRua()
-	{
-		return endRua;
-	}
-
-	public void setEndRua(String endRua)
-	{
-		this.endRua = endRua;
-	}
-
-	public String getEndBairro()
-	{
-		return endBairro;
-	}
-
-	public void setEndBairro(String endBairro)
-	{
-		this.endBairro = endBairro;
-	}
-
-	public String getEndCidade()
-	{
-		return endCidade;
-	}
-
-	public void setEndCidade(String endCidade)
-	{
-		this.endCidade = endCidade;
-	}
-
-	public String getEndComp()
-	{
-		return endComp;
-	}
-
-	public void setEndComp(String endComp)
-	{
-		this.endComp = endComp;
-	}
-
-	public String getEndUF()
-	{
-		return endUF;
-	}
-
-	public void setEndUF(String endUF)
-	{
-		this.endUF = endUF;
-	}
-
-	public String getObs()
-	{
-		return obs;
-	}
-
-	public void setObs(String obs)
-	{
+		this.phone = phone;
 		this.obs = obs;
+		this.address = address;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
 	public int getId()
@@ -117,43 +58,41 @@ public class Client
 		this.rg = rg;
 	}
 
-	public String getFone()
+	public String getEmail()
 	{
-		return fone;
+		return email;
 	}
 
-	public void setFone(String fone)
+	public void setEmail(String email)
 	{
-		this.fone = fone;
+		this.email = email;
 	}
 
-	public String getEndNum()
+	public String getPhone()
 	{
-		return endNum;
+		return phone;
 	}
 
-	public void setEndNum(String endNum)
+	public void setPhone(String phone)
 	{
-		this.endNum = endNum;
+		this.phone = phone;
 	}
 
-	public String getEndCep()
+	public String getObs()
 	{
-		return endCep;
+		return obs;
 	}
 
-	public void setEndCep(String endCep)
+	public void setObs(String obs)
 	{
-		this.endCep = endCep;
+		this.obs = obs;
 	}
 
-	public String getStatus()
-	{
-		return status;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setStatus(String status)
-	{
-		this.status = status;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 }

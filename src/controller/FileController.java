@@ -8,14 +8,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import model.Address;
+import model.Client;
 import model.Theme;
-import persistence.ThemeDao;
+import persistence.ClientsDao;
+import persistence.ThemesDao;
 
 @SuppressWarnings("unused")
 public class FileController
 {
 	private final String path = "C:\\TEMP\\ED\\";
 	private final String nameThemes = "themes.csv";
+	private final String nameClients = "clients.csv";
+	private final String nameRents = "rents.csv";
 
 	public FileController()
 	{
@@ -37,9 +42,9 @@ public class FileController
 			}
 		}
 	}
-	public boolean readFile()
+	public boolean readFile(String name)
 	{
-		File file = new File(path + nameThemes);
+		File file = new File(path + name);
 		if (!file.exists() || !file.isFile())
 		{
 			return false;			
@@ -55,7 +60,7 @@ public class FileController
 		String newTheme;
 		boolean exists = false;
 
-		if(readFile())
+		if(readFile(nameThemes))
 		{
 			newTheme = theme.getId() + ";" + theme.getName() + ";" + theme.getDesc() + ";" + theme.getValue() + "\n";
 			exists = true;
@@ -75,16 +80,12 @@ public class FileController
 		fileWriter.close();			
 	}
 
-	
-
-	public ThemeDao readThemes(ThemeDao tDao) throws IOException
+	public ThemesDao readThemes(ThemesDao tDao) throws IOException
 	{
 		Theme theme;
-
 		File file = new File(path + nameThemes);
-
 		readDir();
-		if (file.exists() && file.isFile())
+		if (readFile(nameThemes))
 		{
 			FileInputStream stream = new FileInputStream(file);
 			InputStreamReader reader = new InputStreamReader(stream);
@@ -97,27 +98,26 @@ public class FileController
 			{
 				String lineTheme[] = line.split(";");
 				theme = new Theme(Integer.parseInt(lineTheme[0]), lineTheme[1], lineTheme[2], Double.parseDouble(lineTheme[3]));
-				tDao.addLast(theme);
+				tDao.addLast(theme, 0);
 				line = buffer.readLine();
 			}
-
 			buffer.close();
 			reader.close();
 			stream.close();
 		}
 		else
 		{
-			throw new IOException ("Empty database.");
+			throw new IOException ("Empty themes database.");
 		}
 		return tDao;
 	}
 
-	private void updateTheme()
+	public void updateTheme()
 	{
 		//logica do update
 	}
 
-	private void deleteTheme(ThemeDao tDao, int id) throws IOException
+	public void deleteTheme(ThemesDao tDao, int id) throws IOException
 	{
 		int idTheme = tDao.getId(id);
 		if (idTheme == 0)
@@ -127,7 +127,7 @@ public class FileController
 		else
 		{
 			File file = new File(path + nameThemes);
-			tDao.removeTheme(id);
+			tDao.removeById(id);
 			if (tDao.getTheme(0) == null)
 			{
 				file.delete();
@@ -162,45 +162,139 @@ public class FileController
 
 	//-----------------------CRUD - Clients-----------------------
 
-	private void createClient()
+	public void createClient(Client client) throws IOException
+	{
+		readDir();
+		File file = new File(path + nameClients);
+		String newClient;
+		boolean exists = false;
+
+		if(readFile(nameClients))
+		{
+			newClient = client.getId() + ";" + client.getName()+ ";" + client.getCpf() + ";"
+					+ client.getRg() + ";" + client.getEmail()+ ";" + client.getPhone() + ";"
+					+ client.getObs() + "\n";
+			exists = true;
+		}
+		else
+		{
+			newClient = "ID;Nome;CPF;RG;E-Mail;Telefone;Observação\n";
+			newClient += client.getId() + ";" + client.getName()+ ";" + client.getCpf() + ";"
+					+ client.getRg() + ";" + client.getEmail()+ ";" + client.getPhone() + ";"
+					+ client.getObs() + "\n";
+		}
+		FileWriter fileWriter = new FileWriter(file, exists);
+
+		PrintWriter print = new PrintWriter(fileWriter);
+		print.write(newClient);
+		print.flush();
+		print.close();
+		fileWriter.close();
+	}
+
+	public ClientsDao readClients(ClientsDao cDao) throws IOException
+	{
+		Client client;
+		File file = new File(path + nameClients);
+		readDir();
+		if (readFile(nameClients))
+		{
+			FileInputStream stream = new FileInputStream(file);
+			InputStreamReader reader = new InputStreamReader(stream);
+			BufferedReader buffer = new BufferedReader(reader);
+
+			String line = buffer.readLine();
+			line = buffer.readLine();
+
+			while (line != null)
+			{
+				String lineClient[] = line.split(";");
+				Address address = new Address(lineClient[7], lineClient[8], lineClient[9],
+						lineClient[10], lineClient[11], lineClient[12], lineClient[13]);
+				
+				client = new Client(Integer.parseInt(lineClient[0]), lineClient[1], lineClient[2],
+						lineClient[3], lineClient[4], lineClient[5], lineClient[6], address);
+				
+				cDao.addLast(client, 0);
+				line = buffer.readLine();
+			}
+			buffer.close();
+			reader.close();
+			stream.close();
+		}
+		else
+		{
+			throw new IOException ("Empty clients database.");
+		}
+		return cDao;
+	}
+
+	public void updateClient()
 	{
 
 	}
 
-	private void readClients()
+	public void deleteClient(ClientsDao cDao, int id) throws IOException
 	{
+		int idClient = cDao.getId(id);
+		if(idClient == 0)
+		{
+			//cliente não encontrado
+		}
+		else
+		{
+			File file = new File(path + nameClients);
+			cDao.removeById(id);
+			if(cDao.getClient(0) == null)
+			{
+				file.delete();
+			}
+			else
+			{
+				StringBuffer buffer = new StringBuffer();
+				int i = 0;
+				Client client = cDao.getClient(i);
 
+				while (client != null)
+				{
+					buffer.append(client.getId() + ";" + client.getName()+ ";" + client.getCpf() + ";"
+							+ client.getRg() + ";" + client.getEmail()+ ";" + client.getPhone() + ";"
+							+ client.getObs() + "\n");
+					i++;
+					client = cDao.getClient(i);
+				}
+				String data = "ID;Nome;CPF;RG;E-Mail;Telefone;Observação";
+				data += buffer.toString();
+
+				FileWriter fileWriter = new FileWriter(file);
+
+				PrintWriter print = new PrintWriter(fileWriter);
+				print.write(data);
+				print.flush();
+				print.close();
+				fileWriter.close();
+			}
+		}
 	}
-
-	private void updateClient()
-	{
-
-	}
-
-	private void deleteClient()
-	{
-
-	}
-
 
 	//-----------------------CRUD - Rental-----------------------
 
-	private void createRental()
+	public void createRental()
 	{
 
 	}
 
-	private void readRentals()
+	public void readRentals()
 	{
 
 	}
 
-	private void updateRental()
+	public void updateRental()
 	{
 
 	}
 
-	private void deleteRental()
+	public void deleteRental()
 	{
 
 	}

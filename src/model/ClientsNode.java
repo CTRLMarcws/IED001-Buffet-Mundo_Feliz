@@ -5,7 +5,7 @@ public class ClientsNode
 	public Client client;
 	public ClientsNode next;
 
-	public ClientsNode(Client client, ClientsNode next)
+	public ClientsNode(Client client)
 	{
 		this.client = client;
 		next = null;

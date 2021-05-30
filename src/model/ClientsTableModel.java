@@ -48,5 +48,10 @@ public class ClientsTableModel extends AbstractTableModel
 		}
 		return null;
 	}
+	
+	public void refreshTable()
+	{
+		this.fireTableDataChanged();
+	}
 
 }

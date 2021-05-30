@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class FPrincipal
+public class FMain
 {
 	static JFrame frame;
 
@@ -16,7 +16,7 @@ public class FPrincipal
 			{
 				try
 				{
-					criarFrame();
+					generateFrame();
 				} 
 				catch (Exception e)
 				{
@@ -27,19 +27,19 @@ public class FPrincipal
 	}
 
 
-	private static void criarFrame()
+	private static void generateFrame()
 	{
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		atualizarFrame(new PMenuPrinc());
+		refreshFrame(new PMainMenu());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setResizable(false);
 	}
 
-	public static void atualizarFrame(JPanel painel)
+	public static void refreshFrame(JPanel panel)
 	{		
-		frame.setContentPane(painel);
+		frame.setContentPane(panel);
 		frame.repaint();
 		frame.pack();
 		frame.revalidate();

@@ -6,13 +6,13 @@ import controller.FileController;
 import model.ThemesNode;
 import model.Theme;
 
-public class ThemeDao
+public class ThemesDao
 {
 	private String msg;
 	private ThemesNode inicio;
 	FileController file;
 
-	public ThemeDao()
+	public ThemesDao()
 	{
 		this.inicio = null;
 	}
@@ -40,6 +40,7 @@ public class ThemeDao
 		}
 		return i;
 	}
+
 	public int getId(int id)
 	{
 		ThemesNode aux = this.inicio;
@@ -97,21 +98,16 @@ public class ThemeDao
 		return aux.getTheme();
 	}
 
-	public String addFirst(Theme theme)
+	private String addFirst(Theme theme)
 	{
 		ThemesNode newTheme = new ThemesNode(theme);
 		newTheme.next = this.inicio;
 		this.inicio = newTheme;
-		msg = "Tema adicionado na lista: \n"
-				+ "ID: " + newTheme.getTheme().getId()
-				+ "\nNome: " + newTheme.getTheme().getName() 
-				+ "\nDescrição: " + newTheme.getTheme().getDesc()
-				+ "\nValor: " + newTheme.getTheme().getValue()+ "\n";
+		msg = msgMod(newTheme, 1);
 		return msg;
 	}
 
-
-	public String addLast(Theme theme) throws IOException
+	public String addLast(Theme theme, int write) throws IOException
 	{
 		if(emptyList())
 		{
@@ -119,44 +115,36 @@ public class ThemeDao
 		}
 		else
 		{
-			ThemesNode auxiliar = this.inicio;
+			ThemesNode aux = this.inicio;
 
-			while(auxiliar.next != null)
+			while(aux.next != null)
 			{
-				auxiliar = auxiliar.next;
+				aux = aux.next;
 			}
-			ThemesNode newTheme = new ThemesNode (theme);
-			auxiliar.next = newTheme;
-			msg = "Tema adicionado na lista: \n"
-					+ "ID: " + newTheme.getTheme().getId()
-					+ "\nNome: " + newTheme.getTheme().getName() 
-					+ "\nDescrição: " + newTheme.getTheme().getDesc()
-					+ "\nValor: " + newTheme.getTheme().getValue()+ "\n";
+			ThemesNode newTheme = new ThemesNode(theme);
+			aux.next = newTheme;
+			msg = msgMod(newTheme, 1);
 		}
-		file = new FileController();
-		file.createTheme(theme);
+		if (write == 1)
+		{
+			file = new FileController();
+			file.createTheme(theme);
+		}
 		return msg;
 	}
-
-
 
 	private String removeFirst()
 	{
-		msg = "Tema removido da lista: \n"
-				+ "ID: " + this.inicio.getTheme().getId()
-				+ "\nNome: " + this.inicio.getTheme().getName() 
-				+ "\nDescrição: " + this.inicio.getTheme().getDesc()
-				+ "\nValor: " + this.inicio.getTheme().getValue()+ "\n";
+		msg = msgMod(this.inicio, 0);
 		this.inicio = this.inicio.getNext();
 		return msg;
 	}
-
 
 	private String removeLast()
 	{
 		if (this.inicio.next == null)
 		{
-			this.inicio = null; //mantém?
+			this.inicio = null;
 		}
 		else
 		{
@@ -168,17 +156,13 @@ public class ThemeDao
 				aux2 = aux1;
 				aux1 = aux1.getNext();
 			}
-			msg = "Tema removido da lista: \n"
-					+ "ID: " + aux1.getTheme().getId()
-					+ "\nNome: " + aux1.getTheme().getName() 
-					+ "\nDescrição: " + aux1.getTheme().getDesc()
-					+ "\nValor: " + aux1.getTheme().getValue()+ "\n";
+			msg = msgMod(aux1, 0);
 			aux2.setNext(null);
 		}
 		return msg;
 	}
 
-	public String removeTheme(int id)
+	public String removeById(int id)
 	{
 		if (emptyList())
 		{
@@ -205,11 +189,7 @@ public class ThemeDao
 					aux1 = aux1.getNext();
 					id --;
 				}
-				msg = "Tema removido da lista: \n"
-						+ "ID: " + aux1.getTheme().getId()
-						+ "\nNome: " + aux1.getTheme().getName() 
-						+ "\nDescrição: " + aux1.getTheme().getDesc()
-						+ "\nValor: " + aux1.getTheme().getValue()+ "\n";
+				msg = msgMod(aux1, 0);
 				aux2.setNext(aux1.getNext());
 			}
 		}
@@ -218,5 +198,21 @@ public class ThemeDao
 
 	//	update theme
 
+	private String msgMod (ThemesNode aux, int add)
+	{
+		if (add == 1)
+		{
+			msg = "Tema adicionado na lista: \n";
+		}
+		else
+		{
+			msg = "Tema removido da lista: \n";
+		}
+		msg += "ID:\t\t\t" + aux.getTheme().getId()
+				+ "\nNome:\t\t" + aux.getTheme().getName() 
+				+ "\nDescrição:\t" + aux.getTheme().getDesc()
+				+ "\nValor:\t\t" + aux.getTheme().getValue()+ "\n";
+		return msg;
+	}
 
 }

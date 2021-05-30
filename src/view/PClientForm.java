@@ -1,36 +1,35 @@
 package view;
 
 import java.awt.Dimension;
-
-import javax.swing.JPanel;
-import javax.swing.text.MaskFormatter;
-
-import controller.ClientsController;
-import controller.ThemesController;
-
-import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
-import javax.swing.JTextArea;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.text.MaskFormatter;
 
-public class PRegClients extends JPanel
+import controller.ClientsController;
+import persistence.ClientsDao;
+
+public class PClientForm extends JPanel
 {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField tfNome, tfEndereco, tfBairro, tfCidade, tfComp, tfEmail, tfEndNum;
-	private JFormattedTextField ftfId, ftfCpf, ftfRg, ftfFone, ftfCep;
+	private JTextField tfName, tfStreet, tfDistrict,
+	tfCity, tfAddrCompl, tfEmail, tfStreetNum;
+	private JFormattedTextField ftfId, ftfCpf, ftfRg, ftfPhone, ftfPostalCode;
 	private JTextArea taObs;
-	private JLabel lblTitulo, label;
-	private JButton btnConsultar, btnFinanceiro, btnHistorico, btnVerTodos, btnSalvar;
+	private JLabel lblHeading, label;
+	private JButton btnConsultar, btnFinanceiro, btnHistorico, btnQuery, btnSalvar;
 
 	public Dimension getPreferredSize()
 	{
@@ -38,15 +37,15 @@ public class PRegClients extends JPanel
 	}
 
 
-	public PRegClients()
+	public PClientForm()
 	{
 		setLayout(null);
 
-		lblTitulo = new JLabel("Cadastro de Clientes");
-		lblTitulo.setBounds(0, 10, 546, 30);
-		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-		add(lblTitulo);
+		lblHeading = new JLabel("Cadastro de Clientes");
+		lblHeading.setBounds(0, 10, 546, 30);
+		lblHeading.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHeading.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		add(lblHeading);
 
 		label = new JLabel("Nome");
 		label.setBounds(20, 60, 46, 20);
@@ -100,10 +99,10 @@ public class PRegClients extends JPanel
 		label.setBounds(20, 160, 46, 20);
 		add(label);
 
-		tfNome = new JTextField();
-		tfNome.setBounds(20, 80, 370, 20);
-		add(tfNome);
-		tfNome.setColumns(10);
+		tfName = new JTextField();
+		tfName.setBounds(20, 80, 370, 20);
+		add(tfName);
+		tfName.setColumns(10);
 
 		MaskFormatter Id = null;
 
@@ -120,7 +119,6 @@ public class PRegClients extends JPanel
 		ftfId.setBounds(400, 80, 134, 20);
 		add(ftfId);
 
-
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(20, 340, 354, 60);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -129,7 +127,6 @@ public class PRegClients extends JPanel
 
 		taObs = new JTextArea();
 		scrollPane.setViewportView(taObs);
-
 
 		MaskFormatter Cpf = null;
 
@@ -146,7 +143,6 @@ public class PRegClients extends JPanel
 		ftfCpf.setBounds(20, 130, 150, 20);
 		add(ftfCpf);
 
-
 		MaskFormatter Rg = null;
 
 		try
@@ -158,11 +154,9 @@ public class PRegClients extends JPanel
 			e.printStackTrace();
 		}
 
-
 		ftfRg = new JFormattedTextField(Rg);
 		ftfRg.setBounds(180, 130, 150, 20);
 		add(ftfRg);
-
 
 		MaskFormatter Fone = null;
 
@@ -175,49 +169,39 @@ public class PRegClients extends JPanel
 			e.printStackTrace();
 		}
 
-
-		ftfFone = new JFormattedTextField(Fone);
-		ftfFone.setBounds(340, 130, 194, 19);
-		add(ftfFone);
-
+		ftfPhone = new JFormattedTextField(Fone);
+		ftfPhone.setBounds(340, 130, 194, 19);
+		add(ftfPhone);
 
 		tfEmail = new JTextField();
 		tfEmail.setBounds(180, 180, 354, 20);
 		add(tfEmail);
 		tfEmail.setColumns(10);
 
+		tfStreet = new JTextField();
+		tfStreet.setBounds(20, 230, 300, 20);
+		add(tfStreet);
+		tfStreet.setColumns(10);
 
+		tfDistrict = new JTextField();
+		tfDistrict.setBounds(20, 280, 270, 20);
+		add(tfDistrict);
+		tfDistrict.setColumns(10);
 
-		tfEndereco = new JTextField();
-		tfEndereco.setBounds(20, 230, 300, 20);
-		add(tfEndereco);
-		tfEndereco.setColumns(10);
+		tfCity = new JTextField();
+		tfCity.setBounds(304, 280, 230, 20);
+		add(tfCity);
+		tfCity.setColumns(10);
 
+		tfAddrCompl = new JTextField();
+		tfAddrCompl.setBounds(439, 230, 95, 20);
+		add(tfAddrCompl);
+		tfAddrCompl.setColumns(10);
 
-
-		tfBairro = new JTextField();
-		tfBairro.setBounds(20, 280, 270, 20);
-		add(tfBairro);
-		tfBairro.setColumns(10);
-
-
-
-		tfCidade = new JTextField();
-		tfCidade.setBounds(304, 280, 230, 20);
-		add(tfCidade);
-		tfCidade.setColumns(10);
-
-		tfComp = new JTextField();
-		tfComp.setBounds(439, 230, 95, 20);
-		add(tfComp);
-		tfComp.setColumns(10);
-
-
-		tfEndNum = new JTextField();
-		tfEndNum.setBounds(330, 230, 95, 20);
-		add(tfEndNum);
-		tfEndNum.setColumns(10);
-
+		tfStreetNum = new JTextField();
+		tfStreetNum.setBounds(330, 230, 95, 20);
+		add(tfStreetNum);
+		tfStreetNum.setColumns(10);
 
 		MaskFormatter Cep = null;
 
@@ -230,18 +214,17 @@ public class PRegClients extends JPanel
 			e.printStackTrace();
 		}
 
-		ftfCep = new JFormattedTextField(Cep);
-		ftfCep.setBounds(20, 180, 150, 20);
-		add(ftfCep);
-
+		ftfPostalCode = new JFormattedTextField(Cep);
+		ftfPostalCode.setBounds(20, 180, 150, 20);
+		add(ftfPostalCode);
 
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(110, 465, 100, 25);
 		add(btnSalvar);
 
-		btnVerTodos = new JButton("Ver Todos");
-		btnVerTodos.setBounds(370, 465, 100, 25);
-		add(btnVerTodos);
+		btnQuery = new JButton("Ver Todos");
+		btnQuery.setBounds(370, 465, 100, 25);
+		add(btnQuery);
 
 		btnHistorico = new JButton("Historico");
 		btnHistorico.setBounds(384, 341, 150, 25);
@@ -255,24 +238,22 @@ public class PRegClients extends JPanel
 		btnFinanceiro.setBounds(384, 376, 150, 25);
 		add(btnFinanceiro);
 
-		JButton Voltar = new JButton("<");
-		Voltar.addActionListener(new ActionListener() {
+		JButton btnBack = new JButton("<");
+		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FPrincipal.atualizarFrame(new PMenuPrinc());
+				FMain.refreshFrame(new PMainMenu());
 			}
 		});
-		Voltar.setBounds(10, 14, 41, 23);
-		add(Voltar);
+		btnBack.setBounds(10, 14, 41, 23);
+		add(btnBack);
 
-		ClientsController ctrClientes = new ClientsController(
-				tfNome, tfEndereco,tfBairro, tfCidade, tfComp, tfEmail, tfEndNum,
-				ftfId, ftfCpf, ftfRg, ftfFone, ftfCep, taObs);
-
-		btnConsultar.addActionListener(ctrClientes);
-		btnFinanceiro.addActionListener(ctrClientes);
-		btnHistorico.addActionListener(ctrClientes);
-		btnVerTodos.addActionListener(ctrClientes);
-		btnSalvar.addActionListener(ctrClientes);
+//		ClientsController ctrClientes = new ClientsController(tfName,  tfEmail,  tfStreet, tfDistrict,  tfCity,  tfAddrCompl,  tfStreetNum, ftfId,  ftfCpf,  ftfRg, ftfPhone,  ftfPostalCode,  taObs);
+//		
+//		btnConsultar.addActionListener(ctrClientes);
+//		btnFinanceiro.addActionListener(ctrClientes);
+//		btnHistorico.addActionListener(ctrClientes);
+//		btnQuery.addActionListener(ctrClientes);
+//		btnSalvar.addActionListener(ctrClientes);
 
 	}
 }

@@ -10,12 +10,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import model.Theme;
-import persistence.ThemeDao;
-import view.FPrincipal;
+import persistence.ThemesDao;
+import view.FMain;
 import view.PQuery;
 public class ThemesController implements ActionListener
 {
-	private ThemeDao tDao;
+	private ThemesDao tDao;
 	private JTextField tfName;
 	private JFormattedTextField ftfValue;
 	private JTextArea taDesc;
@@ -27,12 +27,12 @@ public class ThemesController implements ActionListener
 		this.taDesc = taDesc;
 		
 		
-		tDao = new ThemeDao();
+		tDao = new ThemesDao();
 		
 		FileController file = new FileController();
 		try
 		{
-			if(file.readFile())
+			if(file.readFile("themes.csv"))
 			{
 				tDao = file.readThemes(tDao);
 			}
@@ -68,7 +68,7 @@ public class ThemesController implements ActionListener
 		}
 		if (cmd.equals("Ver Todos"))
 		{
-			FPrincipal.atualizarFrame(new PQuery());
+			FMain.refreshFrame(new PQuery());
 		}
 	}
 
@@ -120,7 +120,7 @@ public class ThemesController implements ActionListener
 				Theme theme = tDao.findTheme(name);
 				if(theme != null)
 				{
-					returnMsg = tDao.removeTheme(theme.getId());					
+					returnMsg = tDao.removeById(theme.getId());					
 				}
 				else
 				{
@@ -154,16 +154,16 @@ public class ThemesController implements ActionListener
 
 			Theme theme = new Theme(id, tfName.getText(), taDesc.getText(), Double.parseDouble(ftfValue.getText().replace(',', '.')));
 
-			String returnMsg = tDao.addLast(theme);
+			String returnMsg = tDao.addLast(theme, 1);
 
 			notification(returnMsg, "adicionado");
 			clearFields();
 		}
 	}
 
-	private void notification(String returnMsg, String contem)
+	private void notification(String returnMsg, String contains)
 	{
-		if (returnMsg.contains(contem))
+		if (returnMsg.contains(contains))
 		{
 			JOptionPane.showMessageDialog(null, returnMsg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -175,9 +175,9 @@ public class ThemesController implements ActionListener
 
 	private void clearFields()
 	{
-		tfName.setText("");
-		taDesc.setText("");
-		ftfValue.setText("");
+		tfName.setText(null);
+		taDesc.setText(null);
+		ftfValue.setText(null);
 	}
 
 	private boolean validateFields()

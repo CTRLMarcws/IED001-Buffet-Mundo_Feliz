@@ -5,38 +5,36 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
 
-import view.FPrincipal;
-import view.PRegThemes;
+import view.FMain;
 import view.PQuery;
+import view.PThemeForm;
 
-public class ControllerMenuPrinc implements ActionListener
+@SuppressWarnings("unused")
+public class MainMenuController implements ActionListener
 {
-	private JComboBox listaOpcoes;
-	private JButton btnCadastro, btnConsulta;
+	private JComboBox cbOptions;
+	private JButton btnForms, btnQuery;
 
-	public ControllerMenuPrinc(JComboBox listaOpcoes, JButton btnCadastro, JButton btnConsulta)
+	public MainMenuController(JComboBox cbOptions, JButton btnForms, JButton btnQuery)
 	{
-		this.btnCadastro = btnCadastro;
-		this.btnConsulta = btnConsulta;
-		this.listaOpcoes = listaOpcoes;
+		this.btnForms = btnForms;
+		this.btnQuery = btnQuery;
+		this.cbOptions = cbOptions;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		String cmd = e.getActionCommand();
-		String opc = String.valueOf(listaOpcoes.getSelectedItem());
+		String opt = String.valueOf(cbOptions.getSelectedItem());
 
 		if (cmd.equals("Cadastrar"))
 		{
-			switch(opc)
+			switch(opt)
 			{
 			case "Temas":
-				FPrincipal.atualizarFrame(new PRegThemes());
+				FMain.refreshFrame(new PThemeForm());
 				break;
 			case "Clientes":
 				//FPrincipal.atualizarFrame(new PCadClientes());
@@ -50,24 +48,24 @@ public class ControllerMenuPrinc implements ActionListener
 
 		if (cmd.equals("Consultar"))
 		{
-			switch(opc)
+			switch(opt)
 			{
 			case "Temas":
-				ControllerConsulta.setTipo(0);
+				QueryController.setKind(0);
 				break;
-				
+
 			case "Clientes":
 				//consultaTipo(1);
 				break;
-				
+
 			case "Alugueis":
 				//consultaTipo(2);
 				break;
 			}
-			
-			FPrincipal.atualizarFrame(new PQuery());
+
+			FMain.refreshFrame(new PQuery());
 		}
 	}
-	
-	
+
+
 }

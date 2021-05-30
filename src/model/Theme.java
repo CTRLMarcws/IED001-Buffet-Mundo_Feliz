@@ -3,7 +3,6 @@ package model;
 
 public class Theme
 {
-
 	private String name, desc;
 	private double value;
 	private int id;

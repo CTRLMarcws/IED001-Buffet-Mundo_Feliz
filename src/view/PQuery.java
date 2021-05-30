@@ -1,39 +1,40 @@
 package view;
 
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import controller.ControllerConsulta;
-import controller.FileController;
-import model.ThemesTableModel;
-import persistence.ThemeDao;
-
-import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Dimension;
-
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JButton;
 import java.awt.Font;
-import javax.swing.JScrollPane;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+import controller.FileController;
+import model.ClientsTableModel;
+import model.ThemesTableModel;
+import persistence.ClientsDao;
+import persistence.ThemesDao;
 
 public class PQuery extends JPanel
 {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
-	private JTextField tfPesquisar;
-	private JButton btnEditar, btnPesquisar;
-	private JLabel lblTituloPesquisa;
-	private JComboBox comboBox;
-	private ThemeDao tDao;
+	private JTextField tfSearch;
+	private JButton btnEdit, btnSearch;
+	private JLabel lblHeading;
+	private JComboBox cbOptions;
+	private ThemesDao tDao;
+	private ClientsDao cDao;
+	private String kind;
 	
 
 	public Dimension getPreferredSize()
@@ -43,21 +44,13 @@ public class PQuery extends JPanel
 
 	public PQuery()
 	{
+		FileController file = new FileController();
 		/*
 		 * Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException: Cannot invoke "model.Theme.getId()"
 		 * because the return value of "persistence.ThemeDao.getTheme(int)" is null
 		 * 
 		 * at model.TableModel_Themes.getValueAt(TableModel_Themes.java:47)
 		 */
-		tDao = new ThemeDao();
-		FileController file = new FileController();
-		
-		try
-		{
-			tDao = file.readThemes(tDao);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
 /*
  * 		Resposabilidade:
  * 
@@ -77,14 +70,41 @@ public class PQuery extends JPanel
 		switch(i)
 		{
 		case 0:
-			ThemesTableModel tableModelTemas = new ThemesTableModel(tDao);
-			table.setModel(tableModelTemas);
+			tDao = new ThemesDao();
+			
+			try
+			{
+				tDao = file.readThemes(tDao);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			ThemesTableModel themesModel = new ThemesTableModel(tDao);
+			table.setModel(themesModel);
+			kind = "Temas";
 			break;
+			
 		case 1:
-			System.out.println("Em progresso");
+			cDao = new ClientsDao();
+			
+			try
+			{
+				cDao = file.readClients(cDao);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			ClientsTableModel clientModel = new ClientsTableModel(cDao);
+			table.setModel(clientModel);
+			kind = "Clientes";
 			break;
+			
 		case 2:
 			System.out.println("Em progresso");
+			kind = "Alugueis";
 			break;
 		}
 		
@@ -92,48 +112,47 @@ public class PQuery extends JPanel
 
 	private void initComp()
 	{
-		String tipo = "Clientes";
 		setBounds(100, 100, 690, 430);
 		setLayout(null);
 
 
-		tfPesquisar = new JTextField();
-		tfPesquisar.setBounds(113, 48, 350, 20);
-		add(tfPesquisar);
-		tfPesquisar.setColumns(10);
+		tfSearch = new JTextField();
+		tfSearch.setBounds(113, 48, 350, 20);
+		add(tfSearch);
+		tfSearch.setColumns(10);
 
-		btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.addActionListener(new ActionListener() {
+		btnSearch = new JButton("Pesquisar");
+		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 			}
 		});
-		btnPesquisar.setBounds(470, 47, 100, 23);
-		add(btnPesquisar);
+		btnSearch.setBounds(470, 47, 100, 23);
+		add(btnSearch);
 
-		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(580, 47, 100, 23);
-		add(btnEditar);
+		btnEdit = new JButton("Editar");
+		btnEdit.setBounds(580, 47, 100, 23);
+		add(btnEdit);
 
-		lblTituloPesquisa = new JLabel("Pesquisa de " + tipo);
-		lblTituloPesquisa.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTituloPesquisa.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-		lblTituloPesquisa.setBounds(10, 11, 670, 23);
-		add(lblTituloPesquisa);
+		lblHeading = new JLabel("Pesquisa de " + kind);
+		lblHeading.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHeading.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		lblHeading.setBounds(10, 11, 670, 23);
+		add(lblHeading);
 
-		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Nome", "ID"}));
-		comboBox.setBounds(10, 47, 93, 22);
-		add(comboBox);
+		cbOptions = new JComboBox();
+		cbOptions.setModel(new DefaultComboBoxModel(new String[] {"Nome", "ID"}));
+		cbOptions.setBounds(10, 47, 93, 22);
+		add(cbOptions);
 
-		JButton btnVoltar = new JButton("<");
-		btnVoltar.addActionListener(new ActionListener() {
+		JButton btnBack = new JButton("<");
+		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FPrincipal.atualizarFrame(new PRegThemes());
+				FMain.refreshFrame(new PThemeForm());
 			}
 		});
-		btnVoltar.setBounds(10, 14, 41, 23);
-		add(btnVoltar);
+		btnBack.setBounds(10, 14, 41, 23);
+		add(btnBack);
 		
 
 		table = new JTable();
