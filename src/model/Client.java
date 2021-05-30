@@ -2,9 +2,19 @@ package model;
 
 public class Client
 {
-	private String name, email, obs, cpf, rg, phone;
-	private String street, district, city, addrCompl, state, streetNum, postalCode;
 	private int id;
+	private String name, cpf, rg, email, phone, obs;
+
+	public Client(int id, String name, String cpf, String rg, String email, String phone, String obs)
+	{
+		this.id = id;
+		this.name = name;
+		this.cpf = cpf;
+		this.rg = rg;
+		this.email = email;
+		this.phone = phone;
+		this.obs = obs;
+	}
 
 	public String getName()
 	{
@@ -14,26 +24,6 @@ public class Client
 	public void setName(String name)
 	{
 		this.name = name;
-	}
-
-	public String getEmail()
-	{
-		return email;
-	}
-
-	public void setEmail(String email)
-	{
-		this.email = email;
-	}
-
-	public String getObs()
-	{
-		return obs;
-	}
-
-	public void setObs(String obs)
-	{
-		this.obs = obs;
 	}
 
 	public int getId()
@@ -66,6 +56,16 @@ public class Client
 		this.rg = rg;
 	}
 
+	public String getEmail()
+	{
+		return email;
+	}
+
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
+
 	public String getPhone()
 	{
 		return phone;
@@ -76,74 +76,13 @@ public class Client
 		this.phone = phone;
 	}
 
-
-	public String getStreet()
+	public String getObs()
 	{
-		return street;
+		return obs;
 	}
 
-	public void setStreet(String street)
+	public void setObs(String obs)
 	{
-		this.street = street;
-	}
-
-	public String getDistrict()
-	{
-		return district;
-	}
-
-	public void setDistrict(String district)
-	{
-		this.district = district;
-	}
-
-	public String getCity()
-	{
-		return city;
-	}
-
-	public void setCity(String city)
-	{
-		this.city = city;
-	}
-
-	public String getAddrCompl()
-	{
-		return addrCompl;
-	}
-
-	public void setAddrCompl(String addrCompl)
-	{
-		this.addrCompl = addrCompl;
-	}
-
-	public String getState()
-	{
-		return state;
-	}
-
-	public void setState(String state)
-	{
-		this.state = state;
-	}
-
-	public String getStreetNum()
-	{
-		return streetNum;
-	}
-
-	public void setStreetNum(String streetNum)
-	{
-		this.streetNum = streetNum;
-	}
-
-	public String getPostalCode()
-	{
-		return postalCode;
-	}
-
-	public void setPostalCode(String postalCode)
-	{
-		this.postalCode = postalCode;
+		this.obs = obs;
 	}
 }

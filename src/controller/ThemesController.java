@@ -120,7 +120,7 @@ public class ThemesController implements ActionListener
 				Theme theme = tDao.findTheme(name);
 				if(theme != null)
 				{
-					returnMsg = tDao.removeTheme(theme.getId());					
+					returnMsg = tDao.removeById(theme.getId());					
 				}
 				else
 				{

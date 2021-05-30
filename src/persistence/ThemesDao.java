@@ -40,6 +40,7 @@ public class ThemesDao
 		}
 		return i;
 	}
+	
 	public int getId(int id)
 	{
 		ThemesNode aux = this.inicio;
@@ -97,19 +98,18 @@ public class ThemesDao
 		return aux.getTheme();
 	}
 
-	public String addFirst(Theme theme)
+	private String addFirst(Theme theme)
 	{
 		ThemesNode newTheme = new ThemesNode(theme);
 		newTheme.next = this.inicio;
 		this.inicio = newTheme;
 		msg = "Tema adicionado na lista: \n"
-				+ "ID: " + newTheme.getTheme().getId()
-				+ "\nNome: " + newTheme.getTheme().getName() 
-				+ "\nDescrição: " + newTheme.getTheme().getDesc()
-				+ "\nValor: " + newTheme.getTheme().getValue()+ "\n";
+				+ "ID:\t\t\t" + newTheme.getTheme().getId()
+				+ "\nNome:\t\t" + newTheme.getTheme().getName() 
+				+ "\nDescrição:\t" + newTheme.getTheme().getDesc()
+				+ "\nValor:\t\t" + newTheme.getTheme().getValue()+ "\n";
 		return msg;
 	}
-
 
 	public String addLast(Theme theme, int write) throws IOException
 	{
@@ -119,19 +119,19 @@ public class ThemesDao
 		}
 		else
 		{
-			ThemesNode auxiliar = this.inicio;
+			ThemesNode aux = this.inicio;
 
-			while(auxiliar.next != null)
+			while(aux.next != null)
 			{
-				auxiliar = auxiliar.next;
+				aux = aux.next;
 			}
-			ThemesNode newTheme = new ThemesNode (theme);
-			auxiliar.next = newTheme;
+			ThemesNode newTheme = new ThemesNode(theme);
+			aux.next = newTheme;
 			msg = "Tema adicionado na lista: \n"
-					+ "ID: " + newTheme.getTheme().getId()
-					+ "\nNome: " + newTheme.getTheme().getName() 
-					+ "\nDescrição: " + newTheme.getTheme().getDesc()
-					+ "\nValor: " + newTheme.getTheme().getValue()+ "\n";
+					+ "ID:\t\t\t" + newTheme.getTheme().getId()
+					+ "\nNome:\t\t" + newTheme.getTheme().getName() 
+					+ "\nDescrição:\t" + newTheme.getTheme().getDesc()
+					+ "\nValor:\t\t" + newTheme.getTheme().getValue()+ "\n";
 		}
 		if (write == 1)
 		{
@@ -144,14 +144,13 @@ public class ThemesDao
 	private String removeFirst()
 	{
 		msg = "Tema removido da lista: \n"
-				+ "ID: " + this.inicio.getTheme().getId()
-				+ "\nNome: " + this.inicio.getTheme().getName() 
-				+ "\nDescrição: " + this.inicio.getTheme().getDesc()
-				+ "\nValor: " + this.inicio.getTheme().getValue()+ "\n";
+				+ "ID:\t\t\t" + this.inicio.getTheme().getId()
+				+ "\nNome:\t\t" + this.inicio.getTheme().getName() 
+				+ "\nDescrição:\t" + this.inicio.getTheme().getDesc()
+				+ "\nValor:\t\t" + this.inicio.getTheme().getValue()+ "\n";
 		this.inicio = this.inicio.getNext();
 		return msg;
 	}
-
 
 	private String removeLast()
 	{
@@ -170,16 +169,16 @@ public class ThemesDao
 				aux1 = aux1.getNext();
 			}
 			msg = "Tema removido da lista: \n"
-					+ "ID: " + aux1.getTheme().getId()
-					+ "\nNome: " + aux1.getTheme().getName() 
-					+ "\nDescrição: " + aux1.getTheme().getDesc()
-					+ "\nValor: " + aux1.getTheme().getValue()+ "\n";
+					+ "ID:\t\t\t" + aux1.getTheme().getId()
+					+ "\nNome:\t\t" + aux1.getTheme().getName() 
+					+ "\nDescrição:\t" + aux1.getTheme().getDesc()
+					+ "\nValor:\t\t" + aux1.getTheme().getValue()+ "\n";
 			aux2.setNext(null);
 		}
 		return msg;
 	}
 
-	public String removeTheme(int id)
+	public String removeById(int id)
 	{
 		if (emptyList())
 		{
@@ -207,10 +206,10 @@ public class ThemesDao
 					id --;
 				}
 				msg = "Tema removido da lista: \n"
-						+ "ID: " + aux1.getTheme().getId()
-						+ "\nNome: " + aux1.getTheme().getName() 
-						+ "\nDescrição: " + aux1.getTheme().getDesc()
-						+ "\nValor: " + aux1.getTheme().getValue()+ "\n";
+						+ "ID:\t\t\t" + aux1.getTheme().getId()
+						+ "\nNome:\t\t" + aux1.getTheme().getName() 
+						+ "\nDescrição:\t" + aux1.getTheme().getDesc()
+						+ "\nValor:\t\t" + aux1.getTheme().getValue()+ "\n";
 				aux2.setNext(aux1.getNext());
 			}
 		}

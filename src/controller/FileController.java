@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import model.Client;
 import model.Theme;
 import persistence.ClientsDao;
 import persistence.ThemesDao;
@@ -130,7 +131,7 @@ public class FileController
 		else
 		{
 			File file = new File(path + nameThemes);
-			tDao.removeTheme(id);
+			tDao.removeById(id);
 			if (tDao.getTheme(0) == null)
 			{
 				file.delete();
@@ -165,15 +166,63 @@ public class FileController
 
 	//-----------------------CRUD - Clients-----------------------
 
-	public void createClient()
+	public void createClient(Client client) throws IOException
 	{
+		readDir();
+		File file = new File(path + nameClients);
+		String newClient;
+		boolean exists = false;
+		
+		if(readFile(nameClients))
+		{
+			newClient = client.getId() + ";";
+			exists = true;
+		}
+		else
+		{
+			newClient = "";
+			newClient += "";
+		}
+		FileWriter fileWriter = new FileWriter(file, exists);
 
+		PrintWriter print = new PrintWriter(fileWriter);
+		print.write(newClient);
+		print.flush();
+		print.close();
+		fileWriter.close();
 	}
 
 	public ClientsDao readClients(ClientsDao cDao) throws IOException
 	{
-		return cDao;
+		Client client;
+		File file = new File(path + nameClients);
+		readDir();
+		if (readFile(nameThemes))
+		{
+			FileInputStream stream = new FileInputStream(file);
+			InputStreamReader reader = new InputStreamReader(stream);
+			BufferedReader buffer = new BufferedReader(reader);
+			
+			String line = buffer.readLine();
+			line = buffer.readLine();
 
+			while (line != null)
+			{
+				String lineTheme[] = line.split(";");
+//				client = new Client(Integer.parseInt(lineTheme[0]));
+//				cDao.addLast(client, 0);
+				line = buffer.readLine();
+			}
+
+			buffer.close();
+			reader.close();
+			stream.close();
+		}
+		else
+		{
+			throw new IOException ("Empty clients database.");
+		}
+		return cDao;
 	}
 
 	public void updateClient()
