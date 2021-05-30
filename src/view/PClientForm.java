@@ -247,13 +247,13 @@ public class PClientForm extends JPanel
 		btnBack.setBounds(10, 14, 41, 23);
 		add(btnBack);
 
-		ClientsController ctrClientes = new ClientsController(tfName,  tfEmail,  tfStreet, tfDistrict,  tfCity,  tfAddrCompl,  tfStreetNum, ftfId,  ftfCpf,  ftfRg, ftfPhone,  ftfPostalCode,  taObs);
-		
-		btnConsultar.addActionListener(ctrClientes);
-		btnFinanceiro.addActionListener(ctrClientes);
-		btnHistorico.addActionListener(ctrClientes);
-		btnQuery.addActionListener(ctrClientes);
-		btnSalvar.addActionListener(ctrClientes);
+//		ClientsController ctrClientes = new ClientsController(tfName,  tfEmail,  tfStreet, tfDistrict,  tfCity,  tfAddrCompl,  tfStreetNum, ftfId,  ftfCpf,  ftfRg, ftfPhone,  ftfPostalCode,  taObs);
+//		
+//		btnConsultar.addActionListener(ctrClientes);
+//		btnFinanceiro.addActionListener(ctrClientes);
+//		btnHistorico.addActionListener(ctrClientes);
+//		btnQuery.addActionListener(ctrClientes);
+//		btnSalvar.addActionListener(ctrClientes);
 
 	}
 }

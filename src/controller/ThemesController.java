@@ -161,9 +161,9 @@ public class ThemesController implements ActionListener
 		}
 	}
 
-	private void notification(String returnMsg, String contem)
+	private void notification(String returnMsg, String contains)
 	{
-		if (returnMsg.contains(contem))
+		if (returnMsg.contains(contains))
 		{
 			JOptionPane.showMessageDialog(null, returnMsg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -175,9 +175,9 @@ public class ThemesController implements ActionListener
 
 	private void clearFields()
 	{
-		tfName.setText("");
-		taDesc.setText("");
-		ftfValue.setText("");
+		tfName.setText(null);
+		taDesc.setText(null);
+		ftfValue.setText(null);
 	}
 
 	private boolean validateFields()

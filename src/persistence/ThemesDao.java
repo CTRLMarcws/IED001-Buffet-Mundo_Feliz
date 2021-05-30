@@ -40,7 +40,7 @@ public class ThemesDao
 		}
 		return i;
 	}
-	
+
 	public int getId(int id)
 	{
 		ThemesNode aux = this.inicio;
@@ -103,11 +103,7 @@ public class ThemesDao
 		ThemesNode newTheme = new ThemesNode(theme);
 		newTheme.next = this.inicio;
 		this.inicio = newTheme;
-		msg = "Tema adicionado na lista: \n"
-				+ "ID:\t\t\t" + newTheme.getTheme().getId()
-				+ "\nNome:\t\t" + newTheme.getTheme().getName() 
-				+ "\nDescrição:\t" + newTheme.getTheme().getDesc()
-				+ "\nValor:\t\t" + newTheme.getTheme().getValue()+ "\n";
+		msg = msgMod(newTheme, 1);
 		return msg;
 	}
 
@@ -127,11 +123,7 @@ public class ThemesDao
 			}
 			ThemesNode newTheme = new ThemesNode(theme);
 			aux.next = newTheme;
-			msg = "Tema adicionado na lista: \n"
-					+ "ID:\t\t\t" + newTheme.getTheme().getId()
-					+ "\nNome:\t\t" + newTheme.getTheme().getName() 
-					+ "\nDescrição:\t" + newTheme.getTheme().getDesc()
-					+ "\nValor:\t\t" + newTheme.getTheme().getValue()+ "\n";
+			msg = msgMod(newTheme, 1);
 		}
 		if (write == 1)
 		{
@@ -140,14 +132,10 @@ public class ThemesDao
 		}
 		return msg;
 	}
-	
+
 	private String removeFirst()
 	{
-		msg = "Tema removido da lista: \n"
-				+ "ID:\t\t\t" + this.inicio.getTheme().getId()
-				+ "\nNome:\t\t" + this.inicio.getTheme().getName() 
-				+ "\nDescrição:\t" + this.inicio.getTheme().getDesc()
-				+ "\nValor:\t\t" + this.inicio.getTheme().getValue()+ "\n";
+		msg = msgMod(this.inicio, 0);
 		this.inicio = this.inicio.getNext();
 		return msg;
 	}
@@ -156,7 +144,7 @@ public class ThemesDao
 	{
 		if (this.inicio.next == null)
 		{
-			this.inicio = null; //mantém?
+			this.inicio = null;
 		}
 		else
 		{
@@ -168,11 +156,7 @@ public class ThemesDao
 				aux2 = aux1;
 				aux1 = aux1.getNext();
 			}
-			msg = "Tema removido da lista: \n"
-					+ "ID:\t\t\t" + aux1.getTheme().getId()
-					+ "\nNome:\t\t" + aux1.getTheme().getName() 
-					+ "\nDescrição:\t" + aux1.getTheme().getDesc()
-					+ "\nValor:\t\t" + aux1.getTheme().getValue()+ "\n";
+			msg = msgMod(aux1, 0);
 			aux2.setNext(null);
 		}
 		return msg;
@@ -205,11 +189,7 @@ public class ThemesDao
 					aux1 = aux1.getNext();
 					id --;
 				}
-				msg = "Tema removido da lista: \n"
-						+ "ID:\t\t\t" + aux1.getTheme().getId()
-						+ "\nNome:\t\t" + aux1.getTheme().getName() 
-						+ "\nDescrição:\t" + aux1.getTheme().getDesc()
-						+ "\nValor:\t\t" + aux1.getTheme().getValue()+ "\n";
+				msg = msgMod(aux1, 0);
 				aux2.setNext(aux1.getNext());
 			}
 		}
@@ -218,5 +198,21 @@ public class ThemesDao
 
 	//	update theme
 
+	private String msgMod (ThemesNode aux, int add)
+	{
+		if (add == 1)
+		{
+			msg = "Tema adicionado na lista: \n";
+		}
+		else
+		{
+			msg = "Tema removido da lista: \n";
+		}
+		msg += "ID:\t\t\t" + aux.getTheme().getId()
+				+ "\nNome:\t\t" + aux.getTheme().getName() 
+				+ "\nDescrição:\t" + aux.getTheme().getDesc()
+				+ "\nValor:\t\t" + aux.getTheme().getValue()+ "\n";
+		return msg;
+	}
 
 }

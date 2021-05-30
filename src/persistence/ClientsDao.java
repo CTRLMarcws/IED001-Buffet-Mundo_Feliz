@@ -214,6 +214,8 @@ public class ClientsDao
 		}
 		return msg;
 	}
+	
+	//update client
 
 	private String msgMod (ClientsNode aux, int add)
 	{

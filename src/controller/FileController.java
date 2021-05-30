@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import model.Address;
 import model.Client;
 import model.Theme;
 import persistence.ClientsDao;
@@ -79,21 +80,17 @@ public class FileController
 		fileWriter.close();			
 	}
 
-	
-
 	public ThemesDao readThemes(ThemesDao tDao) throws IOException
 	{
 		Theme theme;
-
 		File file = new File(path + nameThemes);
-
 		readDir();
 		if (readFile(nameThemes))
 		{
 			FileInputStream stream = new FileInputStream(file);
 			InputStreamReader reader = new InputStreamReader(stream);
 			BufferedReader buffer = new BufferedReader(reader);
-			
+
 			String line = buffer.readLine();
 			line = buffer.readLine();
 
@@ -104,14 +101,13 @@ public class FileController
 				tDao.addLast(theme, 0);
 				line = buffer.readLine();
 			}
-
 			buffer.close();
 			reader.close();
 			stream.close();
 		}
 		else
 		{
-			throw new IOException ("Empty database.");
+			throw new IOException ("Empty themes database.");
 		}
 		return tDao;
 	}
@@ -172,16 +168,20 @@ public class FileController
 		File file = new File(path + nameClients);
 		String newClient;
 		boolean exists = false;
-		
+
 		if(readFile(nameClients))
 		{
-			newClient = client.getId() + ";";
+			newClient = client.getId() + ";" + client.getName()+ ";" + client.getCpf() + ";"
+					+ client.getRg() + ";" + client.getEmail()+ ";" + client.getPhone() + ";"
+					+ client.getObs() + "\n";
 			exists = true;
 		}
 		else
 		{
-			newClient = "";
-			newClient += "";
+			newClient = "ID;Nome;CPF;RG;E-Mail;Telefone;Observação\n";
+			newClient += client.getId() + ";" + client.getName()+ ";" + client.getCpf() + ";"
+					+ client.getRg() + ";" + client.getEmail()+ ";" + client.getPhone() + ";"
+					+ client.getObs() + "\n";
 		}
 		FileWriter fileWriter = new FileWriter(file, exists);
 
@@ -197,23 +197,27 @@ public class FileController
 		Client client;
 		File file = new File(path + nameClients);
 		readDir();
-		if (readFile(nameThemes))
+		if (readFile(nameClients))
 		{
 			FileInputStream stream = new FileInputStream(file);
 			InputStreamReader reader = new InputStreamReader(stream);
 			BufferedReader buffer = new BufferedReader(reader);
-			
+
 			String line = buffer.readLine();
 			line = buffer.readLine();
 
 			while (line != null)
 			{
-				String lineTheme[] = line.split(";");
-//				client = new Client(Integer.parseInt(lineTheme[0]));
-//				cDao.addLast(client, 0);
+				String lineClient[] = line.split(";");
+				Address address = new Address(lineClient[7], lineClient[8], lineClient[9],
+						lineClient[10], lineClient[11], lineClient[12], lineClient[13]);
+				
+				client = new Client(Integer.parseInt(lineClient[0]), lineClient[1], lineClient[2],
+						lineClient[3], lineClient[4], lineClient[5], lineClient[6], address);
+				
+				cDao.addLast(client, 0);
 				line = buffer.readLine();
 			}
-
 			buffer.close();
 			reader.close();
 			stream.close();
@@ -230,11 +234,48 @@ public class FileController
 
 	}
 
-	public void deleteClient()
+	public void deleteClient(ClientsDao cDao, int id) throws IOException
 	{
+		int idClient = cDao.getId(id);
+		if(idClient == 0)
+		{
+			//cliente não encontrado
+		}
+		else
+		{
+			File file = new File(path + nameClients);
+			cDao.removeById(id);
+			if(cDao.getClient(0) == null)
+			{
+				file.delete();
+			}
+			else
+			{
+				StringBuffer buffer = new StringBuffer();
+				int i = 0;
+				Client client = cDao.getClient(i);
 
+				while (client != null)
+				{
+					buffer.append(client.getId() + ";" + client.getName()+ ";" + client.getCpf() + ";"
+							+ client.getRg() + ";" + client.getEmail()+ ";" + client.getPhone() + ";"
+							+ client.getObs() + "\n");
+					i++;
+					client = cDao.getClient(i);
+				}
+				String data = "ID;Nome;CPF;RG;E-Mail;Telefone;Observação";
+				data += buffer.toString();
+
+				FileWriter fileWriter = new FileWriter(file);
+
+				PrintWriter print = new PrintWriter(fileWriter);
+				print.write(data);
+				print.flush();
+				print.close();
+				fileWriter.close();
+			}
+		}
 	}
-
 
 	//-----------------------CRUD - Rental-----------------------
 

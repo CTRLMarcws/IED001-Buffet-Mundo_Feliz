@@ -4,8 +4,9 @@ public class Client
 {
 	private int id;
 	private String name, cpf, rg, email, phone, obs;
+	private Address address;
 
-	public Client(int id, String name, String cpf, String rg, String email, String phone, String obs)
+	public Client(int id, String name, String cpf, String rg, String email, String phone, String obs, Address address)
 	{
 		this.id = id;
 		this.name = name;
@@ -14,6 +15,7 @@ public class Client
 		this.email = email;
 		this.phone = phone;
 		this.obs = obs;
+		this.address = address;
 	}
 
 	public String getName()
@@ -84,5 +86,13 @@ public class Client
 	public void setObs(String obs)
 	{
 		this.obs = obs;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 }
