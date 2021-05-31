@@ -7,10 +7,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 import view.FMain;
+import view.PClientForm;
 import view.PQuery;
 import view.PThemeForm;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "rawtypes"})
 public class MainMenuController implements ActionListener
 {
 	private JComboBox cbOptions;
@@ -37,10 +38,10 @@ public class MainMenuController implements ActionListener
 				FMain.refreshFrame(new PThemeForm());
 				break;
 			case "Clientes":
-				//FPrincipal.atualizarFrame(new PCadClientes());
+				FMain.refreshFrame(new PClientForm());				
 				break;
 			case "Alugueis":
-				//FPrincipal.atualizarFrame(new PCadAlugueis());
+//				FMain.refreshFrame(new PRentalForm());				
 				break;
 			}
 
@@ -51,19 +52,18 @@ public class MainMenuController implements ActionListener
 			switch(opt)
 			{
 			case "Temas":
-				QueryController.setKind(0);
+				FMain.refreshFrame(new PQuery("Temas"));
 				break;
 
 			case "Clientes":
-				//consultaTipo(1);
+				FMain.refreshFrame(new PQuery("Clientes"));
 				break;
 
 			case "Alugueis":
-				//consultaTipo(2);
 				break;
 			}
 
-			FMain.refreshFrame(new PQuery());
+//			FMain.refreshFrame(new PQuery());
 		}
 	}
 

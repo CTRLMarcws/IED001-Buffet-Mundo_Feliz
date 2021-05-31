@@ -68,7 +68,7 @@ public class ThemesController implements ActionListener
 		}
 		if (cmd.equals("Ver Todos"))
 		{
-			FMain.refreshFrame(new PQuery());
+			FMain.refreshFrame(new PQuery("Temas"));
 		}
 	}
 
@@ -121,6 +121,7 @@ public class ThemesController implements ActionListener
 				if(theme != null)
 				{
 					returnMsg = tDao.removeById(theme.getId());					
+					clearFields();
 				}
 				else
 				{
@@ -130,7 +131,6 @@ public class ThemesController implements ActionListener
 			else
 			{
 				returnMsg = "A lista está vazia.";
-				clearFields();
 			}
 
 		}

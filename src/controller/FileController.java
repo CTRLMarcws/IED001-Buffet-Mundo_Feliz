@@ -169,19 +169,24 @@ public class FileController
 		String newClient;
 		boolean exists = false;
 
+		Address address = new Address(client.getAddress().getStreet(), client.getAddress().getStreetNum(),
+				client.getAddress().getDistrict(),client.getAddress().getCity(),client.getAddress().getState(),
+				client.getAddress().getAddrCompl(), client.getAddress().getPostalCode());
+		
 		if(readFile(nameClients))
 		{
+			
 			newClient = client.getId() + ";" + client.getName()+ ";" + client.getCpf() + ";"
 					+ client.getRg() + ";" + client.getEmail()+ ";" + client.getPhone() + ";"
-					+ client.getObs() + "\n";
+					+ client.getObs() + ";" + address.formatToFile() + "\n";
 			exists = true;
 		}
 		else
 		{
-			newClient = "ID;Nome;CPF;RG;E-Mail;Telefone;Observação\n";
+			newClient = "ID;Nome;CPF;RG;E-Mail;Telefone;Observação;Endereço;Número;Bairro;Cidade;UF;Complemento;CEP\n";
 			newClient += client.getId() + ";" + client.getName()+ ";" + client.getCpf() + ";"
 					+ client.getRg() + ";" + client.getEmail()+ ";" + client.getPhone() + ";"
-					+ client.getObs() + "\n";
+					+ client.getObs() + ";" + address.formatToFile() + "\n";
 		}
 		FileWriter fileWriter = new FileWriter(file, exists);
 
@@ -259,11 +264,11 @@ public class FileController
 				{
 					buffer.append(client.getId() + ";" + client.getName()+ ";" + client.getCpf() + ";"
 							+ client.getRg() + ";" + client.getEmail()+ ";" + client.getPhone() + ";"
-							+ client.getObs() + "\n");
+							+ client.getObs() + client.getAddress().formatToFile() + "\n");
 					i++;
 					client = cDao.getClient(i);
 				}
-				String data = "ID;Nome;CPF;RG;E-Mail;Telefone;Observação";
+				String data = "ID;Nome;CPF;RG;E-Mail;Telefone;Observação;Endereço;Número;Bairro;Cidade;UF;Complemento;CEP\n";
 				data += buffer.toString();
 
 				FileWriter fileWriter = new FileWriter(file);

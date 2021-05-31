@@ -6,7 +6,6 @@ import controller.FileController;
 import model.Client;
 import model.ClientsNode;
 
-@SuppressWarnings("unused")
 public class ClientsDao
 {
 	private String msg;

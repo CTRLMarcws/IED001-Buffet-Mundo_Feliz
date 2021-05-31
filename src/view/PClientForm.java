@@ -18,22 +18,27 @@ import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 
 import controller.ClientsController;
-import persistence.ClientsDao;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class PClientForm extends JPanel
 {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField tfName, tfStreet, tfDistrict,
-	tfCity, tfAddrCompl, tfEmail, tfStreetNum;
-	private JFormattedTextField ftfId, ftfCpf, ftfRg, ftfPhone, ftfPostalCode;
+	private JTextField tfName,  tfEmail;
+	private JFormattedTextField ftfId, ftfCpf, ftfRg, ftfPhone;
 	private JTextArea taObs;
+	
+	private JTextField tfStreet, tfDistrict, tfCity, tfAddrCompl, tfStreetNum;
+	private JFormattedTextField ftfPostalCode;
+	
 	private JLabel lblHeading, label;
-	private JButton btnConsultar, btnFinanceiro, btnHistorico, btnQuery, btnSalvar;
+	private JLabel lblId;
+	private JButton btnSearch, btnHistory, btnQuery, btnSubmit, btnRemove;
 
 	public Dimension getPreferredSize()
 	{
-		return new Dimension(563, 543);
+		return new Dimension(550, 500);
 	}
 
 
@@ -51,9 +56,9 @@ public class PClientForm extends JPanel
 		label.setBounds(20, 60, 46, 20);
 		add(label);
 
-		label = new JLabel("Id");
-		label.setBounds(400, 60, 46, 20);
-		add(label);
+		lblId = new JLabel("ID");
+		lblId.setBounds(400, 60, 46, 20);
+		add(lblId);
 
 		label = new JLabel("CPF");
 		label.setBounds(20, 110, 46, 20);
@@ -80,19 +85,19 @@ public class PClientForm extends JPanel
 		add(label);
 
 		label = new JLabel("Cidade");
-		label.setBounds(300, 260, 46, 20);
+		label.setBounds(370, 260, 46, 20);
 		add(label);
 
 		label = new JLabel("Observa\u00E7\u00E3o");
-		label.setBounds(20, 320, 100, 20);
+		label.setBounds(20, 310, 100, 20);
 		add(label);
 
 		label = new JLabel("Complemento");
-		label.setBounds(435, 210, 90, 20);
+		label.setBounds(390, 210, 90, 20);
 		add(label);
 
 		label = new JLabel("Número");
-		label.setBounds(330, 210, 63, 20);
+		label.setBounds(280, 210, 63, 20);
 		add(label);
 
 		label = new JLabel("CEP");
@@ -116,11 +121,13 @@ public class PClientForm extends JPanel
 		}
 
 		ftfId = new JFormattedTextField(Id);
-		ftfId.setBounds(400, 80, 134, 20);
+		ftfId.setEnabled(false);
+		ftfId.setEditable(false);
+		ftfId.setBounds(400, 80, 130, 20);
 		add(ftfId);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 340, 354, 60);
+		scrollPane.setBounds(20, 330, 510, 60);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scrollPane);
@@ -170,16 +177,16 @@ public class PClientForm extends JPanel
 		}
 
 		ftfPhone = new JFormattedTextField(Fone);
-		ftfPhone.setBounds(340, 130, 194, 19);
+		ftfPhone.setBounds(340, 130, 190, 20);
 		add(ftfPhone);
 
 		tfEmail = new JTextField();
-		tfEmail.setBounds(180, 180, 354, 20);
+		tfEmail.setBounds(180, 180, 350, 20);
 		add(tfEmail);
 		tfEmail.setColumns(10);
 
 		tfStreet = new JTextField();
-		tfStreet.setBounds(20, 230, 300, 20);
+		tfStreet.setBounds(20, 230, 250, 20);
 		add(tfStreet);
 		tfStreet.setColumns(10);
 
@@ -189,17 +196,17 @@ public class PClientForm extends JPanel
 		tfDistrict.setColumns(10);
 
 		tfCity = new JTextField();
-		tfCity.setBounds(304, 280, 230, 20);
+		tfCity.setBounds(370, 280, 160, 20);
 		add(tfCity);
 		tfCity.setColumns(10);
 
 		tfAddrCompl = new JTextField();
-		tfAddrCompl.setBounds(439, 230, 95, 20);
+		tfAddrCompl.setBounds(390, 230, 140, 20);
 		add(tfAddrCompl);
 		tfAddrCompl.setColumns(10);
 
 		tfStreetNum = new JTextField();
-		tfStreetNum.setBounds(330, 230, 95, 20);
+		tfStreetNum.setBounds(280, 230, 100, 20);
 		add(tfStreetNum);
 		tfStreetNum.setColumns(10);
 
@@ -218,25 +225,21 @@ public class PClientForm extends JPanel
 		ftfPostalCode.setBounds(20, 180, 150, 20);
 		add(ftfPostalCode);
 
-		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(110, 465, 100, 25);
-		add(btnSalvar);
+		btnSubmit = new JButton("Salvar");
+		btnSubmit.setBounds(40, 410, 130, 25);
+		add(btnSubmit);
 
 		btnQuery = new JButton("Ver Todos");
-		btnQuery.setBounds(370, 465, 100, 25);
+		btnQuery.setBounds(380, 410, 130, 25);
 		add(btnQuery);
 
-		btnHistorico = new JButton("Historico");
-		btnHistorico.setBounds(384, 341, 150, 25);
-		add(btnHistorico);
+		btnHistory = new JButton("Historico");
+		btnHistory.setBounds(380, 445, 130, 25);
+		add(btnHistory);
 
-		btnConsultar = new JButton("Consultar");
-		btnConsultar.setBounds(240, 465, 100, 25);
-		add(btnConsultar);
-
-		btnFinanceiro = new JButton("Situação Financeira");
-		btnFinanceiro.setBounds(384, 376, 150, 25);
-		add(btnFinanceiro);
+		btnSearch = new JButton("Consultar");
+		btnSearch.setBounds(210, 410, 130, 25);
+		add(btnSearch);
 
 		JButton btnBack = new JButton("<");
 		btnBack.addActionListener(new ActionListener() {
@@ -246,14 +249,31 @@ public class PClientForm extends JPanel
 		});
 		btnBack.setBounds(10, 14, 41, 23);
 		add(btnBack);
+		JButton btnClear = new JButton("Limpar");
+		btnClear.setBounds(210, 445, 130, 25);
+		add(btnClear);
 
-//		ClientsController ctrClientes = new ClientsController(tfName,  tfEmail,  tfStreet, tfDistrict,  tfCity,  tfAddrCompl,  tfStreetNum, ftfId,  ftfCpf,  ftfRg, ftfPhone,  ftfPostalCode,  taObs);
-//		
-//		btnConsultar.addActionListener(ctrClientes);
-//		btnFinanceiro.addActionListener(ctrClientes);
-//		btnHistorico.addActionListener(ctrClientes);
-//		btnQuery.addActionListener(ctrClientes);
-//		btnSalvar.addActionListener(ctrClientes);
+		ClientsController ctrClientes = new ClientsController(ftfId, tfName, ftfCpf, ftfRg, tfEmail,
+				ftfPhone, taObs, tfStreet, tfDistrict, tfCity, tfAddrCompl, tfStreetNum, ftfPostalCode);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"SP", "RJ", "MC"}));
+		comboBox.setBounds(300, 280, 60, 20);
+		add(comboBox);
+		
+		JLabel lblEstado = new JLabel("Estado");
+		lblEstado.setBounds(304, 260, 46, 20);
+		add(lblEstado);
+		
+		btnRemove = new JButton("Excluir");
+		btnRemove.setBounds(40, 445, 130, 25);
+		add(btnRemove);
+		
+		btnSearch.addActionListener(ctrClientes);
+		btnClear.addActionListener(ctrClientes);
+		btnHistory.addActionListener(ctrClientes);
+		btnQuery.addActionListener(ctrClientes);
+		btnSubmit.addActionListener(ctrClientes);
 
 	}
 }
