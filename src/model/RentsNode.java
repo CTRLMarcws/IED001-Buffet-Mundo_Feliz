@@ -4,7 +4,7 @@ public class RentsNode
 {
 	public Rent rent;
 	public RentsNode next, prev;
-	
+
 	public RentsNode(Rent rent)
 	{
 		this.rent = rent;

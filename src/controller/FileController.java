@@ -10,17 +10,19 @@ import java.io.PrintWriter;
 
 import model.Address;
 import model.Client;
+import model.Rent;
 import model.Theme;
 import persistence.ClientsDao;
+import persistence.RentsDao;
 import persistence.ThemesDao;
 
-@SuppressWarnings("unused")
 public class FileController
 {
 	private final String path = "C:\\TEMP\\ED\\";
 	private final String nameThemes = "themes.csv";
 	private final String nameClients = "clients.csv";
 	private final String nameRents = "rents.csv";
+	private File file;
 
 	public FileController()
 	{
@@ -44,7 +46,7 @@ public class FileController
 	}
 	public boolean readFile(String name)
 	{
-		File file = new File(path + name);
+		file = new File(path + name);
 		if (!file.exists() || !file.isFile())
 		{
 			return false;			
@@ -56,7 +58,7 @@ public class FileController
 	public void createTheme(Theme theme) throws IOException
 	{
 		readDir();
-		File file = new File(path + nameThemes);
+		file = new File(path + nameThemes);
 		String newTheme;
 		boolean exists = false;
 
@@ -83,7 +85,7 @@ public class FileController
 	public ThemesDao readThemes(ThemesDao tDao) throws IOException
 	{
 		Theme theme;
-		File file = new File(path + nameThemes);
+		file = new File(path + nameThemes);
 		readDir();
 		if (readFile(nameThemes))
 		{
@@ -126,7 +128,7 @@ public class FileController
 		}
 		else
 		{
-			File file = new File(path + nameThemes);
+			file = new File(path + nameThemes);
 			tDao.removeById(id);
 			if (tDao.getTheme(0) == null)
 			{
@@ -165,17 +167,17 @@ public class FileController
 	public void createClient(Client client) throws IOException
 	{
 		readDir();
-		File file = new File(path + nameClients);
+		file = new File(path + nameClients);
 		String newClient;
 		boolean exists = false;
 
 		Address address = new Address(client.getAddress().getStreet(), client.getAddress().getStreetNum(),
 				client.getAddress().getDistrict(),client.getAddress().getCity(),client.getAddress().getState(),
 				client.getAddress().getAddrCompl(), client.getAddress().getPostalCode());
-		
+
 		if(readFile(nameClients))
 		{
-			
+
 			newClient = client.getId() + ";" + client.getName()+ ";" + client.getCpf() + ";"
 					+ client.getRg() + ";" + client.getEmail()+ ";" + client.getPhone() + ";"
 					+ client.getObs() + ";" + address.formatToFile() + "\n";
@@ -200,7 +202,7 @@ public class FileController
 	public ClientsDao readClients(ClientsDao cDao) throws IOException
 	{
 		Client client;
-		File file = new File(path + nameClients);
+		file = new File(path + nameClients);
 		readDir();
 		if (readFile(nameClients))
 		{
@@ -216,10 +218,10 @@ public class FileController
 				String lineClient[] = line.split(";");
 				Address address = new Address(lineClient[7], lineClient[8], lineClient[9],
 						lineClient[10], lineClient[11], lineClient[12], lineClient[13]);
-				
+
 				client = new Client(Integer.parseInt(lineClient[0]), lineClient[1], lineClient[2],
 						lineClient[3], lineClient[4], lineClient[5], lineClient[6], address);
-				
+
 				cDao.addLast(client, 0);
 				line = buffer.readLine();
 			}
@@ -248,7 +250,7 @@ public class FileController
 		}
 		else
 		{
-			File file = new File(path + nameClients);
+			file = new File(path + nameClients);
 			cDao.removeById(id);
 			if(cDao.getClient(0) == null)
 			{
@@ -284,23 +286,118 @@ public class FileController
 
 	//-----------------------CRUD - Rental-----------------------
 
-	public void createRental()
+	public void createRent(Rent rent) throws IOException
+	{
+		readDir();
+		file = new File(path + nameRents);
+		String newRent;
+		boolean exists = false;
+
+		//address?
+
+		if(readFile(nameRents))
+		{
+			newRent = rent.getId() + ";" + rent.getClient() + ";" + rent.getTheme()
+			+ ";" + rent.getDate() + ";" + rent.getStartTime() + ";" + rent.getEndTime()
+			+ ";" + rent.getAddress() + ";" + rent.getValue() + "\n";
+			exists = true;
+		}
+		else
+		{
+			newRent = "ID;Cliente;Tema;Data;Hora-Inicio;Hora-Fim;Endereço;Valor\n";
+			newRent += rent.getId() + ";" + rent.getClient() + ";" + rent.getTheme() + ";"
+					+ rent.getDate() + ";" + rent.getStartTime() + ";" + rent.getEndTime()+ ";"
+					+ rent.getAddress() + ";" + rent.getValue() + "\n";
+		}
+
+		FileWriter fileWriter = new FileWriter(file, exists);
+
+		PrintWriter print = new PrintWriter(fileWriter);
+		print.write(newRent);
+		print.flush();
+		print.close();
+		fileWriter.close();
+
+	}
+
+	public RentsDao readRents(RentsDao rDao) throws IOException
+	{
+		Rent rent;
+		file = new File(path + nameRents);
+		readDir();
+		if(readFile(nameRents))
+		{
+			FileInputStream stream = new FileInputStream(file);
+			InputStreamReader reader = new InputStreamReader(stream);
+			BufferedReader buffer = new BufferedReader(reader);
+
+			String line = buffer.readLine();
+			line = buffer.readLine();
+
+			while (line != null)
+			{
+				String lineRent[] = line.split(";");
+				//address?
+				rent = new Rent(Integer.parseInt(lineRent[0]), lineRent[1], lineRent[2], lineRent[3],
+						lineRent[4], lineRent[5], lineRent[6], Double.parseDouble(lineRent[7]));
+				rDao.addLast(rent, 0);
+				line = buffer.readLine();
+			}
+			buffer.close();
+			reader.close();
+			stream.close();
+		}
+		else
+		{
+			throw new IOException ("Empty clients database.");
+		}
+		return rDao;
+	}
+
+	public void updateRent()
 	{
 
 	}
 
-	public void readRentals()
+	public void deleteRent(RentsDao rDao, int id) throws IOException
 	{
+		int idRent = rDao.getId(id);
+		if(idRent == 0)
+		{
+			//rents não encontrado
+		}
+		else
+		{
+			file = new File(path + nameRents);
+			rDao.removeById(id);
+			if(rDao.getRent(0) == null)
+			{
+				file.delete();
+			}
+			else
+			{
+				StringBuffer buffer = new StringBuffer();
+				int i = 0;
+				Rent rent = rDao.getRent(i);
 
-	}
+				while(rent != null)
+				{
+					buffer.append(rent.getId() + ";" + rent.getClient() + ";" + rent.getTheme() + ";"
+							+ rent.getDate() + ";" + rent.getStartTime() + ";" + rent.getEndTime()+ ";"
+							+ rent.getAddress() + ";" + rent.getValue() + "\n");
+					i++;
+					rent = rDao.getRent(i);
+				}
+				String data = "ID;Cliente;Tema;Data;Hora-Inicio;Hora-Fim;Endereço;Valor\n";
+				data += buffer.toString();
+				FileWriter fileWriter = new FileWriter(file);
 
-	public void updateRental()
-	{
-
-	}
-
-	public void deleteRental()
-	{
-
+				PrintWriter print = new PrintWriter(fileWriter);
+				print.write(data);
+				print.flush();
+				print.close();
+				fileWriter.close();
+			}
+		}
 	}
 }

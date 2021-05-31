@@ -213,7 +213,7 @@ public class ClientsDao
 		}
 		return msg;
 	}
-	
+
 	//update client
 
 	private String msgMod (ClientsNode aux, int add)
@@ -226,13 +226,13 @@ public class ClientsDao
 		{
 			msg = "Cliente removido na lista: \n";			
 		}
-		msg += "ID:\t\t\t" + aux.getClient().getId()
-				+ "\nNome:\t\t\t" + aux.getClient().getName()
-				+ "\nCPF:\t\t\t" + aux.getClient().getCpf()
-				+ "\nRG:\t\t\t\t" + aux.getClient().getRg()
-				+ "\nE-mail:\t\t\t" + aux.getClient().getEmail()
-				+ "\nNúmero:\t\t" + aux.getClient().getPhone()
-				+ "\nObservação:\t" + aux.getClient().getObs() + "\n";
+		msg += "ID: " + aux.getClient().getId()
+				+ "\nNome: " + aux.getClient().getName()
+				+ "\nCPF: " + aux.getClient().getCpf()
+				+ "\nRG: " + aux.getClient().getRg()
+				+ "\nE-mail: " + aux.getClient().getEmail()
+				+ "\nNúmero: " + aux.getClient().getPhone()
+				+ "\nObservação: " + aux.getClient().getObs() + "\n";
 		return msg;
 	}
 }

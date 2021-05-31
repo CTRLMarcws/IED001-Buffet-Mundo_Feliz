@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import controller.MainMenuController;
-import model.ClientsTableModel;
+import model.MainMenuTableModel;
 
 @SuppressWarnings("rawtypes")
 public class PMainMenu extends JPanel
@@ -72,7 +72,7 @@ public class PMainMenu extends JPanel
 		table = new JTable();
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setFillsViewportHeight(true);
-		ClientsTableModel tableModel = new ClientsTableModel(null); //rDao
+		MainMenuTableModel tableModel = new MainMenuTableModel(null); //rDao
 		table.setModel(tableModel);
 
 		JScrollPane scrollPane = new JScrollPane(table);

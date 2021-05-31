@@ -72,7 +72,7 @@ public class RentsDao
 		}
 		return aux.getRent();
 	}
-	
+
 	public RentsNode getRentsNode(int rowIndex)
 	{
 		RentsNode aux = this.start;
@@ -125,7 +125,7 @@ public class RentsDao
 		if (write == 1)
 		{
 			file = new FileController();
-			file.createRental(rent);
+			file.createRent(rent);
 		}
 		return msg;
 	}
@@ -196,9 +196,9 @@ public class RentsDao
 
 	public void updateById()
 	{
-		
+
 	}
-	
+
 	private String msgMod(RentsNode aux, int add)
 	{
 		if (add == 1)
@@ -215,7 +215,6 @@ public class RentsDao
 				+ "\nData: " + aux.getRent().getDate()
 				+ "\nDas: " + aux.getRent().getStartTime()
 				+ " as " + aux.getRent().getEndTime()
-				+ "\nEndereço: " + aux.getRent().getAddress()
 				+ "\nTotal: " + aux.getRent().getValue() + "\n";
 		return msg;
 	}
@@ -224,7 +223,7 @@ public class RentsDao
 	{
 		quickSort(0, getLenght());
 	}
-	
+
 	private void quickSort(int low, int high)
 	{
 		if(low < high)
@@ -234,16 +233,16 @@ public class RentsDao
 			quickSort(pivot + 1, high);
 		}
 	}
-	
+
 	private int partition(int high, int low)
 	{
 		int i = high;
-		
+
 		for(int j = high; j < low; j++)
 		{
 			LocalDate dateJ = getRent(j).formatDate(getRent(j).getDate());
 			LocalDate dateLow = getRent(low).formatDate(getRent(low).getDate());
-			
+
 			if(dateJ.isBefore(dateLow))
 			{
 				swap(i++, j);
@@ -252,15 +251,15 @@ public class RentsDao
 		swap(i, low);
 		return i;
 	}
-	
+
 	private void swap(int high, int low)
 	{
 		RentsNode nodeHigh = getRentsNode(high);
 		Rent rentHigh = nodeHigh.getRent();
-		
+
 		RentsNode nodeLow = getRentsNode(low);
 		Rent rentLow = nodeLow.getRent();
-		
+
 		nodeLow.setRent(rentHigh);
 		nodeHigh.setRent(rentLow);
 	}

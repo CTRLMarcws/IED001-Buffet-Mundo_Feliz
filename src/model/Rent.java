@@ -109,7 +109,7 @@ public class Rent
 	{
 		this.discount = discount;
 	}
-	
+
 	public LocalDate formatDate(String date)
 	{
 		String line[] = date.split("/");
