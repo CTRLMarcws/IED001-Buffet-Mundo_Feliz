@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDate;
+
 public class Rent
 {
 	private int id;
@@ -106,5 +108,11 @@ public class Rent
 	public void setDiscount(double discount)
 	{
 		this.discount = discount;
+	}
+	
+	public LocalDate formatDate(String date)
+	{
+		String line[] = date.split("/");
+		return LocalDate.of(Integer.parseInt(line[2]), Integer.parseInt(line[1]), Integer.parseInt(line[0]));
 	}
 }
