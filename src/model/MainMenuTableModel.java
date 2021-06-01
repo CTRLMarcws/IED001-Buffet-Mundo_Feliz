@@ -43,7 +43,6 @@ public class MainMenuTableModel extends AbstractTableModel
 	{
 		switch(columnIndex)
 		{
-		//"Cliente", "Tema", "Data", "Hora-Inicio", "Hora-Fim"
 		case 0: return rDao.getRent(rowIndex).getClient();
 
 		case 1: return rDao.getRent(rowIndex).getTheme();

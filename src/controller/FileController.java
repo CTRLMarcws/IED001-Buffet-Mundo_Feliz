@@ -53,6 +53,24 @@ public class FileController
 		}
 		return true;
 	}
+	
+	/*public static void initializeFiles() throws IOException
+	{
+		String [] staticFilesNames = {"C:\\TEMP\\ED\\","themes.csv", "clients.csv", "rents.csv"};
+		for (int i = 1; i < 4; i++)
+		{
+			File file = new File(staticFilesNames[0] + staticFilesNames[i]);
+			if(!file.exists() || !file.isFile())
+			{
+				FileWriter fileWriter = new FileWriter(file);
+//				String columns = "Id;Nome;Descricao;Valor\n";
+				PrintWriter print = new PrintWriter(fileWriter);
+				print.flush();
+				print.close();
+				fileWriter.close();				
+			}
+		}
+	}*/
 
 	//-----------------------CRUD - Themes-----------------------
 	public void createTheme(Theme theme) throws IOException
@@ -109,6 +127,7 @@ public class FileController
 		}
 		else
 		{
+			//criar novo arquivo?
 			throw new IOException ("Empty themes database.");
 		}
 		return tDao;

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,8 +19,6 @@ import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 
 import controller.ClientsController;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 public class PClientForm extends JPanel
 {
@@ -33,8 +32,7 @@ public class PClientForm extends JPanel
 	private JFormattedTextField ftfPostalCode;
 	
 	private JLabel lblHeading, label;
-	private JLabel lblId;
-	private JButton btnSearch, btnHistory, btnQuery, btnSubmit, btnRemove;
+	private JButton btnSearch, btnHistory, btnQuery, btnSubmit, btnRemove, btnBack, btnClear;
 
 	public Dimension getPreferredSize()
 	{
@@ -56,9 +54,9 @@ public class PClientForm extends JPanel
 		label.setBounds(20, 60, 46, 20);
 		add(label);
 
-		lblId = new JLabel("ID");
-		lblId.setBounds(400, 60, 46, 20);
-		add(lblId);
+		label = new JLabel("ID");
+		label.setBounds(400, 60, 46, 20);
+		add(label);
 
 		label = new JLabel("CPF");
 		label.setBounds(20, 110, 46, 20);
@@ -241,7 +239,7 @@ public class PClientForm extends JPanel
 		btnSearch.setBounds(210, 410, 130, 25);
 		add(btnSearch);
 
-		JButton btnBack = new JButton("<");
+		btnBack = new JButton("<");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FMain.refreshFrame(new PMainMenu());
@@ -249,26 +247,31 @@ public class PClientForm extends JPanel
 		});
 		btnBack.setBounds(10, 14, 41, 23);
 		add(btnBack);
-		JButton btnClear = new JButton("Limpar");
+		
+		btnClear = new JButton("Limpar");
 		btnClear.setBounds(210, 445, 130, 25);
 		add(btnClear);
 
 		ClientsController ctrClientes = new ClientsController(ftfId, tfName, ftfCpf, ftfRg, tfEmail,
 				ftfPhone, taObs, tfStreet, tfDistrict, tfCity, tfAddrCompl, tfStreetNum, ftfPostalCode);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"SP", "RJ", "MC"}));
-		comboBox.setBounds(300, 280, 60, 20);
-		add(comboBox);
+		String arrayStates[] = {"AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS",
+				"MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"};
 		
-		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setBounds(304, 260, 46, 20);
-		add(lblEstado);
+		JComboBox<String> cbStates = new JComboBox<>(arrayStates);
+		cbStates.setBounds(300, 280, 60, 20);
+		add(cbStates);
+		
+		label = new JLabel("Estado");
+		label.setBounds(304, 260, 46, 20);
+		add(label);
 		
 		btnRemove = new JButton("Excluir");
 		btnRemove.setBounds(40, 445, 130, 25);
 		add(btnRemove);
 		
+		
+		btnRemove.addActionListener(ctrClientes);
 		btnSearch.addActionListener(ctrClientes);
 		btnClear.addActionListener(ctrClientes);
 		btnHistory.addActionListener(ctrClientes);

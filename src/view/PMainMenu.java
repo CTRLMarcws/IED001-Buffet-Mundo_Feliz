@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -18,16 +17,19 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import controller.FileController;
 import controller.MainMenuController;
 import model.MainMenuTableModel;
+import model.RentsTableModel;
+import persistence.RentsDao;
 
-@SuppressWarnings("rawtypes")
 public class PMainMenu extends JPanel
 {
 	private JLabel lblHeading, lblDate, lblNextRentals;
 	private JButton btnForms, btnQuery;
 	private JTable table;
-	private JComboBox cbOptions;
+	private JComboBox<String> cbOptions;
+	private RentsDao rDao;
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +41,37 @@ public class PMainMenu extends JPanel
 	public PMainMenu() 
 	{
 		setLayout(null);
+		initComp();
 
+		FileController file = new FileController();
+		rDao = new RentsDao();
+
+		try
+		{
+			rDao = file.readRents(rDao);
+		}
+		catch (Exception e)
+		{	
+			e.printStackTrace();
+		}
+		if (!rDao.emptyList())
+		{
+			RentsTableModel rentModel = new RentsTableModel(rDao);
+			table.setModel(rentModel);			
+		}
+		else
+		{
+			//não há agendamentos para demonstrar
+		}
+
+		MainMenuController ctrPrinc = new MainMenuController(cbOptions, btnForms, btnQuery);
+		btnForms.addActionListener(ctrPrinc);
+		btnQuery.addActionListener(ctrPrinc);
+
+	}
+
+	private void initComp()
+	{
 		lblHeading = new JLabel("Bem-vinda de volta, Rafaela!");
 		lblHeading.setFont(new Font("Monotype Corsiva", Font.PLAIN, 30));
 		lblHeading.setHorizontalAlignment(SwingConstants.CENTER);
@@ -72,21 +104,16 @@ public class PMainMenu extends JPanel
 		table = new JTable();
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setFillsViewportHeight(true);
-		MainMenuTableModel tableModel = new MainMenuTableModel(null); //rDao
+		MainMenuTableModel tableModel = new MainMenuTableModel(rDao); //rDao
 		table.setModel(tableModel);
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 196, 430, 93);
 		add(scrollPane);
 
-		cbOptions = new JComboBox();
-		cbOptions.setModel(new DefaultComboBoxModel(new String[] {"Temas", "Clientes", "Alugueis"}));
+		String [] arrayType = {"Temas", "Clientes", "Alugueis"};
+		cbOptions = new JComboBox<>(arrayType);
 		cbOptions.setBounds(30, 113, 100, 22);
-		add(cbOptions);
-
-		MainMenuController ctrPrinc = new MainMenuController(cbOptions, btnForms, btnQuery);
-		btnForms.addActionListener(ctrPrinc);
-		btnQuery.addActionListener(ctrPrinc);
-
+		add(cbOptions);	
 	}
 }

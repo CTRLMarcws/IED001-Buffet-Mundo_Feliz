@@ -11,7 +11,6 @@ import view.PClientForm;
 import view.PQuery;
 import view.PThemeForm;
 
-@SuppressWarnings({"unused", "rawtypes"})
 public class MainMenuController implements ActionListener
 {
 	private JComboBox cbOptions;

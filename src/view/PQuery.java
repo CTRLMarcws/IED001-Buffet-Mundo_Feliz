@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -14,16 +13,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import controller.FileController;
 import controller.QueryController;
 import model.ClientsTableModel;
+import model.RentsTableModel;
 import model.ThemesTableModel;
 import persistence.ClientsDao;
+import persistence.RentsDao;
 import persistence.ThemesDao;
-import javax.swing.ScrollPaneConstants;
 
 public class PQuery extends JPanel
 {
@@ -32,23 +33,13 @@ public class PQuery extends JPanel
 	private JTextField tfSearch;
 	private JButton btnEdit, btnSearch, btnRemove;
 	private JLabel lblHeading;
-	private JComboBox cbOptions;
+	private JComboBox<String> cbOptions;
 	private ThemesDao tDao;
 	private ClientsDao cDao;
-	private QueryController qCont;
+	private RentsDao rDao;
 
 	public PQuery(String headingType)
 	{
-//		String headingType = "";
-//		
-//		switch(type)
-//		{
-//		case 0: headingType = "Temas";
-//		
-//		case 1: headingType = "Clientes";
-//
-//		case 2: headingType = "Alugueis";
-//		}
 		initComp(headingType);
 		initList(headingType);
 		FMain.frame.revalidate();
@@ -91,6 +82,18 @@ public class PQuery extends JPanel
 			break;
 			
 		case "Alugueis":
+			rDao = new RentsDao();
+			
+			try
+			{
+				rDao = file.readRents(rDao);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			RentsTableModel rentModel = new RentsTableModel(rDao);
+			table.setModel(rentModel);
 			break;
 		}
 	}
@@ -129,8 +132,8 @@ public class PQuery extends JPanel
 		lblHeading.setBounds(10, 11, 670, 23);
 		add(lblHeading);
 
-		cbOptions = new JComboBox();
-		cbOptions.setModel(new DefaultComboBoxModel(new String[] {"Nome", "ID"}));
+		String [] arraySearch = {"Nome", "ID"};
+		cbOptions = new JComboBox<>(arraySearch);
 		cbOptions.setBounds(10, 47, 93, 22);
 		add(cbOptions);
 

@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import controller.FileController;
+
 public class FMain
 {
 	static JFrame frame;
@@ -17,6 +19,7 @@ public class FMain
 				try
 				{
 					generateFrame();
+					FileController.initializeFiles();
 				} 
 				catch (Exception e)
 				{
