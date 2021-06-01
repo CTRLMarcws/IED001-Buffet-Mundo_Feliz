@@ -21,7 +21,6 @@ import javax.swing.ScrollPaneConstants;
 
 public class PThemeForm extends JPanel
 {
-
 	private JLabel lblHeading, label;
 	private JTextField tfName;
 	private JFormattedTextField ftfValue;
@@ -37,6 +36,12 @@ public class PThemeForm extends JPanel
 	}
 
 	public PThemeForm()
+	{
+		initComp();
+		FMain.setTitle("Cadastro de temas");
+	}
+	
+	public void initComp()
 	{
 		setLayout(null);
 		lblHeading = new JLabel("Cadastro de Temas");
@@ -77,6 +82,16 @@ public class PThemeForm extends JPanel
 		ftfValue.setBounds(20, 217, 110, 20);
 		add(ftfValue);
 
+		label = new JLabel("ID");
+		label.setBounds(320, 198, 46, 20);
+		add(label);
+
+		tfId = new JTextField();
+		tfId.setEnabled(false);
+		tfId.setEditable(false);
+		tfId.setBounds(320, 217, 110, 20);
+		add(tfId);
+
 		btnSubmit = new JButton("Salvar");
 		btnSubmit.setBounds(60, 260, 95, 23);
 		add(btnSubmit);
@@ -93,6 +108,7 @@ public class PThemeForm extends JPanel
 		btnSearch.setBounds(335, 79, 95, 19);
 		add(btnSearch);
 
+		tfId.setColumns(10);
 		JButton Voltar = new JButton("<");
 		Voltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -112,17 +128,7 @@ public class PThemeForm extends JPanel
 		scrollPane.setViewportView(taDesc);
 
 		ThemesController tCtrl = new ThemesController(tfName, taDesc, ftfValue);
-		
-		label = new JLabel("ID");
-		label.setBounds(320, 198, 46, 20);
-		add(label);
-		
-		tfId = new JTextField();
-		tfId.setEnabled(false);
-		tfId.setEditable(false);
-		tfId.setBounds(320, 217, 110, 20);
-		add(tfId);
-		tfId.setColumns(10);
+
 
 		btnSearch.addActionListener(tCtrl);
 		btnSubmit.addActionListener(tCtrl);

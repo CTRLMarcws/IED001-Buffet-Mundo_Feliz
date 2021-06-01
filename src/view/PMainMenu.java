@@ -40,8 +40,8 @@ public class PMainMenu extends JPanel
 
 	public PMainMenu() 
 	{
-		setLayout(null);
 		initComp();
+		FMain.setTitle("Menu principal");
 
 		FileController file = new FileController();
 		rDao = new RentsDao();
@@ -61,7 +61,7 @@ public class PMainMenu extends JPanel
 		}
 		else
 		{
-			//não há agendamentos para demonstrar
+			//lista vazia
 		}
 
 		MainMenuController ctrPrinc = new MainMenuController(cbOptions, btnForms, btnQuery);
@@ -72,6 +72,8 @@ public class PMainMenu extends JPanel
 
 	private void initComp()
 	{
+		setLayout(null);
+		
 		lblHeading = new JLabel("Bem-vinda de volta, Rafaela!");
 		lblHeading.setFont(new Font("Monotype Corsiva", Font.PLAIN, 30));
 		lblHeading.setHorizontalAlignment(SwingConstants.CENTER);
@@ -112,7 +114,7 @@ public class PMainMenu extends JPanel
 		add(scrollPane);
 
 		String [] arrayType = {"Temas", "Clientes", "Alugueis"};
-		cbOptions = new JComboBox<>(arrayType);
+		cbOptions = new JComboBox<String>(arrayType);
 		cbOptions.setBounds(30, 113, 100, 22);
 		add(cbOptions);	
 	}

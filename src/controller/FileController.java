@@ -53,24 +53,22 @@ public class FileController
 		}
 		return true;
 	}
-	
-	/*public static void initializeFiles() throws IOException
+
+	public String initializeFiles(String name, String columns) throws IOException 
 	{
-		String [] staticFilesNames = {"C:\\TEMP\\ED\\","themes.csv", "clients.csv", "rents.csv"};
-		for (int i = 1; i < 4; i++)
+		file = new File(path + name);
+		if (!file.exists() || !file.isFile())
 		{
-			File file = new File(staticFilesNames[0] + staticFilesNames[i]);
-			if(!file.exists() || !file.isFile())
-			{
-				FileWriter fileWriter = new FileWriter(file);
-//				String columns = "Id;Nome;Descricao;Valor\n";
-				PrintWriter print = new PrintWriter(fileWriter);
-				print.flush();
-				print.close();
-				fileWriter.close();				
-			}
+			FileWriter fileWriter = new FileWriter(file);
+			PrintWriter print = new PrintWriter(fileWriter);
+			print.write(columns);
+			print.flush();
+			print.close();
+			fileWriter.close();			
 		}
-	}*/
+
+		return name;				
+	}
 
 	//-----------------------CRUD - Themes-----------------------
 	public void createTheme(Theme theme) throws IOException
@@ -127,8 +125,9 @@ public class FileController
 		}
 		else
 		{
-			//criar novo arquivo?
-			throw new IOException ("Empty themes database.");
+			String columns = "Id;Nome;Descricao;Valor\n";
+			initializeFiles(nameThemes, columns);
+//			throw new IOException ("Empty themes database.");
 		}
 		return tDao;
 	}
@@ -250,7 +249,9 @@ public class FileController
 		}
 		else
 		{
-			throw new IOException ("Empty clients database.");
+			String columns = "ID;Nome;CPF;RG;E-Mail;Telefone;Observação;Endereço;Número;Bairro;Cidade;UF;Complemento;CEP\n";
+			initializeFiles(nameClients, columns);
+//			throw new IOException ("Empty clients database.");
 		}
 		return cDao;
 	}
@@ -368,7 +369,9 @@ public class FileController
 		}
 		else
 		{
-			throw new IOException ("Empty clients database.");
+			String columns = "ID;Cliente;Tema;Data;Hora-Inicio;Hora-Fim;Endereço;Valor\n";
+			initializeFiles(nameRents, columns);
+//			throw new IOException ("Empty clients database.");
 		}
 		return rDao;
 	}

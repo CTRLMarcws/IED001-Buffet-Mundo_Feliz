@@ -1,10 +1,9 @@
 package view;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import controller.FileController;
 
 public class FMain
 {
@@ -19,7 +18,6 @@ public class FMain
 				try
 				{
 					generateFrame();
-					FileController.initializeFiles();
 				} 
 				catch (Exception e)
 				{
@@ -46,6 +44,11 @@ public class FMain
 		frame.repaint();
 		frame.pack();
 		frame.revalidate();
+	}
+	
+	public static void setTitle(String title)
+	{
+		frame.setTitle(title);
 	}
 
 }

@@ -27,10 +27,10 @@ public class PClientForm extends JPanel
 	private JTextField tfName,  tfEmail;
 	private JFormattedTextField ftfId, ftfCpf, ftfRg, ftfPhone;
 	private JTextArea taObs;
-	
+
 	private JTextField tfStreet, tfDistrict, tfCity, tfAddrCompl, tfStreetNum;
 	private JFormattedTextField ftfPostalCode;
-	
+
 	private JLabel lblHeading, label;
 	private JButton btnSearch, btnHistory, btnQuery, btnSubmit, btnRemove, btnBack, btnClear;
 
@@ -41,6 +41,11 @@ public class PClientForm extends JPanel
 
 
 	public PClientForm()
+	{
+		initComp();
+		FMain.setTitle("Cadastro de Clientes");
+	}
+	public void initComp()
 	{
 		setLayout(null);
 
@@ -247,30 +252,29 @@ public class PClientForm extends JPanel
 		});
 		btnBack.setBounds(10, 14, 41, 23);
 		add(btnBack);
-		
+
 		btnClear = new JButton("Limpar");
 		btnClear.setBounds(210, 445, 130, 25);
 		add(btnClear);
 
 		ClientsController ctrClientes = new ClientsController(ftfId, tfName, ftfCpf, ftfRg, tfEmail,
 				ftfPhone, taObs, tfStreet, tfDistrict, tfCity, tfAddrCompl, tfStreetNum, ftfPostalCode);
-		
+
 		String arrayStates[] = {"AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS",
 				"MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"};
 		
 		JComboBox<String> cbStates = new JComboBox<>(arrayStates);
 		cbStates.setBounds(300, 280, 60, 20);
 		add(cbStates);
-		
+
 		label = new JLabel("Estado");
 		label.setBounds(304, 260, 46, 20);
 		add(label);
-		
+
 		btnRemove = new JButton("Excluir");
 		btnRemove.setBounds(40, 445, 130, 25);
 		add(btnRemove);
-		
-		
+
 		btnRemove.addActionListener(ctrClientes);
 		btnSearch.addActionListener(ctrClientes);
 		btnClear.addActionListener(ctrClientes);

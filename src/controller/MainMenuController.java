@@ -9,17 +9,15 @@ import javax.swing.JComboBox;
 import view.FMain;
 import view.PClientForm;
 import view.PQuery;
+import view.PRentForm;
 import view.PThemeForm;
 
 public class MainMenuController implements ActionListener
 {
-	private JComboBox cbOptions;
-	private JButton btnForms, btnQuery;
+	private JComboBox<String> cbOptions;
 
-	public MainMenuController(JComboBox cbOptions, JButton btnForms, JButton btnQuery)
+	public MainMenuController(JComboBox<String> cbOptions, JButton btnForms, JButton btnQuery)
 	{
-		this.btnForms = btnForms;
-		this.btnQuery = btnQuery;
 		this.cbOptions = cbOptions;
 	}
 
@@ -40,7 +38,7 @@ public class MainMenuController implements ActionListener
 				FMain.refreshFrame(new PClientForm());				
 				break;
 			case "Alugueis":
-//				FMain.refreshFrame(new PRentalForm());				
+				FMain.refreshFrame(new PRentForm());				
 				break;
 			}
 
@@ -59,12 +57,9 @@ public class MainMenuController implements ActionListener
 				break;
 
 			case "Alugueis":
+				FMain.refreshFrame(new PQuery("Alugueis"));
 				break;
 			}
-
-//			FMain.refreshFrame(new PQuery());
 		}
 	}
-
-
 }

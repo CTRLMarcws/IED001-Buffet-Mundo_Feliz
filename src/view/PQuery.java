@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -43,12 +44,14 @@ public class PQuery extends JPanel
 		initComp(headingType);
 		initList(headingType);
 		FMain.frame.revalidate();
+		FMain.setTitle("Consulta de " + headingType);
 	}
 
 	private void initList(String headingType)
 	{
 		FileController file = new FileController();
-		
+
+		boolean existData = false;
 		switch(headingType)
 		{
 		case "Temas":
@@ -62,10 +65,14 @@ public class PQuery extends JPanel
 			{
 				e.printStackTrace();
 			}
-			ThemesTableModel themesModel = new ThemesTableModel(tDao);
-			table.setModel(themesModel);			
+			if(!tDao.emptyList())
+			{
+				ThemesTableModel themesModel = new ThemesTableModel(tDao);
+				table.setModel(themesModel);
+				existData = true;
+			}
 			break;
-			
+
 		case "Clientes":
 			cDao = new ClientsDao();
 
@@ -77,13 +84,17 @@ public class PQuery extends JPanel
 			{
 				e.printStackTrace();
 			}
-			ClientsTableModel clientModel = new ClientsTableModel(cDao);
-			table.setModel(clientModel);
+			if(!cDao.emptyList())
+			{
+				ClientsTableModel clientModel = new ClientsTableModel(cDao);
+				table.setModel(clientModel);
+				existData = true;
+			}
 			break;
-			
+
 		case "Alugueis":
 			rDao = new RentsDao();
-			
+
 			try
 			{
 				rDao = file.readRents(rDao);
@@ -92,9 +103,18 @@ public class PQuery extends JPanel
 			{
 				e.printStackTrace();
 			}
-			RentsTableModel rentModel = new RentsTableModel(rDao);
-			table.setModel(rentModel);
+			if(!tDao.emptyList())
+			{
+				RentsTableModel rentModel = new RentsTableModel(rDao);
+				table.setModel(rentModel);				
+				existData = true;
+			}
 			break;
+		}
+		if(!existData)
+		{
+			String warning = "Não há dados para exibir.\nCadastre novos " + headingType + " para continuar.";
+			JOptionPane.showMessageDialog(null, warning, "Erro na consulta.", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -121,7 +141,7 @@ public class PQuery extends JPanel
 		btnEdit = new JButton("Editar");
 		btnEdit.setBounds(580, 47, 100, 23);
 		add(btnEdit);
-		
+
 		btnRemove = new JButton("Excluir");
 		btnRemove.setBounds(0,0,0,0);
 		add(btnRemove);
@@ -133,7 +153,7 @@ public class PQuery extends JPanel
 		add(lblHeading);
 
 		String [] arraySearch = {"Nome", "ID"};
-		cbOptions = new JComboBox<>(arraySearch);
+		cbOptions = new JComboBox<String>(arraySearch);
 		cbOptions.setBounds(10, 47, 93, 22);
 		add(cbOptions);
 
@@ -155,8 +175,9 @@ public class PQuery extends JPanel
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBounds(10, 81, 670, 338);
 		add(scrollPane);
-		
+
 		QueryController qCtrl = new QueryController(btnSearch, btnEdit, btnRemove);
+		
 		
 		btnSearch.addActionListener(qCtrl);
 		btnEdit.addActionListener(qCtrl);
