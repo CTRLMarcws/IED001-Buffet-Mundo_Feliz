@@ -31,7 +31,7 @@ public class ThemesComboBoxModel extends AbstractListModel<Object> implements Co
 
 	@Override
 	public void setSelectedItem(Object anItem)
-	{
+	{  
 		if (anItem instanceof Theme)
 		{
 			this.theme = (Theme) anItem;

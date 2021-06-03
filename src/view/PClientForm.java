@@ -257,9 +257,6 @@ public class PClientForm extends JPanel
 		btnClear.setBounds(210, 445, 130, 25);
 		add(btnClear);
 
-		ClientsController ctrClientes = new ClientsController(ftfId, tfName, ftfCpf, ftfRg, tfEmail,
-				ftfPhone, taObs, tfStreet, tfDistrict, tfCity, tfAddrCompl, tfStreetNum, ftfPostalCode);
-
 		String arrayStates[] = {"AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS",
 				"MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"};
 		
@@ -275,6 +272,8 @@ public class PClientForm extends JPanel
 		btnRemove.setBounds(40, 445, 130, 25);
 		add(btnRemove);
 
+		ClientsController ctrClientes = new ClientsController(ftfId, tfName, ftfCpf, ftfRg, tfEmail,
+				ftfPhone, taObs, tfStreet, tfDistrict, tfCity, tfAddrCompl, tfStreetNum, ftfPostalCode, cbStates);
 		btnRemove.addActionListener(ctrClientes);
 		btnSearch.addActionListener(ctrClientes);
 		btnClear.addActionListener(ctrClientes);

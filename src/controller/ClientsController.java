@@ -1,11 +1,11 @@
 package controller;
 
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
@@ -27,11 +27,12 @@ public class ClientsController implements ActionListener
 	private Client client;
 	private JTextField tfStreet, tfDistrict, tfCity, tfAddrCompl,  tfStreetNum;
 	private JFormattedTextField ftfPostalCode;
+	private JComboBox<String> cbStates;
 
 	public ClientsController(JFormattedTextField ftfId, JTextField tfName, JFormattedTextField ftfCpf,
 			JFormattedTextField ftfRg, JTextField tfEmail, JFormattedTextField ftfPhone, JTextArea taObs,
 			JTextField tfStreet, JTextField tfDistrict, JTextField tfCity, JTextField tfAddrCompl,
-			JTextField tfStreetNum, JFormattedTextField ftfPostalCode)
+			JTextField tfStreetNum, JFormattedTextField ftfPostalCode, JComboBox<String> cbStates)
 	{
 		this.ftfId = ftfId;
 		this.tfName = tfName;
@@ -46,7 +47,7 @@ public class ClientsController implements ActionListener
 		this.tfCity = tfCity;
 		this.tfAddrCompl = tfAddrCompl;
 		this.ftfPostalCode = ftfPostalCode;
-		//incluir estado
+		this.cbStates = cbStates;
 
 		cDao = new ClientsDao();
 		FileController file = new FileController();
@@ -137,6 +138,7 @@ public class ClientsController implements ActionListener
 				tfCity.setText(client.getAddress().getCity());
 				tfAddrCompl.setText(client.getAddress().getAddrCompl());
 				ftfPostalCode.setText(client.getAddress().getPostalCode());
+//				cbStates.setSelectedIndex(address.getIndex(client.getAddress().getState()));
 			}
 			else
 			{
@@ -161,9 +163,8 @@ public class ClientsController implements ActionListener
 				id = cDao.getLastClient().getId() + 1;
 			}
 
-			String uf = "120";
 			address = new Address(tfStreet.getText(),tfStreetNum.getText(),tfDistrict.getText(),tfCity.getText(),
-					uf,tfAddrCompl.getText(),ftfPostalCode.getText());
+					cbStates.getSelectedItem().toString(),tfAddrCompl.getText(),ftfPostalCode.getText());
 
 			client = new Client(id, tfName.getText(), ftfCpf.getText(), ftfRg.getText(),
 					tfEmail.getText(), ftfPhone.getText(), taObs.getText(), address);

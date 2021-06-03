@@ -15,6 +15,7 @@ public class Theme
 		this.value = value;
 	}
 
+
 	public int getId()
 	{
 		return id;
@@ -55,5 +56,10 @@ public class Theme
 		this.value = value;
 	}
 
+	@Override
+	public String toString()
+	{
+		return name;
+	}
 
 }

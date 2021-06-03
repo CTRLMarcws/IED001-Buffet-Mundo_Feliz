@@ -145,7 +145,7 @@ public class PQuery extends JPanel
 		btnRemove = new JButton("Excluir");
 		btnRemove.setBounds(0,0,0,0);
 		add(btnRemove);
-		System.out.println(headingType);
+		
 		lblHeading = new JLabel("Pesquisa de " + headingType);
 		lblHeading.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHeading.setFont(new Font("Century Gothic", Font.PLAIN, 18));

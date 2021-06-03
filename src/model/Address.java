@@ -96,7 +96,6 @@ public class Address
 	//				{"Rio Grande do Sul","RS"},{"Rondônia","RO"},{"Roraima","RR"},{"Santa Catarina","SC"},
 	//				{"São Paulo","SP"},{"Sergipe","SE"},{"Tocantins","TO"}};
 	//
-	//		String [] vet = {estados[pos][0], estados[pos][1]};
 	//		return vet;
 	//	}
 
@@ -110,5 +109,24 @@ public class Address
 	{
 		return getStreet() + ", " + getStreetNum() + " - " + getDistrict() + ", "
 				+ getCity() + "/" + getState() + " - " + getAddrCompl() + " - " + getPostalCode();
+	}
+	
+	public Address getSplitAddress(String address)
+	{
+		String line[] = address.split(";");
+		Address addressAux = new Address(line[0], line[1], line[2], line[3], line[4], line[5], line[7]);
+		return addressAux;
+	}
+	
+	public int getIndex(String state)
+	{
+		String arrayStates[] = {"AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS",
+				"MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"};
+		int i = 0;
+		while (!state.equals(arrayStates[i]))
+		{
+			i++;
+		}
+		return i;
 	}
 }
