@@ -115,4 +115,16 @@ public class Rent
 		String line[] = date.split("/");
 		return LocalDate.of(Integer.parseInt(line[2]), Integer.parseInt(line[1]), Integer.parseInt(line[0]));
 	}
+	
+	public Address getSplitAddress(String addressLine)
+	{
+		String line[] = addressLine.split(",");
+		String lineAux[] = line[1].split("-");
+		String lineAux2[] = line[2].split("-");
+		String lineAux3[] = lineAux2[0].split("/");
+
+		Address address = new Address(line[0], lineAux[0], lineAux[1], lineAux3[0], lineAux2[3], lineAux2[2], lineAux3[1] + "-" + lineAux2[1]);
+		return address;
+		
+	}
 }

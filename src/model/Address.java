@@ -86,19 +86,6 @@ public class Address
 		this.postalCode = postalCode;
 	}
 
-	//	public String[] ufList(int pos)
-	//	{
-	//		String[][] estados = {{"Acre","AC"},{"Alagoas","AL"},{"Amapá","AP"},{"Amazonas","AM"},
-	//				{"Bahia","BA"},{"Ceará","CE"},{"Distrito Federal","DF"},{"Espírito Santo","ES"},
-	//				{"Goiás","GO"},{"Maranhão","MA"},{"Mato Grosso","MT"},{"Mato Grosso do Sul","MS"},
-	//				{"Minas Gerais","MG"},{"Pará","PA"},{"Paraíba","PB"},{"Paraná","PR"},
-	//				{"Pernambuco","PE"},{"Piauí","PI"},{"Rio de Janeiro","RJ"},{"Rio Grande do Norte","RN"},
-	//				{"Rio Grande do Sul","RS"},{"Rondônia","RO"},{"Roraima","RR"},{"Santa Catarina","SC"},
-	//				{"São Paulo","SP"},{"Sergipe","SE"},{"Tocantins","TO"}};
-	//
-	//		return vet;
-	//	}
-
 	public String formatToFile()
 	{
 		return getStreet() + ";" + getStreetNum() + ";" + getDistrict() + ";"
@@ -109,24 +96,5 @@ public class Address
 	{
 		return getStreet() + ", " + getStreetNum() + " - " + getDistrict() + ", "
 				+ getCity() + "/" + getState() + " - " + getAddrCompl() + " - " + getPostalCode();
-	}
-	
-	public Address getSplitAddress(String address)
-	{
-		String line[] = address.split(";");
-		Address addressAux = new Address(line[0], line[1], line[2], line[3], line[4], line[5], line[7]);
-		return addressAux;
-	}
-	
-	public int getIndex(String state)
-	{
-		String arrayStates[] = {"AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS",
-				"MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"};
-		int i = 0;
-		while (!state.equals(arrayStates[i]))
-		{
-			i++;
-		}
-		return i;
 	}
 }

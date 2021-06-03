@@ -10,7 +10,7 @@ public class ThemesDao
 {
 	private String msg;
 	private ThemesNode inicio;
-	FileController file;
+	private FileController file;
 
 	public ThemesDao()
 	{
@@ -162,7 +162,7 @@ public class ThemesDao
 		return msg;
 	}
 
-	public String removeById(int id)
+	public String removeById(int id) throws IOException
 	{
 		if (emptyList())
 		{
@@ -182,7 +182,7 @@ public class ThemesDao
 			{
 				ThemesNode aux1 = this.inicio;
 				ThemesNode aux2 = this.inicio;
-
+				
 				while (id > 1)
 				{
 					aux2 = aux1;

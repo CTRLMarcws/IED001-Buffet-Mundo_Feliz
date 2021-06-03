@@ -98,15 +98,17 @@ public class PQuery extends JPanel
 			try
 			{
 				rDao = file.readRents(rDao);
+				
 			}
 			catch (Exception e)
 			{
 				e.printStackTrace();
 			}
-			if(!tDao.emptyList())
+			if(!rDao.emptyList())
 			{
 				RentsTableModel rentModel = new RentsTableModel(rDao);
 				table.setModel(rentModel);				
+				rDao.sort();
 				existData = true;
 			}
 			break;
@@ -145,7 +147,7 @@ public class PQuery extends JPanel
 		btnRemove = new JButton("Excluir");
 		btnRemove.setBounds(0,0,0,0);
 		add(btnRemove);
-		
+
 		lblHeading = new JLabel("Pesquisa de " + headingType);
 		lblHeading.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHeading.setFont(new Font("Century Gothic", Font.PLAIN, 18));
@@ -166,7 +168,6 @@ public class PQuery extends JPanel
 		btnBack.setBounds(10, 14, 41, 23);
 		add(btnBack);
 
-
 		table = new JTable();
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setFillsViewportHeight(true);
@@ -176,9 +177,8 @@ public class PQuery extends JPanel
 		scrollPane.setBounds(10, 81, 670, 338);
 		add(scrollPane);
 
-		QueryController qCtrl = new QueryController(btnSearch, btnEdit, btnRemove);
-		
-		
+		QueryController qCtrl = new QueryController(btnSearch, btnEdit, btnRemove);		
+
 		btnSearch.addActionListener(qCtrl);
 		btnEdit.addActionListener(qCtrl);
 		btnRemove.addActionListener(qCtrl);

@@ -10,7 +10,7 @@ public class ClientsDao
 {
 	private String msg;
 	private ClientsNode inicio;
-	FileController file;
+	private FileController file;
 
 	public ClientsDao()
 	{
@@ -179,7 +179,7 @@ public class ClientsDao
 		return msg;
 	}
 
-	public String removeById(int id)
+	public String removeById(int id) throws IOException
 	{
 		if (emptyList())
 		{
@@ -199,6 +199,8 @@ public class ClientsDao
 			{
 				ClientsNode aux1 = this.inicio;
 				ClientsNode aux2 = this.inicio;
+				
+				file.deleteClient(this, id);
 
 				while (id > 1)
 				{

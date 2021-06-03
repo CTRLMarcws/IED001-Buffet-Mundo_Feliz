@@ -200,7 +200,14 @@ public class ClientsController implements ActionListener
 
 			if(client != null)
 			{
-				returnMsg = cDao.removeById(client.getId());
+				try
+				{
+					returnMsg = cDao.removeById(client.getId());
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
 				clearFields();
 			}
 			else

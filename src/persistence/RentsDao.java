@@ -11,7 +11,7 @@ public class RentsDao
 {
 	private String msg;
 	private RentsNode start;
-	FileController file;
+	private FileController file;
 
 	public RentsDao()
 	{
@@ -158,7 +158,7 @@ public class RentsDao
 		return msg;
 	}
 
-	public String removeById(int id)
+	public String removeById(int id) throws IOException
 	{
 		if (emptyList())
 		{
@@ -178,7 +178,7 @@ public class RentsDao
 			{
 				RentsNode aux1 = this.start;
 				RentsNode aux2 = this.start;
-
+				file.deleteRent(this, id);
 				while(id > 1)
 				{
 					aux1 = aux1.getNext();
@@ -215,7 +215,7 @@ public class RentsDao
 				+ "\nData: " + aux.getRent().getDate()
 				+ "\nDas: " + aux.getRent().getStartTime()
 				+ " as " + aux.getRent().getEndTime()
-				+ "\nTotal: " + aux.getRent().getValue() + "\n";
+				+ "\nTotal: R$ " + aux.getRent().getValue() + "\n";
 		return msg;
 	}
 

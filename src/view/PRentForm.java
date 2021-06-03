@@ -49,7 +49,7 @@ public class PRentForm extends JPanel
 	{
 		initComp();
 		initList();
-		initCBStates();
+		FMain.setTitle("Cadastro de temas");
 	}
 
 	private void initCBStates() {
@@ -117,8 +117,12 @@ public class PRentForm extends JPanel
 		labels();
 		textFields();
 		formattedTextFields();
-		buttons();
+		initCBStates();
 
+		cbThemes = new JComboBox<Object>();
+		cbThemes.setBounds(360, 70, 170, 20);
+		add(cbThemes);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -127,12 +131,8 @@ public class PRentForm extends JPanel
 
 		taObs = new JTextArea();
 		scrollPane.setViewportView(taObs);
-
-		cbThemes = new JComboBox<Object>();
-		cbThemes.setBounds(360, 70, 170, 20);
-		add(cbThemes);
-
-
+		
+		buttons();
 	}
 
 	private void labels()

@@ -164,53 +164,61 @@ public class RentsController implements ActionListener
 				tfAddrCompl.setText(client.getAddress().getAddrCompl());
 				ftfPostalCode.setText(client.getAddress().getPostalCode());
 				rbAddressYes.setSelected(true);
-				System.out.println(client.getAddress().getState());
-//				cbStates.setSelectedItem(client.getAddress().getState());
+				cbStates.setSelectedItem(client.getAddress().getState());
 			}
 			else
 			{
 				returnMsg = "Cliente não encontrado.";
-				notification(returnMsg, "erro");
+				notify(returnMsg, "erro");
 			}
 		}
 		else
 		{
 			returnMsg = "A lista está vazia.";
-			notification(returnMsg, "erro");
+			notify(returnMsg, "erro");
 		}
 	}
 
 	private void searchRent(int id)
 	{
 		String searchInput, returnMsg;
-		rent = null;
 
 		if(!rDao.emptyList())
 		{
-			rent = rDao.getRent(id);
+			System.out.println(id);
+			rent = rDao.getLastRent();
 
 			if(rent != null)
 			{
 				tfClientName.setText(rent.getClient());
-				address = address.getSplitAddress(rent.getAddress());
+				address = rent.getSplitAddress(rent.getAddress());
 				tfStreet.setText(address.getStreet());
 				tfStreetNum.setText(address.getStreetNum());
 				tfDistrict.setText(address.getDistrict());
 				tfCity.setText(address.getCity());
+				cbStates.setSelectedItem(address.getState().toString());
 				tfAddrCompl.setText(address.getAddrCompl());
+				ftfPostalCode.setText(address.getPostalCode());
 				rbAddressYes.setSelected(true);
-//				cbStates.setSelectedItem(address.getState());
+				
+				cbThemes.setSelectedItem(rent.getTheme().toString());
+				ftfDate.setText(rent.getDate());
+				ftfStartTime.setText(rent.getStartTime());
+				ftfEndTime.setText(rent.getEndTime());
+				tfId.setText(Integer.toString(rent.getId()));
+				String auxValue = "R$ " +  Double.toString(rent.getValue());
+				ftfTotal.setText(auxValue.replace(".", ","));
 			}
 			else
 			{
 				returnMsg = "Aluguel não encontrado.";
-				notification(returnMsg, "erro");
+				notify(returnMsg, "erro");
 			}
 		}
 		else
 		{
 			returnMsg = "A lista está vazia.";
-			notification(returnMsg, "erro");
+			notify(returnMsg, "erro");
 		}
 	}
 
@@ -225,14 +233,17 @@ public class RentsController implements ActionListener
 			}
 
 			address = new Address(tfStreet.getText(), tfStreetNum.getText(), tfDistrict.getText(), tfCity.getText(), ftfPostalCode.getText(),
-					tfAddrCompl.getText(), (String) cbStates.getSelectedItem());
+					tfAddrCompl.getText(), cbStates.getSelectedItem().toString());
 
-			rent = new Rent(id, tfClientName.getText(), (String) cbThemes.getSelectedItem(), ftfDate.getText(),
-					ftfStartTime.getText(), ftfEndTime.getText(), address.formatToFile(), Double.parseDouble(ftfValue.getText()));
+			String aux = ftfTotal.getText().substring(3).replace(',', '.');
+			double totalValue = Double.parseDouble(aux);
+
+			rent = new Rent(id, tfClientName.getText(), cbThemes.getSelectedItem().toString(), ftfDate.getText(),
+					ftfStartTime.getText(), ftfEndTime.getText(), address.formatToTableModel(), totalValue);
 
 			String returnMsg = rDao.addLast(rent, 1);
 
-			notification(returnMsg, "adicionado");
+			notify(returnMsg, "confirmado");
 			clearFields();
 		}
 	}
@@ -251,24 +262,35 @@ public class RentsController implements ActionListener
 			else
 			{
 				returnMsg = "O campo ID é obrigatório para esta operação";
-				notification(returnMsg, "erro");
+				notify(returnMsg, "erro");
 			}
 
 			if(rent != null)
 			{
-				returnMsg = rDao.removeById(Integer.parseInt(tfId.getText()));
+				try
+				{
+					returnMsg = rDao.removeById(Integer.parseInt(tfId.getText()));
+				}
+				catch (NumberFormatException e)
+				{
+					e.printStackTrace();
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
 				clearFields();
 			}
 			else
 			{
-				returnMsg = "Cliente não encontrado.";
-				notification(returnMsg, "erro");
+				returnMsg = "Erro ao processar esta operação.";
+				notify(returnMsg, "erro");
 			}
 		}
 		else
 		{
 			returnMsg = "A lista está vazia.";
-			notification(returnMsg, "erro");
+			notify(returnMsg, "erro");
 		}
 	}
 
@@ -292,14 +314,33 @@ public class RentsController implements ActionListener
 
 	private boolean validateFields()
 	{
-		if (!tfClientName.getText().isEmpty() && cbThemes.getSelectedItem().toString().trim().equals(""))
+		if (!tfClientName.getText().isEmpty() && !cbThemes.getSelectedItem().toString().isEmpty())
 		{
 			if (!ftfPostalCode.getText().isEmpty() && !tfStreetNum.getText().isEmpty())
 			{
-				if (!ftfDate.getText().isEmpty())
+				if (!ftfDate.getText().equals("  /  /   "))
 				{
-					if(!ftfStartTime.getText().isEmpty() && !ftfEndTime.getText().isEmpty())
+					String[] date = ftfDate.getText().split("/");
+					if(Integer.parseInt(date[0]) < 1 || Integer.parseInt(date[0]) > 31 || Integer.parseInt(date[1]) < 1
+							|| Integer.parseInt(date[1]) > 12 || Integer.parseInt(date[2]) < 1900 || Integer.parseInt(date[2]) > 2100)
 					{
+						String returnMsg = "O campo data esta incorreto.";
+						notify(returnMsg, "erro");
+						return false;
+					}
+					if(!ftfStartTime.getText().equals("  :  ") && !ftfEndTime.getText().equals("  :  "))
+					{
+						String[] initHour = ftfStartTime.getText().split(":");
+						String[] endHour = ftfEndTime.getText().split(":");
+						if (Integer.parseInt(initHour[0]) < 0 || Integer.parseInt(initHour[0]) > 23 ||
+								Integer.parseInt(initHour[1]) < 0 || Integer.parseInt(initHour[1]) > 59 ||
+								Integer.parseInt(endHour[0]) < 0 || Integer.parseInt(endHour[0]) > 23 ||
+								Integer.parseInt(endHour[1]) < 0 || Integer.parseInt(endHour[1]) > 59)
+						{
+							String returnMsg = "Os campos 'Hora inicial' e/ou 'Hora final' estão incorretos.";
+							notify(returnMsg, "erro");
+							return false;
+						}
 						if (!ftfTotal.getText().isEmpty())
 						{
 							return true;
@@ -310,11 +351,11 @@ public class RentsController implements ActionListener
 			}
 		}
 		String returnMsg = "Exitem campos obrigatórios vazios.";
-		notification(returnMsg, "erro");
+		notify(returnMsg, "erro");
 		return false;
 	}
 
-	private void notification(String returnMsg, String contains)
+	private void notify(String returnMsg, String contains)
 	{
 		if (returnMsg.contains(contains))
 		{
@@ -325,8 +366,8 @@ public class RentsController implements ActionListener
 			JOptionPane.showMessageDialog(null, returnMsg, "ERRO", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
-	private void textFieldsEnable (boolean active)
+
+	private void textFieldsEnable(boolean active)
 	{
 		tfStreet.setEnabled(active);
 		tfStreetNum.setEnabled(active);
@@ -334,15 +375,15 @@ public class RentsController implements ActionListener
 		tfCity.setEnabled(active);
 		tfAddrCompl.setEnabled(active);
 		ftfPostalCode.setEnabled(active);
-//		cbStates.setEnabled(active);
-		
+		cbStates.setEnabled(active);
+
 		tfStreet.setEditable(active);
 		tfStreetNum.setEditable(active);
 		tfDistrict.setEditable(active);
 		tfCity.setEditable(active);
 		tfAddrCompl.setEditable(active);
 		ftfPostalCode.setEditable(active);
-//		cbStates.setEditable(active);
+		cbStates.setEditable(active);
 	}
 }
 

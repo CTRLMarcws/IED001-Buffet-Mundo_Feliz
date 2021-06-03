@@ -19,6 +19,7 @@ public class ThemesController implements ActionListener
 	private JTextField tfName;
 	private JFormattedTextField ftfValue;
 	private JTextArea taDesc;
+	private FileController file;
 
 	public ThemesController(JTextField tfName, JTextArea taDesc, JFormattedTextField ftfValue)
 	{
@@ -111,7 +112,7 @@ public class ThemesController implements ActionListener
 	private void remove()
 	{
 		String name = tfName.getText();
-		String returnMsg;
+		String returnMsg = "";
 
 		if(!tfName.getText().isEmpty())
 		{
@@ -120,7 +121,17 @@ public class ThemesController implements ActionListener
 				Theme theme = tDao.findTheme(name);
 				if(theme != null)
 				{
-					returnMsg = tDao.removeById(theme.getId());					
+					try
+					{
+						returnMsg = tDao.removeById(theme.getId());
+						file = new FileController();
+						file.deleteTheme(tDao, theme.getId());
+					}
+					catch (IOException e)
+					{
+						e.printStackTrace();
+					}
+					
 					clearFields();
 				}
 				else

@@ -20,7 +20,6 @@ import javax.swing.border.LineBorder;
 import controller.FileController;
 import controller.MainMenuController;
 import model.MainMenuTableModel;
-import model.RentsTableModel;
 import persistence.RentsDao;
 
 public class PMainMenu extends JPanel
@@ -56,8 +55,8 @@ public class PMainMenu extends JPanel
 		}
 		if (!rDao.emptyList())
 		{
-			RentsTableModel rentModel = new RentsTableModel(rDao);
-			table.setModel(rentModel);			
+			MainMenuTableModel mainMenuModel = new MainMenuTableModel(rDao);
+			table.setModel(mainMenuModel);			
 		}
 		else
 		{
