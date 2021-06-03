@@ -7,19 +7,17 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 import view.FMain;
+import view.PClientForm;
 import view.PQuery;
+import view.PRentForm;
 import view.PThemeForm;
 
-@SuppressWarnings("unused")
 public class MainMenuController implements ActionListener
 {
-	private JComboBox cbOptions;
-	private JButton btnForms, btnQuery;
+	private JComboBox<String> cbOptions;
 
-	public MainMenuController(JComboBox cbOptions, JButton btnForms, JButton btnQuery)
+	public MainMenuController(JComboBox<String> cbOptions, JButton btnForms, JButton btnQuery)
 	{
-		this.btnForms = btnForms;
-		this.btnQuery = btnQuery;
 		this.cbOptions = cbOptions;
 	}
 
@@ -37,10 +35,10 @@ public class MainMenuController implements ActionListener
 				FMain.refreshFrame(new PThemeForm());
 				break;
 			case "Clientes":
-				//FPrincipal.atualizarFrame(new PCadClientes());
+				FMain.refreshFrame(new PClientForm());				
 				break;
 			case "Alugueis":
-				//FPrincipal.atualizarFrame(new PCadAlugueis());
+				FMain.refreshFrame(new PRentForm());				
 				break;
 			}
 
@@ -51,21 +49,17 @@ public class MainMenuController implements ActionListener
 			switch(opt)
 			{
 			case "Temas":
-				QueryController.setKind(0);
+				FMain.refreshFrame(new PQuery("Temas"));
 				break;
 
 			case "Clientes":
-				//consultaTipo(1);
+				FMain.refreshFrame(new PQuery("Clientes"));
 				break;
 
 			case "Alugueis":
-				//consultaTipo(2);
+				FMain.refreshFrame(new PQuery("Alugueis"));
 				break;
 			}
-
-			FMain.refreshFrame(new PQuery());
 		}
 	}
-
-
 }

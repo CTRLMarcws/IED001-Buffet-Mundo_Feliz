@@ -86,17 +86,15 @@ public class Address
 		this.postalCode = postalCode;
 	}
 
-//	public String[] ufList(int pos)
-//	{
-//		String[][] estados = {{"Acre","AC"},{"Alagoas","AL"},{"Amapá","AP"},{"Amazonas","AM"},
-//				{"Bahia","BA"},{"Ceará","CE"},{"Distrito Federal","DF"},{"Espírito Santo","ES"},
-//				{"Goiás","GO"},{"Maranhão","MA"},{"Mato Grosso","MT"},{"Mato Grosso do Sul","MS"},
-//				{"Minas Gerais","MG"},{"Pará","PA"},{"Paraíba","PB"},{"Paraná","PR"},
-//				{"Pernambuco","PE"},{"Piauí","PI"},{"Rio de Janeiro","RJ"},{"Rio Grande do Norte","RN"},
-//				{"Rio Grande do Sul","RS"},{"Rondônia","RO"},{"Roraima","RR"},{"Santa Catarina","SC"},
-//				{"São Paulo","SP"},{"Sergipe","SE"},{"Tocantins","TO"}};
-//
-//		String [] vet = {estados[pos][0], estados[pos][1]};
-//		return vet;
-//	}
+	public String formatToFile()
+	{
+		return getStreet() + ";" + getStreetNum() + ";" + getDistrict() + ";"
+				+ getCity() + ";" + getState() + ";" + getAddrCompl() + ";" + getPostalCode();
+	}
+
+	public String formatToTableModel()
+	{
+		return getStreet() + ", " + getStreetNum() + " - " + getDistrict() + ", "
+				+ getCity() + "/" + getState() + " - " + getAddrCompl() + " - " + getPostalCode();
+	}
 }

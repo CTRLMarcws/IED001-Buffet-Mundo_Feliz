@@ -21,14 +21,14 @@ import javax.swing.ScrollPaneConstants;
 
 public class PThemeForm extends JPanel
 {
-
-	private JLabel lblTitulo, label;
-	private JTextField tfNome;
-	private JFormattedTextField ftfValor;
+	private JLabel lblHeading, label;
+	private JTextField tfName;
+	private JFormattedTextField ftfValue;
 	private JTextArea taDesc;
-	private JButton btnSalvar, btnVerTodos, btnExcluir, btnPesquisar;
+	private JButton btnSubmit, btnQuery, btnRemove, btnSearch;
 
 	private static final long serialVersionUID = 1L;
+	private JTextField tfId;
 
 	public Dimension getPreferredSize()
 	{
@@ -37,21 +37,27 @@ public class PThemeForm extends JPanel
 
 	public PThemeForm()
 	{
+		initComp();
+		FMain.setTitle("Cadastro de temas");
+	}
+	
+	public void initComp()
+	{
 		setLayout(null);
-		lblTitulo = new JLabel("Cadastro de Temas");
-		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-		lblTitulo.setBounds(0, 10, 450, 30);
-		add(lblTitulo);
+		lblHeading = new JLabel("Cadastro de Temas");
+		lblHeading.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHeading.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		lblHeading.setBounds(0, 10, 450, 30);
+		add(lblHeading);
 
 		label = new JLabel("Nome");
 		label.setBounds(20, 60, 46, 20);
 		add(label);
 
-		tfNome = new JTextField();
-		tfNome.setBounds(20, 79, 316, 20);
-		add(tfNome);
-		tfNome.setColumns(10);
+		tfName = new JTextField();
+		tfName.setBounds(20, 79, 316, 20);
+		add(tfName);
+		tfName.setColumns(10);
 
 		label = new JLabel("Descri\u00E7\u00E3o");
 		label.setBounds(20, 109, 94, 20);
@@ -72,26 +78,37 @@ public class PThemeForm extends JPanel
 		//		{
 		//			e.printStackTrace();
 		//		}
-		ftfValor = new JFormattedTextField();
-		ftfValor.setBounds(20, 217, 110, 20);
-		add(ftfValor);
+		ftfValue = new JFormattedTextField();
+		ftfValue.setBounds(20, 217, 110, 20);
+		add(ftfValue);
 
-		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(60, 260, 95, 23);
-		add(btnSalvar);
+		label = new JLabel("ID");
+		label.setBounds(320, 198, 46, 20);
+		add(label);
 
-		btnVerTodos = new JButton("Ver Todos");
-		btnVerTodos.setBounds(295, 260, 95, 23);
-		add(btnVerTodos);
+		tfId = new JTextField();
+		tfId.setEnabled(false);
+		tfId.setEditable(false);
+		tfId.setBounds(320, 217, 110, 20);
+		add(tfId);
 
-		btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(177, 260, 95, 23);
-		add(btnExcluir);
+		btnSubmit = new JButton("Salvar");
+		btnSubmit.setBounds(60, 260, 95, 23);
+		add(btnSubmit);
 
-		btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.setBounds(335, 79, 95, 19);
-		add(btnPesquisar);
+		btnQuery = new JButton("Ver Todos");
+		btnQuery.setBounds(295, 260, 95, 23);
+		add(btnQuery);
 
+		btnRemove = new JButton("Excluir");
+		btnRemove.setBounds(177, 260, 95, 23);
+		add(btnRemove);
+
+		btnSearch = new JButton("Pesquisar");
+		btnSearch.setBounds(335, 79, 95, 19);
+		add(btnSearch);
+
+		tfId.setColumns(10);
 		JButton Voltar = new JButton("<");
 		Voltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -110,11 +127,12 @@ public class PThemeForm extends JPanel
 		taDesc = new JTextArea();
 		scrollPane.setViewportView(taDesc);
 
-		ThemesController ctrTemas = new ThemesController(tfNome, taDesc, ftfValor);
+		ThemesController tCtrl = new ThemesController(tfName, taDesc, ftfValue);
 
-		btnPesquisar.addActionListener(ctrTemas);
-		btnSalvar.addActionListener(ctrTemas);
-		btnExcluir.addActionListener(ctrTemas);
-		btnVerTodos.addActionListener(ctrTemas);
+
+		btnSearch.addActionListener(tCtrl);
+		btnSubmit.addActionListener(tCtrl);
+		btnRemove.addActionListener(tCtrl);
+		btnQuery.addActionListener(tCtrl);
 	}
 }

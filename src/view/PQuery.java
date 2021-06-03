@@ -6,72 +6,57 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import controller.FileController;
+import controller.QueryController;
 import model.ClientsTableModel;
+import model.RentsTableModel;
 import model.ThemesTableModel;
 import persistence.ClientsDao;
+import persistence.RentsDao;
 import persistence.ThemesDao;
 
 public class PQuery extends JPanel
 {
-
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private JTextField tfSearch;
-	private JButton btnEdit, btnSearch;
+	private JButton btnEdit, btnSearch, btnRemove;
 	private JLabel lblHeading;
-	private JComboBox cbOptions;
+	private JComboBox<String> cbOptions;
 	private ThemesDao tDao;
 	private ClientsDao cDao;
-	private String kind;
-	
+	private RentsDao rDao;
 
-	public Dimension getPreferredSize()
+	public PQuery(String headingType)
 	{
-		return new Dimension(690, 430);
+		initComp(headingType);
+		initList(headingType);
+		FMain.frame.revalidate();
+		FMain.setTitle("Consulta de " + headingType);
 	}
 
-	public PQuery()
+	private void initList(String headingType)
 	{
 		FileController file = new FileController();
-		/*
-		 * Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException: Cannot invoke "model.Theme.getId()"
-		 * because the return value of "persistence.ThemeDao.getTheme(int)" is null
-		 * 
-		 * at model.TableModel_Themes.getValueAt(TableModel_Themes.java:47)
-		 */
-/*
- * 		Resposabilidade:
- * 
- * 		1. Iniciar componentes
- * 		2. Iniciar controller
- * 
- * 		Responsabilidades ControllerConsulta:
- * 		Informar o tipo
- * 		criar a tablemodel
- * 		popular a tablemodel
- */
-		
-		initComp();
-		
-		int i = 0;
 
-		switch(i)
+		boolean existData = false;
+		switch(headingType)
 		{
-		case 0:
+		case "Temas":
 			tDao = new ThemesDao();
-			
+
 			try
 			{
 				tDao = file.readThemes(tDao);
@@ -80,15 +65,17 @@ public class PQuery extends JPanel
 			{
 				e.printStackTrace();
 			}
-			
-			ThemesTableModel themesModel = new ThemesTableModel(tDao);
-			table.setModel(themesModel);
-			kind = "Temas";
+			if(!tDao.emptyList())
+			{
+				ThemesTableModel themesModel = new ThemesTableModel(tDao);
+				table.setModel(themesModel);
+				existData = true;
+			}
 			break;
-			
-		case 1:
+
+		case "Clientes":
 			cDao = new ClientsDao();
-			
+
 			try
 			{
 				cDao = file.readClients(cDao);
@@ -97,20 +84,48 @@ public class PQuery extends JPanel
 			{
 				e.printStackTrace();
 			}
-			ClientsTableModel clientModel = new ClientsTableModel(cDao);
-			table.setModel(clientModel);
-			kind = "Clientes";
+			if(!cDao.emptyList())
+			{
+				ClientsTableModel clientModel = new ClientsTableModel(cDao);
+				table.setModel(clientModel);
+				existData = true;
+			}
 			break;
-			
-		case 2:
-			System.out.println("Em progresso");
-			kind = "Alugueis";
+
+		case "Alugueis":
+			rDao = new RentsDao();
+
+			try
+			{
+				rDao = file.readRents(rDao);
+				
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			if(!rDao.emptyList())
+			{
+				RentsTableModel rentModel = new RentsTableModel(rDao);
+				table.setModel(rentModel);				
+				rDao.sort();
+				existData = true;
+			}
 			break;
 		}
-		
+		if(!existData)
+		{
+			String warning = "Não há dados para exibir.\nCadastre novos " + headingType + " para continuar.";
+			JOptionPane.showMessageDialog(null, warning, "Erro na consulta.", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
-	private void initComp()
+	public Dimension getPreferredSize()
+	{
+		return new Dimension(690, 430);
+	}
+
+	private void initComp(String headingType)
 	{
 		setBounds(100, 100, 690, 430);
 		setLayout(null);
@@ -122,11 +137,6 @@ public class PQuery extends JPanel
 		tfSearch.setColumns(10);
 
 		btnSearch = new JButton("Pesquisar");
-		btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
 		btnSearch.setBounds(470, 47, 100, 23);
 		add(btnSearch);
 
@@ -134,33 +144,43 @@ public class PQuery extends JPanel
 		btnEdit.setBounds(580, 47, 100, 23);
 		add(btnEdit);
 
-		lblHeading = new JLabel("Pesquisa de " + kind);
+		btnRemove = new JButton("Excluir");
+		btnRemove.setBounds(0,0,0,0);
+		add(btnRemove);
+
+		lblHeading = new JLabel("Pesquisa de " + headingType);
 		lblHeading.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHeading.setFont(new Font("Century Gothic", Font.PLAIN, 18));
 		lblHeading.setBounds(10, 11, 670, 23);
 		add(lblHeading);
 
-		cbOptions = new JComboBox();
-		cbOptions.setModel(new DefaultComboBoxModel(new String[] {"Nome", "ID"}));
+		String [] arraySearch = {"Nome", "ID"};
+		cbOptions = new JComboBox<String>(arraySearch);
 		cbOptions.setBounds(10, 47, 93, 22);
 		add(cbOptions);
 
 		JButton btnBack = new JButton("<");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FMain.refreshFrame(new PThemeForm());
+				FMain.refreshFrame(new PMainMenu());
 			}
 		});
 		btnBack.setBounds(10, 14, 41, 23);
 		add(btnBack);
-		
 
 		table = new JTable();
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setFillsViewportHeight(true);
 
 		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBounds(10, 81, 670, 338);
 		add(scrollPane);
+
+		QueryController qCtrl = new QueryController(btnSearch, btnEdit, btnRemove);		
+
+		btnSearch.addActionListener(qCtrl);
+		btnEdit.addActionListener(qCtrl);
+		btnRemove.addActionListener(qCtrl);
 	}
 }

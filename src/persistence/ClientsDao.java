@@ -6,12 +6,11 @@ import controller.FileController;
 import model.Client;
 import model.ClientsNode;
 
-@SuppressWarnings("unused")
 public class ClientsDao
 {
 	private String msg;
 	private ClientsNode inicio;
-	FileController file;
+	private FileController file;
 
 	public ClientsDao()
 	{
@@ -180,7 +179,7 @@ public class ClientsDao
 		return msg;
 	}
 
-	public String removeById(int id)
+	public String removeById(int id) throws IOException
 	{
 		if (emptyList())
 		{
@@ -200,6 +199,8 @@ public class ClientsDao
 			{
 				ClientsNode aux1 = this.inicio;
 				ClientsNode aux2 = this.inicio;
+				
+				file.deleteClient(this, id);
 
 				while (id > 1)
 				{
@@ -214,7 +215,7 @@ public class ClientsDao
 		}
 		return msg;
 	}
-	
+
 	//update client
 
 	private String msgMod (ClientsNode aux, int add)
@@ -227,13 +228,13 @@ public class ClientsDao
 		{
 			msg = "Cliente removido na lista: \n";			
 		}
-		msg += "ID:\t\t\t" + aux.getClient().getId()
-				+ "\nNome:\t\t\t" + aux.getClient().getName()
-				+ "\nCPF:\t\t\t" + aux.getClient().getCpf()
-				+ "\nRG:\t\t\t\t" + aux.getClient().getRg()
-				+ "\nE-mail:\t\t\t" + aux.getClient().getEmail()
-				+ "\nNúmero:\t\t" + aux.getClient().getPhone()
-				+ "\nObservação:\t" + aux.getClient().getObs() + "\n";
+		msg += "ID: " + aux.getClient().getId()
+				+ "\nNome: " + aux.getClient().getName()
+				+ "\nCPF: " + aux.getClient().getCpf()
+				+ "\nRG: " + aux.getClient().getRg()
+				+ "\nE-mail: " + aux.getClient().getEmail()
+				+ "\nNúmero: " + aux.getClient().getPhone()
+				+ "\nObservação: " + aux.getClient().getObs() + "\n";
 		return msg;
 	}
 }
